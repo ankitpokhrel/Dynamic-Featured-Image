@@ -1,7 +1,6 @@
-Dynamic Featured Image (WordPress Plugin)
-========================================
+## Dynamic Featured Image (A WordPress Plugin)
 
-Dynamically adds multiple featured image (post thumbnail) functionality to posts, pages and custom post types.
+_Dynamically adds multiple featured image (post thumbnail) functionality to posts, pages and custom post types._
 
 
 ### Installation

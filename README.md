@@ -15,13 +15,15 @@ Dynamically adds multiple featured image (post thumbnail) functionality to posts
 
 1. After successfull plugin activation go to `add` or `edit` page of posts or pages and you will notice a box for second featured image.
 
-   ![Snapshot 1](http://ankitpokhrel.com.np/dfi/1.jpg)
+   ![Snapshot 1](http://ankitpokhrel.com.np/dfi/snapshot_1.jpg)
 
 2. Click `Set featured image`, select required image from media popup and click `Insert to post`.
-   ![Snapshot 2](http://ankitpokhrel.com.np/dfi/2.jpg)
+
+   ![Snapshot 2](http://ankitpokhrel.com.np/dfi/snapshot_2.jpg)
 
 3. Click on `Add New` to add new featured image or use `Remove` link to remove the featured image box.
-   ![Snapshot 3](http://ankitpokhrel.com.np/dfi/3.jpg)
+ 
+   ![Snapshot 3](http://ankitpokhrel.com.np/dfi/snapshot_3.jpg)
 
 4. After adding featured images click `publish` or `update` to save featured images.
 
@@ -65,3 +67,12 @@ array
       'full' => string 'http://your_site/upload_path/yourSelectedImage_fullSize.jpg' (length=69)
   2 => ...
 ```
+
+
+### Help
+
+You can always contact me at `ankitpokhrel@gmail.com`, if you have any question or queries about the project. 
+I am available for freelance work too.
+
+Please feel free to report any bug found.
+

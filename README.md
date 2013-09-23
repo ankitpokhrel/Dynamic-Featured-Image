@@ -1,13 +1,13 @@
-Dynamic Featured Image
-======================
+## Dynamic Featured Image (A WordPress Plugin)
 
-Dynamically adds multiple featured image (post thumbnail) functionality to posts, pages and custom post types.
+_Dynamically adds multiple featured image (post thumbnail) functionality to posts, pages and custom post types._
 
 
 ### Installation
 
   1. Unzip and upload the `dynamic-featured-images` directory to the plugin directory (`/wp-content/plugins/`) or install it from `Plugins->Add New->Upload`
   2. Activate the plugin through the `Plugins` menu in WordPress.
+  3. If you don't see new featured image box, click `Screen Options` in the upper right corner of your wordpress admin and make sure that the `Featured Image 2` box is slected.
 
 
 
@@ -17,7 +17,7 @@ Dynamically adds multiple featured image (post thumbnail) functionality to posts
 
    ![Snapshot 1](http://ankitpokhrel.com.np/dfi/snapshot_1.jpg)
 
-2. Click `Set featured image`, select required image from media popup and click `Insert to post`.
+2. Click `Set featured image`, select required image from media popup and click `Insert into Post`.
 
    ![Snapshot 2](http://ankitpokhrel.com.np/dfi/snapshot_2.jpg)
 

@@ -138,8 +138,8 @@
         return;
     }
      
- 	global $post;        
-    if( current_user_can('edit_post', $pos->ID) ) { //Check permission	
+ 	global $post;
+    if( current_user_can('edit_post', $pos->ID) ) { //Check permission
 	   update_post_meta($post->ID, 'dfiFeatured', $_POST['dfiFeatured']);
 	}
  }

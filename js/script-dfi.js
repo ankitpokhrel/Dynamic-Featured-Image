@@ -9,17 +9,28 @@ jQuery(document).ready(function($){
 	/*
 	 * Add new meta box
 	 */
-	$(document).on('click', '.dfiAddNew', function(){	   
-		var id = parseInt( $('.featured-meta-box:last').find('.dfiAddNew').attr('data-id') );     
-                
-        var newMetaBox = $(this).closest('.featured-meta-box').clone();     
-        newMetaBox.find('.hndle span').html('Featured Image ' + ++id);
-        newMetaBox.find('.handlediv').addClass('dfiDynamicBox');
-        newMetaBox.find('.dfiAddNew').attr('data-id', id);
-        newMetaBox.find('input').val('');
-        newMetaBox.attr('id', 'dfiFeaturedMetaBox' + "-" + id);
-        newMetaBox.find('img').attr('src', '');
-        newMetaBox.appendTo($(this).closest('.featured-meta-box').parent());    
+	$(document).on('click', '.dfiAddNew', function(){	   		
+       var obj = $(this);
+       var id = parseInt( $('.featured-meta-box:last').find('.dfiAddNew').attr('data-id') );
+       
+       var newMetaBox = obj.closest('.featured-meta-box').clone();
+       newMetaBox.find('.hndle span').html('Featured Image ' + ++id);
+       newMetaBox.attr('id', 'dfiFeaturedMetaBox' + "-" + id);
+       newMetaBox.find('.handlediv').addClass('dfiDynamicBox');
+       
+       var metaBoxContentObj = newMetaBox.find('.inside');
+       metaBoxContentObj.html('');
+       
+       $.ajax({
+          type: 'POST',  
+          url: 'admin-ajax.php',  
+          data: { action: 'dfiMetaBox_callback', id: id },  
+          success: function(response){
+            metaBoxContentObj.append(response);
+            newMetaBox.appendTo(obj.closest('.featured-meta-box').parent())
+          }
+       });
+       
 	});
 	
 	/*
@@ -59,7 +70,7 @@ jQuery(document).ready(function($){
 		var dfiFeaturedImages = [imgUrlTrimmed, fullUrlTrimmed];
 			
 		featuredBox.find('img').attr('src', imgurl).fadeIn(200);
-		featuredBox.find('input').val(dfiFeaturedImages);
+		featuredBox.find('input.dfiImageHolder').val(dfiFeaturedImages);
 		tb_remove();
 	}
 	

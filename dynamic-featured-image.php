@@ -96,12 +96,8 @@
 		list($featuredImgTrimmed, $featuredImgFull) = explode(',', $featuredImg); 
 	} 			
     
-    //Add nonce field only once for all featured box
-    global $flag;          
-    if( !$flag ){
-        wp_nonce_field( plugin_basename(__FILE__), 'dfi_fimageplug');
-        $flag = true;
-     }
+    //Add a nonce field   
+    wp_nonce_field( plugin_basename(__FILE__), 'dfi_fimageplug-' . $featuredId);    
  ?>   
    <a href="javascript:void(0)" class='dfiFeaturedImage'><?php _e('Set featured image', 'ap_dfi_dynamic-featured-image') ?></a><br/> 	   
    <img src="<?php if( !empty($featuredImgTrimmed) ) echo site_url() . $featuredImgTrimmed ?>" class='dfiImg <?php if( is_null($featuredImgTrimmed) ) echo 'dfiImgEmpty' ?>'/>
@@ -110,8 +106,30 @@
  	<a href="javascript:void(0)" class='dfiRemove'><?php _e('Remove', 'ap_dfi_dynamic-featured-image') ?></a>
    </div>
    <div class='dfiClearFloat'></div>
-   <input type='hidden' name="dfiFeatured[]" value="<?php echo $featuredImg ?>" />
+   <input type='hidden' name="dfiFeatured[]" value="<?php echo $featuredImg ?>"  class="dfiImageHolder" />
  <?php } 
+ 
+ //handle ajax request
+ add_action( 'wp_ajax_nopriv_ dfiMetaBox_callback', 'dfiMetaBox_callback' );
+ add_action('wp_ajax_dfiMetaBox_callback', 'dfiMetaBox_callback');
+ function dfiMetaBox_callback(){
+     $featuredId = isset($_POST['id']) ? (int) strip_tags( trim($_POST['id']) ) : null;
+     
+     if( is_null($featuredId) ) return;
+     
+     wp_nonce_field( plugin_basename(__FILE__), 'dfi_fimageplug-' . $featuredId );
+ ?>
+      <a href="javascript:void(0)" class='dfiFeaturedImage'><?php _e('Set featured image', 'ap_dfi_dynamic-featured-image') ?></a><br/>        
+       <img src="<?php if( !empty($featuredImgTrimmed) ) echo site_url() . $featuredImgTrimmed ?>" class='dfiImg <?php if( is_null($featuredImgTrimmed) ) echo 'dfiImgEmpty' ?>'/>
+       <div class='dfiLinks'>   
+        <a href="javascript:void(0)" data-id='<?php echo $featuredId ?>' class='dfiAddNew'><?php _e('Add New', 'ap_dfi_dynamic-featured-image') ?></a>
+        <a href="javascript:void(0)" class='dfiRemove'><?php _e('Remove', 'ap_dfi_dynamic-featured-image') ?></a>
+       </div>
+       <div class='dfiClearFloat'></div>
+       <input type='hidden' name="dfiFeatured[]" value="<?php echo $featuredImg ?>" class="dfiImageHolder" />
+<?php
+     die();
+ }
  
  /*
   * Add custom class, featured-meta-box to meta box
@@ -128,9 +146,19 @@
   
  add_action('save_post', 'save_dfi_featured_meta');
  function save_dfi_featured_meta() {
+     $featuredIds = array();
+     $keys = array_keys( $_POST );    
+     foreach ( $keys as $key ) {
+        if ( preg_match( '/dfi_fimageplug-.$/', $key ) ) {
+             $featuredIds[] = $key;
+        }
+     }
+         
     //Verify nonce
-    if ( !wp_verify_nonce( $_POST['dfi_fimageplug'], plugin_basename(__FILE__) ) ) {
+    foreach( $featuredIds as $nonceId ) {
+     if ( !wp_verify_nonce( $_POST[$nonceId], plugin_basename(__FILE__) ) ) {
        return;
+     }
     }
     
     //Check autosave

@@ -1,9 +1,9 @@
 <?php
 /**
  * Plugin Name: Dynamic Featured Image
- * Plugin URI: http://ankitpokhrel.com.np
+ * Plugin URI: http://wordpress.org/plugins/dynamic-featured-image/
  * Description: Add multiple featured image dynamically in your wordpress posts.
- * Version: 1.0.3
+ * Version: 1.1.0
  * Author: Ankit Pokhrel
  * Author URI: http://ankitpokhrel.com.np
  */
@@ -25,7 +25,7 @@
    along with this program.  If not, see <http://www.gnu.org/licenses/>.
   */
  
- define('DYNAMIC_FEATURED_IMAGE_VERSION', '1.0.3');
+ define('DYNAMIC_FEATURED_IMAGE_VERSION', '1.1.0');
 
  //prevent direct access
  if ( !function_exists( 'add_action' ) ) {
@@ -86,7 +86,6 @@
 	}
  }
 
- $flag = false;
  function dfi_featured_meta_box($post, $featured){ 	
  	$featuredImg = is_null($featured['args'][0]) ? '' : $featured['args'][0]; 	
  	$featuredId = is_null($featured['args'][1]) ? 2 : --$featured['args'][1];
@@ -111,7 +110,7 @@
  
  //handle ajax request
  add_action( 'wp_ajax_nopriv_ dfiMetaBox_callback', 'dfiMetaBox_callback' );
- add_action('wp_ajax_dfiMetaBox_callback', 'dfiMetaBox_callback');
+ add_action( 'wp_ajax_dfiMetaBox_callback', 'dfiMetaBox_callback' );
  function dfiMetaBox_callback(){
      $featuredId = isset($_POST['id']) ? (int) strip_tags( trim($_POST['id']) ) : null;
      
@@ -166,12 +165,19 @@
         return;
     }
      
- 	global $post;
-    if( current_user_can('edit_post', $pos->ID) ) { //Check permission
+    //Check permission before saving data
+ 	global $post;        
+    if( current_user_can('edit_post', $pos->ID) ) {
 	   update_post_meta($post->ID, 'dfiFeatured', $_POST['dfiFeatured']);
-	}
+    }
  }
  
+ /*
+  * Retrieve featured images for specific posts
+  * 
+  * @return Array
+  */
+  
  function dfiGetFeaturedImages($postId = null){
     if( is_null($postId) ){
      global $post;

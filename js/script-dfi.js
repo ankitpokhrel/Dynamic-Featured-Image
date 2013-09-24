@@ -21,13 +21,16 @@ jQuery(document).ready(function($){
        var metaBoxContentObj = newMetaBox.find('.inside');
        metaBoxContentObj.html('');
        
+       obj.append('<img src="images/wpspin_light.gif" class="dfiLoading">').hide().fadeIn(200);
        $.ajax({
           type: 'POST',  
           url: 'admin-ajax.php',  
           data: { action: 'dfiMetaBox_callback', id: id },  
           success: function(response){
             metaBoxContentObj.append(response);
-            newMetaBox.appendTo(obj.closest('.featured-meta-box').parent())
+            newMetaBox.appendTo( obj.closest('.featured-meta-box').parent() );
+            
+            obj.parent().find('.dfiLoading').fadeOut(300, function(){ $(this).remove(); });
           }
        });
        
@@ -50,6 +53,9 @@ jQuery(document).ready(function($){
 		return false;
 	});
 	 
+	/*
+	 * Allow access to media uploader
+	 */
 	window.send_to_editor = function(html){
 		var fullSize = $('img', html).parent().attr('href');		
 		var imgurl = $('img', html).attr('src');

@@ -74,5 +74,4 @@ array
 You can always contact me at `ankitpokhrel@gmail.com`, if you have any question or queries about the project. 
 I am available for freelance work too.
 
-Please feel free to report any bug found.
-
+Please feel free to report any bug found. Pull requests, issues, and plugin recommendations are more than welcome!

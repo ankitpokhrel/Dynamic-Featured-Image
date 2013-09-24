@@ -6,7 +6,7 @@
     float: right;
 }
 
-.dfiClearFloat{
+.dfiClearFloat {
     clear: both;
 }
 
@@ -19,6 +19,12 @@ img.dfiImg {
 	max-width: 258px;	
 }
 
-img.dfiImgEmpty{
+img.dfiImgEmpty {
 	display: none;
+}
+
+.dfiLoading {
+    position: relative;
+    top: 3px;
+    left: 5px;
 }

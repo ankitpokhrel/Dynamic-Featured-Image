@@ -86,4 +86,5 @@ jQuery(document).ready(function($){
 	$(document).on('click', '.dfiDynamicBox', function(){
 	    $(this).parent().toggleClass('closed');
 	});
+	
 });

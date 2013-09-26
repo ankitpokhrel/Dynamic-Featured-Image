@@ -201,3 +201,72 @@
    
     return  ( !empty($retImages) ) ? $retImages : null;
  }
+ 
+ /*
+  * Add required styles and scripts for front end theme
+  */
+  
+ add_action('wp_head', 'dfi_theme_functions');
+ function dfi_theme_functions(){
+    wp_enqueue_style('style-dfi-theme', plugins_url('/css/style-dfi-theme.css', __FILE__));
+    wp_enqueue_style('style-dfi-fancybox', plugins_url('/plugins/fancybox/source/jquery.fancybox.css', __FILE__));
+     
+    //register scripts
+    wp_register_script('dfi-mousewheel', plugins_url('/plugins/fancybox/lib/jquery.mousewheel-3.0.6.pack.js', __FILE__), array('jquery','media-upload','thickbox'));   
+    wp_register_script('dfi-fancybox', plugins_url('/plugins/fancybox/source/jquery.fancybox.js', __FILE__), array('jquery','media-upload','thickbox'));   
+    wp_register_script('dfi-theme-scripts', plugins_url('/js/dfi-theme-scripts.js', __FILE__), array('jquery','media-upload','thickbox'));   
+   
+    //enqueue scripts    
+    wp_enqueue_script('dfi-mousewheel');
+    wp_enqueue_script('dfi-fancybox');     
+    wp_enqueue_script('dfi-theme-scripts');     
+ }
+ 
+ /*
+  * Display all featured images
+  * 
+  * @return none
+  */
+
+  function dfiDisplayFeaturedImages($postId = null, $width = 150, $height = 150){            
+      
+      if( is_null($postId) ){
+        global $post;
+        $postId = $post->ID;    
+      }
+      
+      $dfiImages = dfiGetFeaturedImages($postId);
+      
+      if( !is_null($dfiImages) ){
+          
+        $links = array();
+      
+        foreach($dfiImages as $images){         
+            $thumb = $images['thumb'];
+            $fullImage = $images['full'];
+            
+            $links[] = "<a href='{$fullImage}' class='dfiImageLink dfiFancybox' rel='group-{$postId}'><img src='{$thumb}' alt='' height='{$height}' width='{$width}' /></a>";           
+        }      
+      
+        echo "<div class='dfiImages'>";
+        foreach($links as $link){
+          echo $link;
+        }     
+        echo "<div style='clear:both'></div>";
+        echo "</div>";
+     }
+ } 
+  
+ /*
+  * Add shortcode support
+  */
+  
+ add_shortcode('dfiFeaturedImages', 'dfiDisplayImageShortcode');
+ function dfiDisplayImageShortcode( $atts ){
+    extract(shortcode_atts(array(
+          'width' => 150,
+          'height'=> 150
+    ), $atts));
+      
+    dfiDisplayFeaturedImages(null, $width, $height);
+ }

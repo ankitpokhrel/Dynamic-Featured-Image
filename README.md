@@ -68,10 +68,18 @@ array
   2 => ...
 ```
 
+### Author available for hire
+
+I'm available for freelance work. Remote worldwide or locally around Nepal. Drop me a line if you like.
+
+### Donate with [PayPal](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=J9FVY3ESPPD58)
+
+If you think this script is useful and saves you a lot of work, a lot of costs (PHP developers are expensive) and let you sleep much better, then donating a small amount would be very cool.
+
+[![Paypal](http://ankitpokhrel.com.np/img/paypal.png)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=J9FVY3ESPPD58)
 
 ### Help
 
 You can always contact me at `ankitpokhrel@gmail.com`, if you have any question or queries about the project. 
-I am available for freelance work too.
 
 Please feel free to report any bug found. Pull requests, issues, and plugin recommendations are more than welcome!

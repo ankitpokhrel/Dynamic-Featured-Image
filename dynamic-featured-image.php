@@ -166,8 +166,8 @@
     }
      
     //Check permission before saving data
- 	global $post;        
-    if( current_user_can('edit_post', $pos->ID) ) {
+    global $post;
+    if( current_user_can('edit_post', $post->ID) ) {
 	   update_post_meta($post->ID, 'dfiFeatured', $_POST['dfiFeatured']);
     }
  }

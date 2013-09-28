@@ -43,8 +43,9 @@
     wp_register_script('dfi-scripts', plugins_url('/js/script-dfi.js', __FILE__), array('jquery','media-upload','thickbox'));   
    
     //enqueue scripts    
-	wp_enqueue_script('media-upload');
-	wp_enqueue_script('thickbox');	
+	wp_enqueue_script('thickbox');   
+    wp_enqueue_script('media-models');
+	wp_enqueue_script('media-upload');		
 	wp_enqueue_script('dfi-scripts');
 	wp_enqueue_script( 'script-dfi.js');	
  }

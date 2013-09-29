@@ -78,7 +78,7 @@ If you think this script is useful and saves you a lot of work, a lot of costs (
 
 [![Paypal](http://ankitpokhrel.com.np/img/paypal.png)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=J9FVY3ESPPD58)
 
-### Help
+### Questions about this project?
 
 You can always contact me at `ankitpokhrel@gmail.com`, if you have any question or queries about the project. 
 

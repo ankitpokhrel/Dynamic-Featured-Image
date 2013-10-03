@@ -3,7 +3,7 @@
  * Plugin Name: Dynamic Featured Image
  * Plugin URI: http://wordpress.org/plugins/dynamic-featured-image/
  * Description: Add multiple featured image dynamically in your wordpress posts.
- * Version: 1.1.0
+ * Version: 1.1.2
  * Author: Ankit Pokhrel
  * Author URI: http://ankitpokhrel.com.np
  */
@@ -25,7 +25,7 @@
    along with this program.  If not, see <http://www.gnu.org/licenses/>.
   */
  
- define('DYNAMIC_FEATURED_IMAGE_VERSION', '1.1.0');
+ define('DYNAMIC_FEATURED_IMAGE_VERSION', '1.1.2');
 
  //prevent direct access
  if ( !function_exists( 'add_action' ) ) {
@@ -220,7 +220,11 @@
     //enqueue scripts    
     wp_enqueue_script('dfi-mousewheel');
     wp_enqueue_script('dfi-fancybox');     
-    wp_enqueue_script('dfi-theme-scripts');     
+    
+    //$params = get_option('dfi-settings-fancyboxSettings');
+    $params = array('width' => 200, 'height' => 200);
+    wp_localize_script( 'dfi-theme-scripts', 'dfiThemeSettings', $params );
+    wp_enqueue_script('dfi-theme-scripts');    
  }
  
  /*
@@ -246,7 +250,7 @@
             $thumb = $images['thumb'];
             $fullImage = $images['full'];
             
-            $links[] = "<a href='{$fullImage}' class='dfiImageLink dfiFancybox' rel='group-{$postId}'><img src='{$thumb}' alt='' height='{$height}' width='{$width}' /></a>";           
+            $links[] = "<a href='{$fullImage}' class='dfiImageLink dfiFancybox' rel='group-{$postId}' data-fancybox-width='200' data-fancybox-height='200'><img src='{$thumb}' alt='' height='{$height}' width='{$width}' /></a>";           
         }      
       
         echo "<div class='dfiImages'>";
@@ -271,3 +275,33 @@
       
     dfiDisplayFeaturedImages(null, $width, $height);
  }
+
+ /*
+  * Add an option page
+  */
+
+  add_action('admin_menu', 'dfiSettings');
+  function dfiSettings(){
+      add_options_page('DFI Settings', 'DFI Settings', 'manage_options', 'dfi-settings', 'dfiSettingsPage');
+  } 
+  
+  add_action('admin_init', 'dfiSettingsInit');
+  function dfiSettingsInit(){
+      register_setting('dfi-settings-options', 'dfi-settings-fancyboxSettings');
+  }
+  
+  function dfiSettingsPage(){
+?>
+ <div class="wrap dfiSettingsWrap">
+     <?php screen_icon(); ?>
+     <h2>Dynamic Featured Image Settings</h2>
+     <form action='options.php' method="post">
+      <?php settings_fields('dfi-settings-options') ?>
+      <h4>Fancybox Settings</h4>     
+      <textarea name="dfi-settings-fancyboxSettings" id="dfi-settings-fancyboxSettings" placeholder='Add your fancybox settings here'><?php echo esc_attr( get_option('dfi-settings-fancyboxSettings') ) ?></textarea><br/><br/>
+      <input type="submit" name="submit" value="<?php esc_attr_e('Save changes') ?>" class="button-primary" />
+     </form>   
+ </div>
+<?php
+      
+  }

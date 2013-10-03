@@ -28,3 +28,9 @@ img.dfiImgEmpty {
     top: 3px;
     left: 5px;
 }
+
+/* Settings area */
+.dfiSettingsWrap textarea{
+    width: 300px;
+    height: 150px;
+}

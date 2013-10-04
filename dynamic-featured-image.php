@@ -209,22 +209,45 @@
   
  add_action('wp_head', 'dfi_theme_functions');
  function dfi_theme_functions(){
-    wp_enqueue_style('style-dfi-theme', plugins_url('/css/style-dfi-theme.css', __FILE__));
+    wp_enqueue_style('style-dfi-theme', plugins_url('/css/style-dfi-theme.css', __FILE__));   
     wp_enqueue_style('style-dfi-fancybox', plugins_url('/plugins/fancybox/source/jquery.fancybox.css', __FILE__));
+    wp_enqueue_style('style-dfi-fancybox', plugins_url('/plugins/fancybox/source/helpers/jquery.fancybox-buttons.css', __FILE__));
+    wp_enqueue_style('style-dfi-fancybox', plugins_url('/plugins/fancybox/source/helpers/jquery.fancybox-thumbs.css', __FILE__));
      
     //register scripts
-    wp_register_script('dfi-mousewheel', plugins_url('/plugins/fancybox/lib/jquery.mousewheel-3.0.6.pack.js', __FILE__), array('jquery','media-upload','thickbox'));   
-    wp_register_script('dfi-fancybox', plugins_url('/plugins/fancybox/source/jquery.fancybox.js', __FILE__), array('jquery','media-upload','thickbox'));   
-    wp_register_script('dfi-theme-scripts', plugins_url('/js/dfi-theme-scripts.js', __FILE__), array('jquery','media-upload','thickbox'));   
+    wp_register_script('dfi-mousewheel', plugins_url('/plugins/fancybox/lib/jquery.mousewheel-3.0.6.pack.js', __FILE__));   
+    wp_register_script('dfi-fancybox', plugins_url('/plugins/fancybox/source/jquery.fancybox.js', __FILE__));   
+    wp_register_script('dfi-fancybox-buttons', plugins_url('/plugins/fancybox/source/helpers/jquery.fancybox-buttons.js', __FILE__));   
+    wp_register_script('dfi-fancybox-thumbs', plugins_url('/plugins/fancybox/source/helpers/jquery.fancybox-thumbs.js', __FILE__));   
+    wp_register_script('dfi-fancybox-media', plugins_url('/plugins/fancybox/source/helpers/jquery.fancybox-media.js', __FILE__));   
+    wp_register_script('dfi-theme-scripts', plugins_url('/js/dfi-theme-scripts.js', __FILE__));   
    
     //enqueue scripts    
     wp_enqueue_script('dfi-mousewheel');
     wp_enqueue_script('dfi-fancybox');     
+    wp_enqueue_script('dfi-fancybox-buttons');     
+    wp_enqueue_script('dfi-fancybox-thumbs');     
+    wp_enqueue_script('dfi-fancybox-media');     
     
-    //$params = get_option('dfi-settings-fancyboxSettings');
-    $params = array('width' => 200, 'height' => 200);
-    wp_localize_script( 'dfi-theme-scripts', 'dfiThemeSettings', $params );
+    $params = get_option('dfi-settings-fancyboxSettings');
+    $data = dfiFilterSettings($params); 
+     
+    wp_localize_script( 'dfi-theme-scripts', 'dfiThemeSettings', $data );
     wp_enqueue_script('dfi-theme-scripts');    
+ }
+ 
+ /*
+  * Filter and convert fancybox settings input of user to array
+  */
+ function dfiFilterSettings($data){
+     $data = preg_replace('/\'/' , '"' , $data);
+    
+     $data = '{'  . $data . '}' ;
+     echo "<pre>";
+     print_r($data);
+     echo "</pre>";
+    
+     return json_decode($data, true);     
  }
  
  /*
@@ -250,7 +273,7 @@
             $thumb = $images['thumb'];
             $fullImage = $images['full'];
             
-            $links[] = "<a href='{$fullImage}' class='dfiImageLink dfiFancybox' rel='group-{$postId}' data-fancybox-width='200' data-fancybox-height='200'><img src='{$thumb}' alt='' height='{$height}' width='{$width}' /></a>";           
+            $links[] = "<a href='{$fullImage}' class='dfiImageLink dfiFancybox' rel='group-{$postId}' data-fancybox-width='200' data-fancybox-height='200' title='check title'><img src='{$thumb}' alt='' height='{$height}' width='{$width}' /></a>";           
         }      
       
         echo "<div class='dfiImages'>";

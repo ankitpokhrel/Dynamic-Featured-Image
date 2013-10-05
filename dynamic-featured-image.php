@@ -211,8 +211,8 @@
  function dfi_theme_functions(){
     wp_enqueue_style('style-dfi-theme', plugins_url('/css/style-dfi-theme.css', __FILE__));   
     wp_enqueue_style('style-dfi-fancybox', plugins_url('/plugins/fancybox/source/jquery.fancybox.css', __FILE__));
-    wp_enqueue_style('style-dfi-fancybox', plugins_url('/plugins/fancybox/source/helpers/jquery.fancybox-buttons.css', __FILE__));
-    wp_enqueue_style('style-dfi-fancybox', plugins_url('/plugins/fancybox/source/helpers/jquery.fancybox-thumbs.css', __FILE__));
+    wp_enqueue_style('style-dfi-fancybox-buttons', plugins_url('/plugins/fancybox/source/helpers/jquery.fancybox-buttons.css', __FILE__));
+    wp_enqueue_style('style-dfi-fancybox-thumbs', plugins_url('/plugins/fancybox/source/helpers/jquery.fancybox-thumbs.css', __FILE__));
      
     //register scripts
     wp_register_script('dfi-mousewheel', plugins_url('/plugins/fancybox/lib/jquery.mousewheel-3.0.6.pack.js', __FILE__));   
@@ -231,7 +231,7 @@
     
     $params = get_option('dfi-settings-fancyboxSettings');
     $data = dfiFilterSettings($params); 
-     
+
     wp_localize_script( 'dfi-theme-scripts', 'dfiThemeSettings', $data );
     wp_enqueue_script('dfi-theme-scripts');    
  }
@@ -325,6 +325,5 @@
       <input type="submit" name="submit" value="<?php esc_attr_e('Save changes') ?>" class="button-primary" />
      </form>   
  </div>
-<?php
-      
+<?php    
   }

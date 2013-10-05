@@ -1,6 +1,23 @@
+/*
+ * Styles for dynamic featured image plugin user theme area
+ * 
+ * Copyright (c) 2013, Ankit Pokhrel <ankitpokhrel@gmail.com, http://ankitpokhrel.com.np>
+ */
 .dfiImages .dfiImageLink img{
     padding: 4px;
     border: 1px solid #ccc;
     margin: 10px 5px;
     float: left;
+}
+
+.fancybox-overlay {
+    z-index: 9999 !important;
+}
+
+#fancybox-thumbs{
+    z-index: 10000 !important;
+}
+
+#fancybox-buttons{
+    z-index:  10001 !important;
 }

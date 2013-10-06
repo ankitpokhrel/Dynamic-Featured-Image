@@ -211,42 +211,51 @@
  function dfi_theme_functions(){
     wp_enqueue_style('style-dfi-theme', plugins_url('/css/style-dfi-theme.css', __FILE__));   
     wp_enqueue_style('style-dfi-fancybox', plugins_url('/plugins/fancybox/source/jquery.fancybox.css', __FILE__));
-    wp_enqueue_style('style-dfi-fancybox-buttons', plugins_url('/plugins/fancybox/source/helpers/jquery.fancybox-buttons.css', __FILE__));
-    wp_enqueue_style('style-dfi-fancybox-thumbs', plugins_url('/plugins/fancybox/source/helpers/jquery.fancybox-thumbs.css', __FILE__));
+    
+    
      
     //register scripts
     wp_register_script('dfi-mousewheel', plugins_url('/plugins/fancybox/lib/jquery.mousewheel-3.0.6.pack.js', __FILE__));   
-    wp_register_script('dfi-fancybox', plugins_url('/plugins/fancybox/source/jquery.fancybox.js', __FILE__));   
-    wp_register_script('dfi-fancybox-buttons', plugins_url('/plugins/fancybox/source/helpers/jquery.fancybox-buttons.js', __FILE__));   
-    wp_register_script('dfi-fancybox-thumbs', plugins_url('/plugins/fancybox/source/helpers/jquery.fancybox-thumbs.js', __FILE__));   
+    wp_register_script('dfi-fancybox', plugins_url('/plugins/fancybox/source/jquery.fancybox.js', __FILE__));              
     wp_register_script('dfi-fancybox-media', plugins_url('/plugins/fancybox/source/helpers/jquery.fancybox-media.js', __FILE__));   
     wp_register_script('dfi-theme-scripts', plugins_url('/js/dfi-theme-scripts.js', __FILE__));   
    
     //enqueue scripts    
     wp_enqueue_script('dfi-mousewheel');
-    wp_enqueue_script('dfi-fancybox');     
-    wp_enqueue_script('dfi-fancybox-buttons');     
-    wp_enqueue_script('dfi-fancybox-thumbs');     
+    wp_enqueue_script('dfi-fancybox');                 
     wp_enqueue_script('dfi-fancybox-media');     
     
     $params = get_option('dfi-settings-fancyboxSettings');
     $data = dfiFilterSettings($params); 
-
+    
+    //if helpers are used, load required styles and scripts
+    if( isset($data['helpers']['buttons']) ){ //button helper
+        wp_enqueue_style('style-dfi-fancybox-buttons', plugins_url('/plugins/fancybox/source/helpers/jquery.fancybox-buttons.css', __FILE__));
+        wp_register_script('dfi-fancybox-buttons', plugins_url('/plugins/fancybox/source/helpers/jquery.fancybox-buttons.js', __FILE__));   
+        wp_enqueue_script('dfi-fancybox-buttons');
+    } else if( isset($data['helpers']['thumbs']) ){ //thumbs helper
+        wp_enqueue_style('style-dfi-fancybox-thumbs', plugins_url('/plugins/fancybox/source/helpers/jquery.fancybox-thumbs.css', __FILE__));
+        wp_register_script('dfi-fancybox-thumbs', plugins_url('/plugins/fancybox/source/helpers/jquery.fancybox-thumbs.js', __FILE__));
+        wp_enqueue_script('dfi-fancybox-thumbs');
+    }
+    
     wp_localize_script( 'dfi-theme-scripts', 'dfiThemeSettings', $data );
     wp_enqueue_script('dfi-theme-scripts');    
  }
  
  /*
   * Filter and convert fancybox settings input of user to array
+  * 
+  * @return JSON
   */
  function dfiFilterSettings($data){
+     //Convert single quote to double if any
      $data = preg_replace('/\'/' , '"' , $data);
     
+     //Wrap with curly braces to make it a valid JSON
      $data = '{'  . $data . '}' ;
-     echo "<pre>";
-     print_r($data);
-     echo "</pre>";
-    
+     
+     //Return a JSON object
      return json_decode($data, true);     
  }
  
@@ -256,8 +265,8 @@
   * @return none
   */
 
-  function dfiDisplayFeaturedImages($postId = null, $width = 150, $height = 150){            
-      
+  function dfiDisplayFeaturedImages($postId = null, $width = 150, $height = 150){
+                        
       if( is_null($postId) ){
         global $post;
         $postId = $post->ID;    
@@ -273,7 +282,7 @@
             $thumb = $images['thumb'];
             $fullImage = $images['full'];
             
-            $links[] = "<a href='{$fullImage}' class='dfiImageLink dfiFancybox' rel='group-{$postId}' data-fancybox-width='200' data-fancybox-height='200' title='check title'><img src='{$thumb}' alt='' height='{$height}' width='{$width}' /></a>";           
+            $links[] = "<a href='{$fullImage}' class='dfiImageLink dfiFancybox' rel='group-{$postId}' data-fancybox-width='200' data-fancybox-height='200'><img src='{$thumb}' alt='' height='{$height}' width='{$width}' /></a>";           
         }      
       
         echo "<div class='dfiImages'>";
@@ -308,10 +317,18 @@
       add_options_page('DFI Settings', 'DFI Settings', 'manage_options', 'dfi-settings', 'dfiSettingsPage');
   } 
   
+  /*
+   * Register the settings
+   */
+   
   add_action('admin_init', 'dfiSettingsInit');
   function dfiSettingsInit(){
       register_setting('dfi-settings-options', 'dfi-settings-fancyboxSettings');
   }
+
+ /*
+  * Generate settings page
+  */  
   
   function dfiSettingsPage(){
 ?>
@@ -321,9 +338,17 @@
      <form action='options.php' method="post">
       <?php settings_fields('dfi-settings-options') ?>
       <h4>Fancybox Settings</h4>     
-      <textarea name="dfi-settings-fancyboxSettings" id="dfi-settings-fancyboxSettings" placeholder='Add your fancybox settings here'><?php echo esc_attr( get_option('dfi-settings-fancyboxSettings') ) ?></textarea><br/><br/>
+      <textarea name="dfi-settings-fancyboxSettings" id="dfi-settings-fancyboxSettings" placeholder='Add your fancybox settings here'><?php echo esc_attr( get_option('dfi-settings-fancyboxSettings') ) ?></textarea><br/>
+      <span class="dfiInfo"><?php esc_attr_e('This is a advance settings. Implementation details can be found') ?> <a href="https://github.com/ankitpokhrel/Dynamic-Featured-Image" target="_blank"><?php esc_attr_e('here') ?></a>.
+          <?php esc_attr_e('The easy version of the settings will be added in the next release. Drop me a line if you are confused with the settings.') ?></span><br/>
       <input type="submit" name="submit" value="<?php esc_attr_e('Save changes') ?>" class="button-primary" />
      </form>   
+ </div>
+ <div class="dfiSideBox">
+    <div class="dfiDonate">
+     If you think this script is useful and saves you a lot of work, a lot of costs (PHP developers are expensive) and let you sleep much better, then donating a small amount would be very cool.<br/>
+     <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=J9FVY3ESPPD58" target="_blank"><img src="http://ankitpokhrel.com.np/img/paypal.png" /></a>
+    </div>
  </div>
 <?php    
   }

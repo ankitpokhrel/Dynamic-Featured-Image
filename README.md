@@ -111,12 +111,17 @@ You can get the settings for fancybox from [fancybox docs](http://fancyapps.com/
 
 * Go to `Settings > DFI Settings`
 * Write your settings in a textbox as shown in the image and click `Save changes`
-![DFI Settings](http://ankitpokhrel.com.np/dfi/snapshot_4.jpg)
+![DFI Settings](http://ankitpokhrel.com.np/dfi/snapshot_settings.jpg)
 
 #### Required Format for Fancybox Settings
-The fancybox settings should be in a valid `JSON` format but without the opening curly braces. Some examples of the valid settings are:
+The fancybox settings should be in a valid `JSON` format but without the opening curly braces.
 
-* Basic Settings
+> These settings are fancybox specific and primarily focused to developers.
+>The fancybox version used in this project is 2.1.4. 
+> Drop me a line at `ankitpokhrel@gmail.com` if you are confused with the settings. 
+> The friendly version of the settings will be included in the future release.
+
+* Example #1 - Basic Settings
 ```
 "maxWidth": 800,
 "maxHeight": 600,
@@ -129,7 +134,7 @@ The fancybox settings should be in a valid `JSON` format but without the opening
 "closeEffect": "none"
 ```
 
-* Using Thumbnail Helper
+* Example #2 - Using Thumbnail Helper
 ```
 "openEffect": "elastic",
 "openSpeed": 150,
@@ -144,7 +149,7 @@ The fancybox settings should be in a valid `JSON` format but without the opening
  }
 ```
 
-* Using Button Helper
+* Example #3 - Using Button Helper
 ```
 "prevEffect": "none",
 "nextEffect": "none",
@@ -154,11 +159,8 @@ The fancybox settings should be in a valid `JSON` format but without the opening
 }
 ```
 
-> These settings are fancybox specific. The fancybox version used in this project is 2.1.4. 
-> Drop me a line at `ankitpokhrel@gmail.com` if you are confused with the settings. 
-> The easy version of the settings will be included in the next release.
-
 ===================================================================================================
+
 ### Author available for hire
 
 I'm available for freelance work. Remote worldwide or locally around Nepal. Drop me a line if you like.

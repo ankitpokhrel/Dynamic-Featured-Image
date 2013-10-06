@@ -83,7 +83,7 @@ height: height of the thumbnail displayed (default: 150)
 [dfiFeaturedImages width="300" height="300"]
 ```
 
-### Getting images with fancybox support in a theme
+### Retrieving Images with Fancybox Support in a Theme
 
 Function syntax
 
@@ -107,17 +107,59 @@ if( function_exists('dfiDisplayFeaturedImages') ){
 }
 ```
 
-### Applying fancybox settings
+### Applying Fancybox Settings
 The fancybox settings can be applied by directly pasting the settings code in the "Fancybox Settings" textbox but the settings needs to be in a special format (JSON).
+You can get the settings for fancybox from [fancybox docs](http://fancyapps.com/fancybox/).
 
 * Go to `Settings > DFI Settings`
-* Paste your settings in a textbox and click `Save changes`
-![Snapshot 4](http://ankitpokhrel.com.np/dfi/snapshot_4.jpg)
+* Write your settings in a textbox as shown in the image and click `Save changes`
+![DFI Settings](http://ankitpokhrel.com.np/dfi/snapshot_4.jpg)
+
+#### Required Format for Fancybox Settings
+The fancybox settings should be in a valid `JSON` format but without the opening curly braces. Some examples of the valid settings are:
+
+* Basic Settings
+```
+"maxWidth": 800,
+"maxHeight": 600,
+"fitToView": false,
+"width": "70%",
+"height": "70%",
+"autoSize": false,
+"closeClick": false,
+"openEffect": "none",
+"closeEffect": "none"
+```
+
+* Using Thumbnail Helper
+```
+"openEffect": "elastic",
+"openSpeed": 150,
+"closeEffect": "elastic",
+"closeSpeed": 150,
+"closeClick": true,
+"helpers": {      
+        "thumbs": {
+            "width": 50,
+            "height": 50
+         }
+ }
+```
+
+* Using Button Helper
+```
+"prevEffect": "none",
+"nextEffect": "none",
+"closeBtn": false,
+"helpers": {       
+      "buttons": {}
+}
+```
 
 ### Author available for hire
 
 I'm available for freelance work. Remote worldwide or locally around Nepal. Drop me a line if you like.
-
+ 
 ### Donate with [PayPal](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=J9FVY3ESPPD58)
 
 If you think this script is useful and saves you a lot of work, a lot of costs (PHP developers are expensive) and let you sleep much better, then donating a small amount would be very cool.

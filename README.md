@@ -68,6 +68,52 @@ array
   2 => ...
 ```
 
+## ShortCode and FancyBox integration ( ver. 1.2+ )
+
+### Using shortcode
+The `shortcode` to get all the image with embeded fancybox support is:
+```
+[dfiFeaturedImages]
+
+//Options
+width: width of the thumbnail displayed (default: 150)
+height: height of the thumbnail displayed (default: 150)
+
+//Example
+[dfiFeaturedImages width="300" height="300"]
+```
+
+### Getting images with fancybox support in a theme
+
+Function syntax
+
+```
+dfiDisplayFeaturedImages($postId = null, $width = 150, $height = 150)
+```
+
+Example
+
+```
+if( function_exists('dfiDisplayFeaturedImages') ){
+    dfiDisplayFeaturedImages();
+}
+```
+
+or you can also call the shortcode directly
+
+```
+if( function_exists('dfiDisplayFeaturedImages') ){
+   echo do_shortcode('[dfiFeaturedImages]');
+}
+```
+
+### Applying fancybox settings
+The fancybox settings can be applied by directly pasting the settings code in the "Fancybox Settings" textbox but the settings needs to be in a special format (JSON).
+
+* Go to `Settings > DFI Settings`
+* Paste your settings in a textbox and click `Save changes`
+![Snapshot 4](http://ankitpokhrel.com.np/dfi/snapshot_4.jpg)
+
 ### Author available for hire
 
 I'm available for freelance work. Remote worldwide or locally around Nepal. Drop me a line if you like.

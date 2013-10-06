@@ -9,8 +9,6 @@ _Dynamically adds multiple featured image (post thumbnail) functionality to post
   2. Activate the plugin through the `Plugins` menu in WordPress.
   3. If you don't see new featured image box, click `Screen Options` in the upper right corner of your wordpress admin and make sure that the `Featured Image 2` box is slected.
 
-
-
 ### How it works?
 
 1. After successfull plugin activation go to `add` or `edit` page of posts or pages and you will notice a box for second featured image.
@@ -68,7 +66,7 @@ array
   2 => ...
 ```
 
-## ShortCode and FancyBox integration ( ver. 1.2+ )
+## ShortCode and FancyBox Integration ( ver. 1.2+ )
 
 ### Using shortcode
 The `shortcode` to get all the image with embeded fancybox support is:
@@ -156,6 +154,11 @@ The fancybox settings should be in a valid `JSON` format but without the opening
 }
 ```
 
+> These settings are fancybox specific. The fancybox version used in this project is 2.1.4. 
+> Drop me a line at `ankitpokhrel@gmail.com` if you are confused with the settings. 
+> The easy version of the settings will be included in the next release.
+
+===================================================================================================
 ### Author available for hire
 
 I'm available for freelance work. Remote worldwide or locally around Nepal. Drop me a line if you like.

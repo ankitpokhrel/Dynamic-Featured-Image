@@ -161,6 +161,13 @@ The fancybox settings should be in a valid `JSON` format but without the opening
 
 ===================================================================================================
 
+### TODO List
+
+1. Title and Description for each featured image.
+2. Improved Settings Page.
+3. UI Change if Featured Image is More than Certain Number.
+4. and many more...
+
 ### Author available for hire
 
 I'm available for freelance work. Remote worldwide or locally around Nepal. Drop me a line if you like.

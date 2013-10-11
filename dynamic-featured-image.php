@@ -166,8 +166,8 @@
         return;
     }
      
-    //Check permission before saving data   
-    if( current_user_can('edit_posts', $post_id) ) {
+    //Check permission before saving data       
+    if( !empty($_POST) && current_user_can('edit_posts', $post_id) ) {
        update_post_meta($post_id, 'dfiFeatured', $_POST['dfiFeatured']);
     }
  }

@@ -57,7 +57,7 @@ jQuery(document).ready(function($){
 		restore_send_to_editor = window.send_to_editor;
 		if( null != current){
 		    media_uploader();
-		    tb_show('', 'media-upload.php?post_id=' + post_id + 'type=image&amp;TB_iframe=true');
+		    tb_show('', 'media-upload.php?post_id=' + post_id + '&amp;type=image&amp;TB_iframe=true');
 		}
 		return false;
 	});

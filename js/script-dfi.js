@@ -26,9 +26,12 @@ jQuery(document).ready(function($){
           type: 'POST',  
           url: 'admin-ajax.php',  
           data: { action: 'dfiMetaBox_callback', id: id },  
-          success: function(response){
+          success: function(response){            
             metaBoxContentObj.append(response);
             newMetaBox.appendTo( obj.closest('.featured-meta-box').parent() );
+            
+            //Add post id
+            newMetaBox.find('.dfiFeaturedImage').attr('data-post-id', obj.parent().parent().find('.dfiFeaturedImage').attr('data-post-id') );
             
             obj.parent().find('.dfiLoading').fadeOut(300, function(){ $(this).remove(); });
           }
@@ -52,7 +55,7 @@ jQuery(document).ready(function($){
 	$(document).on('click', '.dfiFeaturedImage', function() {		
 		current = $(this);
 		
-		var post_id = $('.dfiFeaturedImage:first').attr('data-post-id');
+		var post_id = current.attr('data-post-id');
 		
 		restore_send_to_editor = window.send_to_editor;
 		if( null != current){

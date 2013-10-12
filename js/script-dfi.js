@@ -51,10 +51,13 @@ jQuery(document).ready(function($){
 	var restore_send_to_editor = "";
 	$(document).on('click', '.dfiFeaturedImage', function() {		
 		current = $(this);
+		
+		var post_id = $('.dfiFeaturedImage:first').attr('data-post-id');
+		
 		restore_send_to_editor = window.send_to_editor;
 		if( null != current){
 		    media_uploader();
-		    tb_show('', 'media-upload.php?type=image&amp;TB_iframe=true');
+		    tb_show('', 'media-upload.php?post_id=' + post_id + 'type=image&amp;TB_iframe=true');
 		}
 		return false;
 	});

@@ -99,7 +99,7 @@
     //Add a nonce field   
     wp_nonce_field( plugin_basename(__FILE__), 'dfi_fimageplug-' . $featuredId);    
  ?>   
-   <a href="javascript:void(0)" class='dfiFeaturedImage'><?php _e('Set featured image', 'ap_dfi_dynamic-featured-image') ?></a><br/>       
+   <a href="javascript:void(0)" class='dfiFeaturedImage' data-post-id="<?php the_ID() ?>"><?php _e('Set featured image', 'ap_dfi_dynamic-featured-image') ?></a><br/>       
    <img src="<?php if( isset($featuredImgTrimmed) && !empty($featuredImgTrimmed) ) echo site_url() . $featuredImgTrimmed ?>" class='dfiImg <?php if( !isset($featuredImgTrimmed) || is_null($featuredImgTrimmed) ) echo 'dfiImgEmpty' ?>'/>
    <div class='dfiLinks'>   
     <a href="javascript:void(0)" data-id='<?php echo $featuredId ?>' class='dfiAddNew'><?php _e('Add New', 'ap_dfi_dynamic-featured-image') ?></a>

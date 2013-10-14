@@ -190,10 +190,12 @@
     $retImages = array();
     if( !empty($dfiImages) && is_array($dfiImages) ) {
       $count = 0;
-      foreach($dfiImages as $dfiImage){
-        list($dfiImageTrimmed, $dfiImageFull) = explode(',', $dfiImage);
+      foreach($dfiImages as $dfiImage){      
+        list($dfiImageTrimmed, $dfiImageFull, $dfiImageName, $dfiImageExt) = explode(',', $dfiImage);
         $retImages[$count]['thumb'] = site_url() . $dfiImageTrimmed;
         $retImages[$count]['full'] = site_url() . $dfiImageFull;
+        $retImages[$count]['name'] = $dfiImageName;
+        $retImages[$count]['ext'] = $dfiImageExt;
         
         $count++;
       }
@@ -202,6 +204,24 @@
     return  ( !empty($retImages) ) ? $retImages : null;
  }
  
+ /* ===============================================================================================
+  * 
+  * Shortcode and Fancybox integration (Ver. 1.2+)
+  * 
+  * =============================================================================================== */
+  
+  /*
+   * Add custom image thumbnail site
+   */
+   if(function_exists('add_theme_support'))
+    add_theme_support('post-thumbnails'); //automatically add default wordpress featured image support
+    
+    // Set the thumbnail size
+    add_image_size('dfi_admin_thumb', 260, 160, true );
+    // add_image_size('custom_website_thumb', 450, 200, true );
+    // add_image_size('custom_print_ad_thumb', 200, 400, true );
+      
+     
  /*
   * Add required styles and scripts for front end theme
   */
@@ -259,12 +279,53 @@
  }
  
  /*
+  * Get image thumbnail url of specific size
+  * 
+  * @return String
+  */
+ function dfi_get_image_thumb( $image_url, $size ) {
+    global $wpdb;
+    $prefix = $wpdb->prefix;
+    $attachment = $wpdb->get_col( $wpdb->prepare( "SELECT ID FROM " . $prefix . "posts" . " WHERE guid='" . $image_url . "';" ) );
+    $image_thumb = wp_get_attachment_image_src( $attachment[0], $size );
+    
+    return $image_thumb[0];
+ }
+ 
+ /*
+  * Get image title
+  * 
+  * @return String
+  */
+ function dfi_get_image_title( $image_url ) {
+    global $wpdb;
+    $prefix = $wpdb->prefix;
+    $post_title = $wpdb->get_col( $wpdb->prepare( "SELECT post_title FROM " . $prefix . "posts" . " WHERE guid='" . $image_url . "';" ) );
+   
+    return $post_title[0];
+ }
+ 
+ /*
+  * Get image alternate text
+  * 
+  * @return String
+  */
+ function dfi_get_image_alt( $image_url ) {
+    global $wpdb;
+    $prefix = $wpdb->prefix;
+    $attachment = $wpdb->get_col( $wpdb->prepare( "SELECT ID FROM " . $prefix . "posts" . " WHERE guid='" . $image_url . "';" ) );
+   
+    $alt = get_post_meta($attachment[0], '_wp_attachment_image_alt');
+   
+    return empty($alt) ? null : $alt[0];
+ }
+ 
+ /*
   * Display all featured images
   * 
   * @return none
   */
-
-  function dfiDisplayFeaturedImages($postId = null, $width = 150, $height = 150){
+  function dfiDisplayFeaturedImages($postId = null, $size = 'thumbnail', $show = 'full', $width='150', $height='150'){
                         
       if( is_null($postId) ){
         global $post;
@@ -277,12 +338,17 @@
           
         $links = array();
       
-        foreach($dfiImages as $images){         
-            $thumb = $images['thumb'];
+        foreach($dfiImages as $images){
+                                          
             $fullImage = $images['full'];
-            
-            $links[] = "<a href='{$fullImage}' class='dfiImageLink dfiFancybox' rel='group-{$postId}' data-fancybox-width='200' data-fancybox-height='200'><img src='{$thumb}' alt='' height='{$height}' width='{$width}' /></a>";           
-        }      
+            $alt = is_null( dfi_get_image_alt($fullImage) ) ? $images['name'] : dfi_get_image_alt($fullImage);            
+            $title = dfi_get_image_title($fullImage);                        
+            $thumb = ($size == 'selected') ? $images['thumb'] : dfi_get_image_thumb($fullImage, $size);
+            $display = ($show == 'selected') ? $images['thumb'] : $images['full'];
+                        
+            $links[] = "<a href='{$display}' class='dfiImageLink dfiFancybox' rel='group-{$postId}' title='{$title}'><img src='{$thumb}' alt='{$alt}' title='{$title}' height='{$height}' width='{$width}' /></a>";
+                       
+        }
       
         echo "<div class='dfiImages'>";
         foreach($links as $link){
@@ -291,21 +357,29 @@
         echo "<div style='clear:both'></div>";
         echo "</div>";
      }
+      
  } 
   
  /*
   * Add shortcode support
   */
-  
+    
  add_shortcode('dfiFeaturedImages', 'dfiDisplayImageShortcode');
  function dfiDisplayImageShortcode( $atts ){
     extract(shortcode_atts(array(
+          'size' => 'thumbnail',
+          'show' => 'full',
           'width' => 150,
           'height'=> 150
     ), $atts));
       
-    dfiDisplayFeaturedImages(null, $width, $height);
+    dfiDisplayFeaturedImages(null, $size, $show, $width, $height);
  }
+
+ /*
+  * Add shortcode support in widgets
+  */
+ add_filter('widget_text', 'do_shortcode');
 
  /*
   * Add an option page
@@ -337,7 +411,7 @@
      <form action='options.php' method="post">
       <?php settings_fields('dfi-settings-options') ?>
       <h4>Fancybox Settings</h4>     
-      <textarea name="dfi-settings-fancyboxSettings" id="dfi-settings-fancyboxSettings" placeholder='Add your fancybox settings here'><?php echo esc_attr( get_option('dfi-settings-fancyboxSettings') ) ?></textarea><br/>
+      <textarea name="dfi-settings-fancyboxSettings" id="dfi-settings-fancyboxSettings" placeholder='Add your custom fancybox settings here'><?php echo esc_attr( get_option('dfi-settings-fancyboxSettings') ) ?></textarea><br/>
       <span class="dfiInfo"><?php esc_attr_e('This is a advance settings. Implementation details can be found') ?> <a href="https://github.com/ankitpokhrel/Dynamic-Featured-Image" target="_blank"><?php esc_attr_e('here') ?></a>.
           <?php esc_attr_e('The easy version of the settings will be added in the next release. Drop me a line if you are confused with the settings.') ?></span><br/>
       <input type="submit" name="submit" value="<?php esc_attr_e('Save changes') ?>" class="button-primary" />

@@ -70,16 +70,20 @@ jQuery(document).ready(function($){
 	 */
     function media_uploader(){
        	window.send_to_editor = function(html){	    
-	   
+	        
     		var fullSize = $('img', html).parent().attr('href');		
     		var imgurl = $('img', html).attr('src');
     		
     		imgUrlTrimmed = imgurl.split('wp-content');
-    		imgUrlTrimmed = '/wp-content' + imgUrlTrimmed[1];
+    		imgUrlTrimmed = '/wp-content' + imgUrlTrimmed[1];    	
     		
     		fullUrlTrimmed = fullSize.split('wp-content');
     		fullUrlTrimmed = '/wp-content' + fullUrlTrimmed[1];
     		
+    		var fullImageName = fullUrlTrimmed.substring( fullUrlTrimmed.lastIndexOf('/') + 1 );    		
+    		var imageName = fullImageName.substring( 0, fullImageName.lastIndexOf('.') );
+    		var ext = fullImageName.substring( fullImageName.lastIndexOf('.') + 1 );
+    		    		
     		var featuredBox = current.parent();
     		
     		featuredBox.find('.fImg').attr({
@@ -87,7 +91,7 @@ jQuery(document).ready(function($){
     			'data-src': fullSize
     		});
     			
-    		var dfiFeaturedImages = [imgUrlTrimmed, fullUrlTrimmed];
+    		var dfiFeaturedImages = [imgUrlTrimmed, fullUrlTrimmed, imageName, ext];
     			
     		featuredBox.find('img').attr('src', imgurl).fadeIn(200);
     		featuredBox.find('input.dfiImageHolder').val(dfiFeaturedImages);

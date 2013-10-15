@@ -38,8 +38,8 @@ DFI allows you to add different number of featured images to each post and page 
 * To get featured images of specific post
 
 ```
-if( function_exists('dfiGetFeaturedImages') )
-   $featuredImages = dfiGetFeaturedImages($postId);
+if( function_exists('dfi_get_featured_images') )
+   $featuredImages = dfi_get_featured_images($postId);
 ```
 
 * To get featured images in a post loop.
@@ -48,8 +48,10 @@ if( function_exists('dfiGetFeaturedImages') )
 <?php 
    while ( have_posts() ) : the_post();
 
-   if( function_exists('dfiGetFeaturedImages') ) {
-       $featuredImages = dfiGetFeaturedImages();
+   if( function_exists('dfi_get_featured_images') ) {
+       $featuredImages = dfi_get_featured_images();
+       
+       //Now, loop through the image to display
    }
    
    endwhile;
@@ -64,10 +66,16 @@ array
     array
       'thumb' => string 'http://your_site/upload_path/yourSelectedImage.jpg' (length=50)
       'full' => string 'http://your_site/upload_path/yourSelectedImage_fullSize.jpg' (length=69)
+      'attachment_id' => string '56' (length=2)
+      'image_name' => string 'yourSelectedImage' (length=17)
+      'image_ext' => string 'jpg' (length=3)
   1 => 
     array
       'thumb' => string 'http://your_site/upload_path/yourSelectedImage.jpg' (length=50)
       'full' => string 'http://your_site/upload_path/yourSelectedImage_fullSize.jpg' (length=69)
+      'attachment_id' => string '57' (length=2)
+      'image_name' => string 'yourSelectedImage' (length=17)
+      'image_ext' => string 'jpg' (length=3)
   2 => ...
 ```
 

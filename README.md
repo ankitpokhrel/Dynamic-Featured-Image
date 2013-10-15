@@ -71,7 +71,7 @@ array
   2 => ...
 ```
 
-## ShortCode and FancyBox Integration ( ver. 1.2+ - upcoming verison )
+## ShortCode and FancyBox Integration ( ver. 2+ - Future verison - Please ignore this for now)
 
 ### Using shortcode
 The `shortcode` to get all the image with embeded fancybox support is:

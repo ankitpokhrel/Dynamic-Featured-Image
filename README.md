@@ -14,83 +14,25 @@ DFI allows you to add different number of featured images to each post and page 
   2. Activate the plugin through the `Plugins` menu in WordPress.
   3. If you don't see new featured image box, click `Screen Options` in the upper right corner of your wordpress admin and make sure that the `Featured Image 2` box is slected.
 
-### How it works?
-
-1. After successfull plugin activation go to `add` or `edit` page of posts or pages and you will notice a box for second featured image.
-
-   ![Snapshot 1](http://ankitpokhrel.com.np/dfi/snapshot_1.jpg)
-
-2. Click `Set featured image`, select required image from media popup and click `Insert into Post`.
-
-   ![Snapshot 2](http://ankitpokhrel.com.np/dfi/snapshot_2.jpg)
-
-3. Click on `Add New` to add new featured image or use `Remove` link to remove the featured image box.
- 
-   ![Snapshot 3](http://ankitpokhrel.com.np/dfi/snapshot_3.jpg)
-
-4. After adding featured images click `publish` or `update` to save featured images.
-
-###### _Note: The featured images are only saved when you publish or update the post._
+### Documentation
+* [How it works?](/ankitpokhrel/Dynamic-Featured-Image/wiki/How-it-works%3F)
+* [Retrieving images in a theme](/ankitpokhrel/Dynamic-Featured-Image/wiki/Retrieving-images-in-a-theme)
+* [Getting image title, alt and caption attributes](/ankitpokhrel/Dynamic-Featured-Image/wiki/Available-Functions#getting-image-title-alt-and-caption-attributes)
+* [Helpers/Utility functions](/ankitpokhrel/Dynamic-Featured-Image/wiki/Available-Functions)
 
 
-### Retrieving Images in a Theme
-
-* To get featured images of specific post
-
-```
-if( function_exists('dfi_get_featured_images') )
-   $featuredImages = dfi_get_featured_images($postId);
-```
-
-* To get featured images in a post loop.
-
-```
-<?php 
-   while ( have_posts() ) : the_post();
-
-   if( function_exists('dfi_get_featured_images') ) {
-       $featuredImages = dfi_get_featured_images();
-       
-       //Now, loop through the image to display
-   }
-   
-   endwhile;
-?>
-```
-
-* The data is returned as an array that contain selected image and full size path to the selected image.
-
-```
-array
-  0 => 
-    array
-      'thumb' => string 'http://your_site/upload_path/yourSelectedImage.jpg' (length=50)
-      'full' => string 'http://your_site/upload_path/yourSelectedImage_fullSize.jpg' (length=69)
-      'attachment_id' => string '56' (length=2)
-      'image_name' => string 'yourSelectedImage' (length=17)
-      'image_ext' => string 'jpg' (length=3)
-  1 => 
-    array
-      'thumb' => string 'http://your_site/upload_path/yourSelectedImage.jpg' (length=50)
-      'full' => string 'http://your_site/upload_path/yourSelectedImage_fullSize.jpg' (length=69)
-      'attachment_id' => string '57' (length=2)
-      'image_name' => string 'yourSelectedImage' (length=17)
-      'image_ext' => string 'jpg' (length=3)
-  2 => ...
-```
-
-## Helper/Utility Functions ( ver. 2+ )
-1. dfi_get_image_id( $image_url )
-2. dfi_get_image_thumb( $image_url, $size )
-3. dfi_get_image_url( $attachmentId, $size = "full" )
-4. dfi_get_image_title( $image_url )
-5. dfi_get_image_title_by_id( $attachmentId )
-6. dfi_get_image_caption( $image_url )
-7. dfi_get_image_caption_by_id( $attachmentId )
-8. dfi_get_image_alt( $image_url )
-9. dfi_get_image_alt_by_id( $attachmentId )
-10. dfi_get_post_attachment_ids( $postId )
-11. dfi_is_attached( $attachmentId, $postId )
+#### The List of Available Functions are:
+1. [dfi_get_image_id( $image_url )](https://github.com/ankitpokhrel/Dynamic-Featured-Image/wiki/Available-Functions#1-dfi_get_image_id-image_url-)
+2. [dfi_get_image_thumb( $image_url, $size = "thumbnail" )](https://github.com/ankitpokhrel/Dynamic-Featured-Image/wiki/Available-Functions#2-dfi_get_image_thumb-image_url-size--thumbnail-)
+3. [dfi_get_image_url( $attachment_id, $size = "full" )](https://github.com/ankitpokhrel/Dynamic-Featured-Image/wiki/Available-Functions#3-dfi_get_image_url-attachment_id-size--full-)
+4. [dfi_get_post_attachment_ids( $post_id )](https://github.com/ankitpokhrel/Dynamic-Featured-Image/wiki/Available-Functions#4-dfi_get_post_attachment_ids-post_id-)
+5. [dfi_is_attached( $attachment_id, $post_id )](https://github.com/ankitpokhrel/Dynamic-Featured-Image/wiki/Available-Functions#5-dfi_is_attached-attachment_id-post_id-)
+6. [dfi_get_image_title( $image_url )](https://github.com/ankitpokhrel/Dynamic-Featured-Image/wiki/Available-Functions#6-dfi_get_image_title-image_url-)
+7. [dfi_get_image_title_by_id( $attachment_id )](https://github.com/ankitpokhrel/Dynamic-Featured-Image/wiki/Available-Functions#7-dfi_get_image_title_by_id-attachment_id-)
+8. [dfi_get_image_alt( $image_url )](https://github.com/ankitpokhrel/Dynamic-Featured-Image/wiki/Available-Functions#8-dfi_get_image_alt-image_url-)
+9. [dfi_get_image_alt_by_id( $attachment_id )](https://github.com/ankitpokhrel/Dynamic-Featured-Image/wiki/Available-Functions#9-dfi_get_image_alt_by_id-attachment_id-)
+10. [dfi_get_image_caption( $image_url )](https://github.com/ankitpokhrel/Dynamic-Featured-Image/wiki/Available-Functions#10-dfi_get_image_caption-image_url-)
+11. [dfi_get_image_caption_by_id( $attachment_id )](https://github.com/ankitpokhrel/Dynamic-Featured-Image/wiki/Available-Functions#11-dfi_get_image_caption_by_id-attachment_id-)
 
 ===================================================================================================
 

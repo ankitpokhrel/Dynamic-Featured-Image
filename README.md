@@ -14,8 +14,24 @@ DFI allows you to add different number of featured images to each post and page 
   2. Activate the plugin through the `Plugins` menu in WordPress.
   3. If you don't see new featured image box, click `Screen Options` in the upper right corner of your wordpress admin and make sure that the `Featured Image 2` box is slected.
 
+### How it works?
+1. After successfull plugin activation go to `add` or `edit` page of posts or pages and you will notice a box for second featured image.
+
+   ![Snapshot 1](http://ankitpokhrel.com.np/dfi/snapshot_1.jpg)
+
+2. Click `Set featured image`, select required image from media popup and click `Insert into Post`.
+
+   ![Snapshot 2](http://ankitpokhrel.com.np/dfi/snapshot_2.jpg)
+
+3. Click on `Add New` to add new featured image or use `Remove` link to remove the featured image box.
+ 
+   ![Snapshot 3](http://ankitpokhrel.com.np/dfi/snapshot_3.jpg)
+
+4. After adding featured images click `publish` or `update` to save featured images.
+
+###### _Note: The featured images are only saved when you publish or update the post._
+
 ### Documentation
-* [How it works?](/ankitpokhrel/Dynamic-Featured-Image/wiki/How-it-works%3F)
 * [Retrieving images in a theme](/ankitpokhrel/Dynamic-Featured-Image/wiki/Retrieving-images-in-a-theme)
 * [Getting image title, alt and caption attributes](/ankitpokhrel/Dynamic-Featured-Image/wiki/Available-Functions#getting-image-title-alt-and-caption-attributes)
 * [Helpers/Utility functions](/ankitpokhrel/Dynamic-Featured-Image/wiki/Available-Functions)

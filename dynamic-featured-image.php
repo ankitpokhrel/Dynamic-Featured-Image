@@ -197,7 +197,7 @@
     $prefix = $wpdb->prefix;
     $attachment = $wpdb->get_col( $wpdb->prepare( "SELECT ID FROM " . $prefix . "posts" . " WHERE guid='" . $image_url . "';" ) );
     
-    return $attachment[0];
+    return empty($attachment) ? null : $attachment[0];
  }
  
  /*
@@ -208,7 +208,7 @@
  function dfi_get_image_url( $attachmentId, $size = 'full' ) {
     $image_thumb = wp_get_attachment_image_src( $attachmentId, $size );
     
-    return $image_thumb[0];
+    return empty($image_thumb) ? null : $image_thumb[0];
  }
  
  /*
@@ -216,11 +216,11 @@
   *
   * @return String
   */
- function dfi_get_image_thumb( $image_url, $size ) {   
-    $attachmentID = dfi_get_image_id( $image_url );
-    $image_thumb = wp_get_attachment_image_src( $attachmentID, $size );
+ function dfi_get_image_thumb( $image_url, $size = 'thumbnail' ) {   
+    $attachment_id = dfi_get_image_id( $image_url );
+    $image_thumb = wp_get_attachment_image_src( $attachment_id, $size );
     
-    return $image_thumb[0];
+    return empty($image_thumb) ? null : $image_thumb[0];
  }
  
  /*
@@ -241,10 +241,10 @@
   *
   * @return String
   */
- function dfi_get_image_title_by_id( $attachmentId ) {
+ function dfi_get_image_title_by_id( $attachment_id ) {
     global $wpdb;
     $prefix = $wpdb->prefix;
-    $post_title = $wpdb->get_col( $wpdb->prepare( "SELECT post_title FROM " . $prefix . "posts" . " WHERE ID='" . $attachmentId . "';" ) );
+    $post_title = $wpdb->get_col( $wpdb->prepare( "SELECT post_title FROM " . $prefix . "posts" . " WHERE ID='" . $attachment_id . "';" ) );
    
     return empty($post_title) ? null : $post_title[0];  
  }
@@ -267,10 +267,10 @@
   *
   * @return String
   */
- function dfi_get_image_caption_by_id( $attachmentId ) {
+ function dfi_get_image_caption_by_id( $attachment_id ) {
     global $wpdb;
     $prefix = $wpdb->prefix;
-    $post_caption = $wpdb->get_col( $wpdb->prepare( "SELECT post_excerpt FROM " . $prefix . "posts" . " WHERE ID='" . $attachmentId . "';" ) );      
+    $post_caption = $wpdb->get_col( $wpdb->prepare( "SELECT post_excerpt FROM " . $prefix . "posts" . " WHERE ID='" . $attachment_id . "';" ) );      
    
     return empty($post_caption) ? null : $post_caption[0];  
  }
@@ -295,8 +295,8 @@
  *
  * @return String
  */
- function dfi_get_image_alt_by_id( $attachmentId ) {    
-    $alt = get_post_meta($attachmentId, '_wp_attachment_image_alt');
+ function dfi_get_image_alt_by_id( $attachment_id ) {    
+    $alt = get_post_meta($attachment_id, '_wp_attachment_image_alt');
    
     return empty($alt) ? null : $alt[0];
  }
@@ -306,8 +306,8 @@
   * 
   * @return Array
   */
-  function dfi_get_post_attachment_ids( $postId ){    
-    $dfiImages = get_post_custom($postId);
+  function dfi_get_post_attachment_ids( $post_id ){    
+    $dfiImages = get_post_custom($post_id);
     $dfiImages = ( isset($dfiImages['dfiFeatured'][0]) ) ? @array_filter( unserialize( $dfiImages['dfiFeatured'][0] ) ) : array();
     
     $retVal = array();
@@ -327,10 +327,10 @@
   * 
   * @return boolean
   */
- function dfi_is_attached( $attachmentId, $postId ){
-     $attachmentIds = dfi_get_post_attachment_ids( $postId );
+ function dfi_is_attached( $attachment_id, $post_id ){
+     $attachment_ids = dfi_get_post_attachment_ids( $post_id );
      
-     return in_array($attachmentId, $attachmentIds) ? true : false;
+     return in_array($attachment_id, $attachment_ids) ? true : false;
  }
  
  /*
@@ -338,13 +338,13 @@
   * 
   * @return Array
   */  
- function dfi_get_featured_images($postId = null){
-    if( is_null($postId) ){
+ function dfi_get_featured_images($post_id = null){
+    if( is_null($post_id) ){
      global $post;
-     $postId = $post->ID;
+     $post_id = $post->ID;
     }
     
-    $dfiImages = get_post_custom($postId);
+    $dfiImages = get_post_custom($post_id);
     $dfiImages = ( isset($dfiImages['dfiFeatured'][0]) ) ? @array_filter( unserialize( $dfiImages['dfiFeatured'][0] ) ) : array();
     
     $retImages = array();

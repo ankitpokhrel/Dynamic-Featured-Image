@@ -97,11 +97,13 @@
         list($featuredImgTrimmed, $featuredImgFull) = explode(',', $featuredImg); 
     }           
     
+    $thumbnail = dfi_get_image_thumb( site_url() . $featuredImgFull, 'medium' );
+    
     //Add a nonce field   
     wp_nonce_field( plugin_basename(__FILE__), 'dfi_fimageplug-' . $featuredId);    
  ?>   
    <a href="javascript:void(0)" class='dfiFeaturedImage' data-post-id="<?php the_ID() ?>"><?php _e('Set featured image', 'ap_dfi_dynamic-featured-image') ?></a><br/>       
-   <img src="<?php if( isset($featuredImgTrimmed) && !empty($featuredImgTrimmed) ) echo site_url() . $featuredImgTrimmed ?>" class='dfiImg <?php if( !isset($featuredImgTrimmed) || is_null($featuredImgTrimmed) ) echo 'dfiImgEmpty' ?>'/>
+   <img src="<?php if( isset($thumbnail) && !is_null($thumbnail) ) echo $thumbnail; ?>" class='dfiImg <?php if( !isset($featuredImgTrimmed) || is_null($featuredImgTrimmed) ) echo 'dfiImgEmpty' ?>'/>
    <div class='dfiLinks'>   
     <a href="javascript:void(0)" data-id='<?php echo $featuredId ?>' class='dfiAddNew'><?php _e('Add New', 'ap_dfi_dynamic-featured-image') ?></a>
     <a href="javascript:void(0)" class='dfiRemove'><?php _e('Remove', 'ap_dfi_dynamic-featured-image') ?></a>
@@ -169,7 +171,9 @@
      
     //Check permission before saving data       
     if( !empty($_POST) && current_user_can('edit_posts', $post_id) ) {
+      if( isset($_POST['dfiFeatured']) ){
        update_post_meta($post_id, 'dfiFeatured', $_POST['dfiFeatured']);
+      }
     }
  }
  
@@ -346,25 +350,19 @@
     
     $dfiImages = get_post_custom($post_id);
     $dfiImages = ( isset($dfiImages['dfiFeatured'][0]) ) ? @array_filter( unserialize( $dfiImages['dfiFeatured'][0] ) ) : array();
-    
+   
     $retImages = array();
     if( !empty($dfiImages) && is_array($dfiImages) ) {
       $count = 0;
-      foreach($dfiImages as $dfiImage){
-        list($dfiImageTrimmed, $dfiImageFull, $dfiImageName, $dfiImageExt) = explode(',', $dfiImage);
-        $retImages[$count]['thumb'] = site_url() . $dfiImageTrimmed;
+      foreach($dfiImages as $dfiImage){        
+        @list($dfiImageTrimmed, $dfiImageFull, $dfiImageName, $dfiImageExt) = explode(',', $dfiImage);
+        $retImages[$count]['selected'] = site_url() . $dfiImageTrimmed;
         $retImages[$count]['full'] = site_url() . $dfiImageFull;
-        $retImages[$count]['attachment_id'] = dfi_get_image_id( site_url() . $dfiImageFull );
-        $retImages[$count]['image_name'] = $dfiImageName;
-        $retImages[$count]['image_ext'] = $dfiImageExt;    
-        
-        var_dump(dfi_get_image_title_by_id($retImages[$count]['attachment_id']));             
-        var_dump(dfi_get_image_url($retImages[$count]['attachment_id'], 'medium'));             
+        $retImages[$count]['attachment_id'] = dfi_get_image_id( site_url() . $dfiImageFull );                    
         
         $count++;
       }
     }  
     
-
     return ( !empty($retImages) ) ? $retImages : null;
  }

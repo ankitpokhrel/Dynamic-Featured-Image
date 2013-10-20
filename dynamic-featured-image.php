@@ -206,7 +206,7 @@
  
  /* ===============================================================================================
   * 
-  * Shortcode and Fancybox integration (Ver. 1.2+)
+  * Shortcode and Fancybox integration
   * 
   * =============================================================================================== */
   
@@ -230,7 +230,6 @@
  function dfi_theme_functions(){
     wp_enqueue_style('style-dfi-theme', plugins_url('/css/style-dfi-theme.css', __FILE__));   
     wp_enqueue_style('style-dfi-fancybox', plugins_url('/plugins/fancybox/source/jquery.fancybox.css', __FILE__));
-    
     
      
     //register scripts

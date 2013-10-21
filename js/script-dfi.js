@@ -4,7 +4,7 @@
  * Copyright (c) 2013, Ankit Pokhrel <ankitpokhrel@gmail.com, http://ankitpokhrel.com.np>
  */
 jQuery(document).ready(function($){
-	var current = null;
+	var current = null;	
 	
 	/*
 	 * Add new meta box
@@ -43,8 +43,17 @@ jQuery(document).ready(function($){
 	 * Remove featured image meta box
 	 */
 	$(document).on('click', '.dfiRemove', function(){
-	   if( confirm('Are you sure?') )
-		  $(this).closest('.featured-meta-box').remove();
+	   if( confirm('Are you sure?') ){
+	     var dfiMetaBox = $(this).closest('.featured-meta-box');	     
+	     var totalMetaBox = $('.featured-meta-box').length;
+	     
+	     if( totalMetaBox == 1 ){	          
+	           dfiMetaBox.find('.dfiImg').attr('src', '');
+	           dfiMetaBox.find('.dfiImageHolder').val('');
+	     } else {
+		      dfiMetaBox.remove();
+		 }
+	   }
 	});
 	
 	/*

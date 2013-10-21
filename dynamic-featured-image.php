@@ -67,7 +67,7 @@
     }
     
     $filter = array('attachment', 'revision', 'nav_menu_item'); 
-    $postTypes = get_post_types();  
+    $postTypes = get_post_types();     
     $postTypes = array_diff($postTypes, $filter);
            
     if( $totalFeatured >= 1 ){
@@ -199,7 +199,7 @@
  function dfi_get_image_id( $image_url ) {
     global $wpdb;
     $prefix = $wpdb->prefix;
-    $attachment = $wpdb->get_col( $wpdb->prepare( "SELECT ID FROM " . $prefix . "posts" . " WHERE guid='" . $image_url . "';" ) );
+    $attachment = $wpdb->get_col( $wpdb->prepare( "SELECT ID FROM " . $prefix . "posts" . " WHERE guid= %s", $image_url ) );
     
     return empty($attachment) ? null : $attachment[0];
  }
@@ -235,7 +235,7 @@
  function dfi_get_image_title( $image_url ) {
     global $wpdb;
     $prefix = $wpdb->prefix;
-    $post_title = $wpdb->get_col( $wpdb->prepare( "SELECT post_title FROM " . $prefix . "posts" . " WHERE guid='" . $image_url . "';" ) );
+    $post_title = $wpdb->get_col( $wpdb->prepare( "SELECT post_title FROM " . $prefix . "posts" . " WHERE guid = %s", $image_url ) );
    
     return empty($post_title) ? null : $post_title[0];  
  }
@@ -248,7 +248,7 @@
  function dfi_get_image_title_by_id( $attachment_id ) {
     global $wpdb;
     $prefix = $wpdb->prefix;
-    $post_title = $wpdb->get_col( $wpdb->prepare( "SELECT post_title FROM " . $prefix . "posts" . " WHERE ID='" . $attachment_id . "';" ) );
+    $post_title = $wpdb->get_col( $wpdb->prepare( "SELECT post_title FROM " . $prefix . "posts" . " WHERE ID = %d", $attachment_id ) );
    
     return empty($post_title) ? null : $post_title[0];  
  }
@@ -261,7 +261,7 @@
  function dfi_get_image_caption( $image_url ) {
     global $wpdb;
     $prefix = $wpdb->prefix;
-    $post_caption = $wpdb->get_col( $wpdb->prepare( "SELECT post_excerpt FROM " . $prefix . "posts" . " WHERE guid='" . $image_url . "';" ) );      
+    $post_caption = $wpdb->get_col( $wpdb->prepare( "SELECT post_excerpt FROM " . $prefix . "posts" . " WHERE guid = %s", $image_url ) );      
    
     return empty($post_caption) ? null : $post_caption[0];  
  }
@@ -274,7 +274,7 @@
  function dfi_get_image_caption_by_id( $attachment_id ) {
     global $wpdb;
     $prefix = $wpdb->prefix;
-    $post_caption = $wpdb->get_col( $wpdb->prepare( "SELECT post_excerpt FROM " . $prefix . "posts" . " WHERE ID='" . $attachment_id . "';" ) );      
+    $post_caption = $wpdb->get_col( $wpdb->prepare( "SELECT post_excerpt FROM " . $prefix . "posts" . " WHERE ID = %d", $attachment_id ) );      
    
     return empty($post_caption) ? null : $post_caption[0];  
  }
@@ -287,11 +287,14 @@
  function dfi_get_image_alt( $image_url ) {
     global $wpdb;
     $prefix = $wpdb->prefix;
-    $attachment = $wpdb->get_col( $wpdb->prepare( "SELECT ID FROM " . $prefix . "posts" . " WHERE guid='" . $image_url . "';" ) );
+    $attachment = $wpdb->get_col( $wpdb->prepare( "SELECT ID FROM " . $prefix . "posts" . " WHERE guid = %s", $image_url ) );
    
-    $alt = get_post_meta($attachment[0], '_wp_attachment_image_alt');
-   
-    return empty($alt) ? null : $alt[0];
+    $alt = null;
+    if( !empty($attachment) ){
+        $alt = get_post_meta($attachment[0], '_wp_attachment_image_alt');
+    }
+    
+    return ( is_null($alt) || empty($alt) ) ? null : $alt[0];
  }
  
  /*
@@ -350,19 +353,20 @@
     
     $dfiImages = get_post_custom($post_id);
     $dfiImages = ( isset($dfiImages['dfiFeatured'][0]) ) ? @array_filter( unserialize( $dfiImages['dfiFeatured'][0] ) ) : array();
-   
+    
     $retImages = array();
     if( !empty($dfiImages) && is_array($dfiImages) ) {
       $count = 0;
-      foreach($dfiImages as $dfiImage){        
-        @list($dfiImageTrimmed, $dfiImageFull, $dfiImageName, $dfiImageExt) = explode(',', $dfiImage);
-        $retImages[$count]['selected'] = site_url() . $dfiImageTrimmed;
+      foreach($dfiImages as $dfiImage){
+        @list($dfiImageTrimmed, $dfiImageFull) = explode(',', $dfiImage);
+        $retImages[$count]['thumb'] = site_url() . $dfiImageTrimmed;
         $retImages[$count]['full'] = site_url() . $dfiImageFull;
-        $retImages[$count]['attachment_id'] = dfi_get_image_id( site_url() . $dfiImageFull );                    
+        $retImages[$count]['attachment_id'] = dfi_get_image_id( site_url() . $dfiImageFull );                   
         
         $count++;
       }
     }  
     
+
     return ( !empty($retImages) ) ? $retImages : null;
  }

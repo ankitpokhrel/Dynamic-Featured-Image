@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Dynamic Featured Image
  * Plugin URI: http://wordpress.org/plugins/dynamic-featured-image/
- * Description: Add multiple featured image dynamically in your wordpress posts.
+ * Description: Dynamically adds multiple featured image or post thumbnail functionality to your posts, pages and custom post types.
  * Version: 2.0.0
  * Author: Ankit Pokhrel
  * Author URI: http://ankitpokhrel.com.np
@@ -26,7 +26,7 @@
   */
  
  define('DYNAMIC_FEATURED_IMAGE_VERSION', '2.0.0');
- define('DOCUMENTATION_PAGE', 'https://github.com/ankitpokhrel/Dynamic-Featured-Image');
+ define('DOCUMENTATION_PAGE', 'https://github.com/ankitpokhrel/Dynamic-Featured-Image/wiki');
 
  //prevent direct access
  if ( !function_exists( 'add_action' ) ) {
@@ -96,8 +96,8 @@
     if( !empty($featuredImg) ){
         list($featuredImgTrimmed, $featuredImgFull) = explode(',', $featuredImg); 
     }           
-    
-    $thumbnail = dfi_get_image_thumb( site_url() . $featuredImgFull, 'medium' );
+   
+    $thumbnail =  ( strpos($featuredImgFull, 'wp-content') !== false ) ?  dfi_get_image_thumb( site_url() . $featuredImgFull, 'medium' ) : $featuredImgFull;
     
     //Add a nonce field   
     wp_nonce_field( plugin_basename(__FILE__), 'dfi_fimageplug-' . $featuredId);    
@@ -177,13 +177,13 @@
     }
  }
  
- /* Helper functions */
+ /* ver. 2.0.0 */
  
  /*
   * Add update notice
   */
  function dfi_update_notice() {
-    $info = __( ' ATTENTION! This version has some changes that will break your existing work. 
+    $info = __( ' ATTENTION! This version has major changes that will break your existing work. 
                    Please read the <a href="' . DOCUMENTATION_PAGE . '" target="_blank">DOCUMENTATION</a> properly before update.', 'dfi_text_domain' );
     echo '<div style="color:red; padding:7px 0;">' . strip_tags( $info, '<a><b><i><span>' ) . '</div>';
  }
@@ -191,6 +191,8 @@
  if( is_admin() )
     add_action( 'in_plugin_update_message-' . plugin_basename(__FILE__), 'dfi_update_notice' );
  
+ /* Helper functions */
+  
  /*
   * Get attachment id of the image by image url
   *
@@ -358,15 +360,21 @@
     if( !empty($dfiImages) && is_array($dfiImages) ) {
       $count = 0;
       foreach($dfiImages as $dfiImage){
-        @list($dfiImageTrimmed, $dfiImageFull) = explode(',', $dfiImage);
-        $retImages[$count]['thumb'] = site_url() . $dfiImageTrimmed;
-        $retImages[$count]['full'] = site_url() . $dfiImageFull;
-        $retImages[$count]['attachment_id'] = dfi_get_image_id( site_url() . $dfiImageFull );                   
+        @list($dfiImageTrimmed, $dfiImageFull) = explode(',', $dfiImage);        
+        if( strpos($dfiImageFull, 'wp-content') !== false ){
+            $retImages[$count]['thumb'] = site_url() . $dfiImageTrimmed;
+            $retImages[$count]['full'] = site_url() . $dfiImageFull;
+            $retImages[$count]['attachment_id'] = dfi_get_image_id( site_url() . $dfiImageFull );           
+        } else {
+            $retImages[$count]['thumb'] = $dfiImageTrimmed;
+            $retImages[$count]['full'] = $dfiImageFull;
+            $retImages[$count]['attachment_id'] = dfi_get_image_id( site_url() . $dfiImageFull );       
+        }
+                    
         
         $count++;
       }
     }  
     
-
     return ( !empty($retImages) ) ? $retImages : null;
  }

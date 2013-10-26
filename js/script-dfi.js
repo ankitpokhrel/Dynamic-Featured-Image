@@ -78,27 +78,36 @@ jQuery(document).ready(function($){
 	 * Allow access to media uploader
 	 */
     function media_uploader(){
-       	window.send_to_editor = function(html){	    
-	   
-    		var fullSize = $('img', html).parent().attr('href');		
-    		var imgurl = $('img', html).attr('src');
+       	window.send_to_editor = function(html){       	        	             
+    		var fullSize = $('img', html).parent().attr('href');    		
+    		if( typeof fullSize === "undefined" ) fullSize = $(html).attr('src');
+    			
+    		var imgUrl, imgUrlTrimmed, fullUrlTrimmed;
     		
-    		imgUrlTrimmed = imgurl.split('wp-content');
-    		imgUrlTrimmed = '/wp-content' + imgUrlTrimmed[1];
-    		
-    		fullUrlTrimmed = fullSize.split('wp-content');
-    		fullUrlTrimmed = '/wp-content' + fullUrlTrimmed[1];
+    		if( /wp-content/.test(fullSize) ){
+        		imgUrl = $('img', html).attr('src');
+        		
+        		imgUrlTrimmed = imgUrl.split('wp-content');
+        		imgUrlTrimmed = '/wp-content' + imgUrlTrimmed[1];
+        		
+        		fullUrlTrimmed = fullSize.split('wp-content');
+        		fullUrlTrimmed = '/wp-content' + fullUrlTrimmed[1];
+    		} else {
+    		    imgUrl = fullSize;
+    		    imgUrlTrimmed = fullSize;
+    		    fullUrlTrimmed = fullSize;
+    		}
     		
     		var featuredBox = current.parent();
     		
     		featuredBox.find('.fImg').attr({
-    			'src': imgurl,
+    			'src': imgUrl,
     			'data-src': fullSize
     		});
     			
     		var dfiFeaturedImages = [imgUrlTrimmed, fullUrlTrimmed];
-    			
-    		featuredBox.find('img').attr('src', imgurl).fadeIn(200);
+    		console.log(imgUrl);
+    		featuredBox.find('img').attr('src', imgUrl).fadeIn(200);
     		featuredBox.find('input.dfiImageHolder').val(dfiFeaturedImages);
     		tb_remove();
     		window.send_to_editor = restore_send_to_editor;

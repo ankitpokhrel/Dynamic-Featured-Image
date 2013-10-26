@@ -106,7 +106,7 @@ jQuery(document).ready(function($){
     		});
     			
     		var dfiFeaturedImages = [imgUrlTrimmed, fullUrlTrimmed];
-    		console.log(imgUrl);
+    		
     		featuredBox.find('img').attr('src', imgUrl).fadeIn(200);
     		featuredBox.find('input.dfiImageHolder').val(dfiFeaturedImages);
     		tb_remove();

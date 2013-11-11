@@ -17,7 +17,7 @@ DFI allows you to add different number of featured images to each post and page 
 ### How it works?
 1. After successfull plugin activation go to `add` or `edit` page of posts or pages and you will notice a box for second featured image.
 
-   ![Snapshot 1](http://ankitpokhrel.com.np/dfi/snapshot_1.jpg)
+   ![Snapshot 1](http://ankitpokhrel.com.np/dfi/screenshot-1.jpg)
 
 2. Click `Set featured image`, select required image from media popup and click `Insert into Post`.
 
@@ -25,7 +25,7 @@ DFI allows you to add different number of featured images to each post and page 
 
 3. Click on `Add New` to add new featured image or use `Remove` link to remove the featured image box.
  
-   ![Snapshot 3](http://ankitpokhrel.com.np/dfi/snapshot_3.jpg)
+   ![Snapshot 3](http://ankitpokhrel.com.np/dfi/screenshot-3.jpg)
 
 4. After adding featured images click `publish` or `update` to save featured images.
 

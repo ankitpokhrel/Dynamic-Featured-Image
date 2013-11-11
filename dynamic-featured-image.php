@@ -102,11 +102,11 @@
     //Add a nonce field   
     wp_nonce_field( plugin_basename(__FILE__), 'dfi_fimageplug-' . $featuredId);    
  ?>   
-   <a href="javascript:void(0)" class='dfiFeaturedImage' data-post-id="<?php the_ID() ?>"><?php _e('Set featured image', 'ap_dfi_dynamic-featured-image') ?></a><br/>       
+   <a href="javascript:void(0)" class='dfiFeaturedImage <?php if( isset($featuredImgTrimmed) && !empty($featuredImgTrimmed) ) echo 'hasFeaturedImage' ?>' title="Set Featured Image" data-post-id="<?php the_ID() ?>"><span></span></a><br/>       
    <img src="<?php if( isset($thumbnail) && !is_null($thumbnail) ) echo $thumbnail; ?>" class='dfiImg <?php if( !isset($featuredImgTrimmed) || is_null($featuredImgTrimmed) ) echo 'dfiImgEmpty' ?>'/>
    <div class='dfiLinks'>   
-    <a href="javascript:void(0)" data-id='<?php echo $featuredId ?>' class='dfiAddNew'><?php _e('Add New', 'ap_dfi_dynamic-featured-image') ?></a>
-    <a href="javascript:void(0)" class='dfiRemove'><?php _e('Remove', 'ap_dfi_dynamic-featured-image') ?></a>
+    <a href="javascript:void(0)" data-id='<?php echo $featuredId ?>' class='dfiAddNew' title="Add New"></a>
+    <a href="javascript:void(0)" class='dfiRemove' title="Remove"></a>
    </div>
    <div class='dfiClearFloat'></div>
    <input type='hidden' name="dfiFeatured[]" value="<?php echo $featuredImg ?>"  class="dfiImageHolder" />
@@ -122,11 +122,11 @@
      
      wp_nonce_field( plugin_basename(__FILE__), 'dfi_fimageplug-' . $featuredId );
  ?>
-      <a href="javascript:void(0)" class='dfiFeaturedImage'><?php _e('Set featured image', 'ap_dfi_dynamic-featured-image') ?></a><br/>        
+      <a href="javascript:void(0)" class='dfiFeaturedImage' title="Set Featured Image"><span></span></a><br/>        
        <img src="" class='dfiImg dfiImgEmpty'/>
        <div class='dfiLinks'>   
-        <a href="javascript:void(0)" data-id='<?php echo $featuredId ?>' class='dfiAddNew'><?php _e('Add New', 'ap_dfi_dynamic-featured-image') ?></a>
-        <a href="javascript:void(0)" class='dfiRemove'><?php _e('Remove', 'ap_dfi_dynamic-featured-image') ?></a>
+        <a href="javascript:void(0)" data-id='<?php echo $featuredId ?>' class='dfiAddNew' title="Add New"></a>
+        <a href="javascript:void(0)" class='dfiRemove' title="Remove"></a>
        </div>
        <div class='dfiClearFloat'></div>
        <input type='hidden' name="dfiFeatured[]" value="" class="dfiImageHolder" />
@@ -183,8 +183,7 @@
   * Add update notice
   */
  function dfi_update_notice() {
-    $info = __( ' ATTENTION! This version has major changes that will break your existing work. 
-                   Please read the <a href="' . DOCUMENTATION_PAGE . '" target="_blank">DOCUMENTATION</a> properly before update.', 'dfi_text_domain' );
+    $info = __( ' ATTENTION! Please read the <a href="' . DOCUMENTATION_PAGE . '" target="_blank">DOCUMENTATION</a> properly before update.', 'dfi_text_domain' );
     echo '<div style="color:red; padding:7px 0;">' . strip_tags( $info, '<a><b><i><span>' ) . '</div>';
  }
 

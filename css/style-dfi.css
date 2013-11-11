@@ -5,19 +5,33 @@
  */
 
 .dfiAddNew {
-	float: left;
+  background: #fff url("../img/btnAdd.png") no-repeat;
+  float: left;
+  height: 16px;
+  width: 16px;
+}
+
+.dfiAddNew:hover, .dfiRemove:hover {
+    background-position: 0 -16px;
 }
 
 .dfiRemove {
+    background: #fff url("../img/btnRemove.png") no-repeat;
     float: right;
+    height: 16px;
+    width: 16px;
+}
+
+.dfiLinks{
+    padding: 2px 0;
 }
 
 .dfiClearFloat {
     clear: both;
 }
 
-.featured-meta-box a {
-    display: inline-block;
+.featured-meta-box a:not(.hasFeaturedImage):not(.dfiAddNew) {
+    display: inline-block !important;
     margin: 3px 0;
 }
 
@@ -31,6 +45,47 @@ img.dfiImgEmpty {
 
 .dfiLoading {
     position: relative;
-    top: 3px;
-    left: 5px;
+    top: 2px;
+    left: 0;
+}
+
+.dfiFeaturedImage {
+  border: 2px dashed #AAA;
+  color: #CCC;
+  height: 130px;
+  margin: 10px 0 !important;
+  padding: 10px;
+  text-align: center;
+  width: 235px;
+}
+
+.dfiFeaturedImage:hover{
+    border-color: #999;
+}
+
+.dfiFeaturedImage > span {
+  background: url("../img/imageAdd.png") no-repeat;
+  display: inline-block;
+  width: 54px;
+  height: 47px;
+  margin-top: 18%;
+}
+
+.hasFeaturedImage {
+  border: none;
+  width: auto;
+  height: auto;
+  margin: 0 !important; 
+  position: absolute;
+  top: 35%;
+  left: 110px;
+  display: none;
+  z-index: 999;
+}
+
+.hasFeaturedImage > span {
+  background: url("../img/imageAddDark.png") no-repeat; 
+  width: 54px;
+  height: 47px;
+  position: relative;
 }

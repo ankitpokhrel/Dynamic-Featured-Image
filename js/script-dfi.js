@@ -20,8 +20,8 @@ jQuery(document).ready(function($){
        
        var metaBoxContentObj = newMetaBox.find('.inside');
        metaBoxContentObj.html('');
-       
-       obj.append('<img src="images/wpspin_light.gif" class="dfiLoading">').hide().fadeIn(200);
+       obj.hide();
+       obj.parent().append('<img src="images/wpspin_light.gif" class="dfiLoading">').hide().fadeIn(200);       
        $.ajax({
           type: 'POST',  
           url: 'admin-ajax.php',  
@@ -32,8 +32,9 @@ jQuery(document).ready(function($){
             
             //Add post id
             newMetaBox.find('.dfiFeaturedImage').attr('data-post-id', obj.parent().parent().find('.dfiFeaturedImage').attr('data-post-id') );
-            
-            obj.parent().find('.dfiLoading').fadeOut(300, function(){ $(this).remove(); });
+           
+            var alias = obj;
+            obj.parent().find('.dfiLoading').fadeOut(300, function(){ $(this).remove(); alias.fadeIn(200); });
           }
        });
        
@@ -50,8 +51,14 @@ jQuery(document).ready(function($){
 	     if( totalMetaBox == 1 ){	          
 	           dfiMetaBox.find('.dfiImg').attr('src', '');
 	           dfiMetaBox.find('.dfiImageHolder').val('');
+	           dfiMetaBox.find('.dfiFeaturedImage')
+	                     .removeClass('hasFeaturedImage')
+	                     .show()
+	                     .animate({ opacity: 1, display: 'inline-block' }, 600);	                     
 	     } else {
-		      dfiMetaBox.remove();
+		      dfiMetaBox.fadeOut(500, function(){
+		        $(this).remove();  
+		      });
 		 }
 	   }
 	});
@@ -98,12 +105,14 @@ jQuery(document).ready(function($){
     		    fullUrlTrimmed = fullSize;
     		}
     		
-    		var featuredBox = current.parent();
+    		var featuredBox = current.parent();    		
     		
     		featuredBox.find('.fImg').attr({
     			'src': imgUrl,
     			'data-src': fullSize
     		});
+    		
+    		featuredBox.find('.dfiFeaturedImage').addClass('hasFeaturedImage');
     			
     		var dfiFeaturedImages = [imgUrlTrimmed, fullUrlTrimmed];
     		
@@ -121,4 +130,19 @@ jQuery(document).ready(function($){
 	    $(this).parent().toggleClass('closed');
 	});
 	
+	/*
+	 * Add a hover animation in image
+	 */
+	$(document).on({
+	    mouseenter: function(){	
+	        var obj = $(this).closest('.featured-meta-box');       
+	        obj.find('.dfiImg').stop(true, true).animate({ opacity: 0.3 }, 300 );
+	        obj.find('.hasFeaturedImage').fadeIn(200);
+	    },
+	    mouseleave: function(){
+	        var obj = $(this);
+	        obj.find('.dfiImg').stop(true, true).animate({ opacity: 1 }, 300 );
+	        obj.find('.hasFeaturedImage').fadeOut(100);        	        
+	    }
+	}, '.featured-meta-box .inside');
 });

@@ -19,7 +19,7 @@ DFI allows you to add different number of featured images to each post and page 
 
    ![Snapshot 1](http://ankitpokhrel.com.np/dfi/screenshot-1.jpg)
 
-2. Click `Set featured image`, select required image from media popup and click `Insert into Post`.
+2. Click `Set featured image`, select required image from media popup and click `Insert into Post`. Make sure `File URL` is selected in the `Link URL` section of media popup.
 
    ![Snapshot 2](http://ankitpokhrel.com.np/dfi/snapshot_2.jpg)
 

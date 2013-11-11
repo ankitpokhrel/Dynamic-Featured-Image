@@ -4,22 +4,24 @@
  * Copyright (c) 2013, Ankit Pokhrel <ankitpokhrel@gmail.com, http://ankitpokhrel.com.np>
  */
 
+.dfiAddNew, .dfiRemove {
+    height: 16px;
+    width: 16px;
+}
+
 .dfiAddNew {
   background: #fff url("../img/btnAdd.png") no-repeat;
   float: left;
-  height: 16px;
-  width: 16px;
-}
-
-.dfiAddNew:hover, .dfiRemove:hover {
-    background-position: 0 -16px;
 }
 
 .dfiRemove {
     background: #fff url("../img/btnRemove.png") no-repeat;
-    float: right;
-    height: 16px;
-    width: 16px;
+    float: right;   
+    margin: 0 !important;
+}
+
+.dfiAddNew:hover, .dfiRemove:hover {
+    background-position: 0 -16px;
 }
 
 .dfiLinks{

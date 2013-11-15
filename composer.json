@@ -18,5 +18,6 @@
     ],
     "require": {
         "wordpress": ">=3.3.0"
-    }
+    },
+    "minimum-stability":"dev"
 }

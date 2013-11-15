@@ -1,0 +1,22 @@
+{
+    "name": "ankitpokhrel/dynamic-featured-image",
+    "description": "Dynamically adds multiple featured image (post thumbnail) functionality to posts, pages and custom post types.",
+    "keywords": [
+        "dynamic featured image",
+        "multiple featured image",
+        "multiple post thumbnails",
+        "wordpress plugin"
+    ],
+    "license": "GPL2",
+    "authors": [
+        {
+            "name": "Ankit Pokhrel",
+            "email": "ankitpokhrel@gmail.com",
+            "homepage": "http://ankitpokhrel.com.np",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "wordpress": ">=3.3.0"
+    }
+}

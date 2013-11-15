@@ -19,5 +19,5 @@
     "require": {
         "wordpress": ">=3.3.0"
     },
-    "minimum-stability": "v2.0.1",
+    "minimum-stability": "v2.0.1"
 }

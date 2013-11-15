@@ -1,7 +1,6 @@
 {
     "name": "ankitpokhrel/dynamic-featured-image",
     "description": "Dynamically adds multiple featured image (post thumbnail) functionality to posts, pages and custom post types.",
-    "version": "2.0.1",
     "keywords": [
         "dynamic featured image",
         "multiple featured image",

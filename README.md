@@ -1,3 +1,4 @@
+[![Latest Stable Version](https://poser.pugx.org/ankitpokhrel/Dynamic-Featured-Image/v/stable.png)](https://packagist.org/packages/ankitpokhrel/Dynamic-Featured-Image)
 ## Dynamic Featured Image (A WordPress Plugin)
 
 _Dynamically adds multiple featured image (post thumbnail) functionality to posts, pages and custom post types._

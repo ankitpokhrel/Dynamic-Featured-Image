@@ -21,8 +21,7 @@ jQuery(document).ready(function($){
        var metaBoxContentObj = newMetaBox.find('.inside');
        metaBoxContentObj.html('');
        obj.hide();
-       obj.parent().append('<img src="images/wpspin_light.gif" class="dfiLoading">').hide().fadeIn(200);       
-
+       obj.parent().append('<img src="images/wpspin_light.gif" class="dfiLoading">').hide().fadeIn(200);       
        $.ajax({
           type: 'POST',  
           url: 'admin-ajax.php',  

@@ -4,7 +4,7 @@
  * Copyright (c) 2013, Ankit Pokhrel <ankitpokhrel@gmail.com, http://ankitpokhrel.com.np>
  */
 jQuery(document).ready(function($){
-	var current = null;
+	var current = null;	
 	
 	/*
 	 * Add new meta box
@@ -20,8 +20,9 @@ jQuery(document).ready(function($){
        
        var metaBoxContentObj = newMetaBox.find('.inside');
        metaBoxContentObj.html('');
-       
-       obj.append('<img src="images/wpspin_light.gif" class="dfiLoading">').hide().fadeIn(200);
+       obj.hide();
+       obj.parent().append('<img src="images/wpspin_light.gif" class="dfiLoading">').hide().fadeIn(200);       
+
        $.ajax({
           type: 'POST',  
           url: 'admin-ajax.php',  
@@ -32,8 +33,9 @@ jQuery(document).ready(function($){
             
             //Add post id
             newMetaBox.find('.dfiFeaturedImage').attr('data-post-id', obj.parent().parent().find('.dfiFeaturedImage').attr('data-post-id') );
-            
-            obj.parent().find('.dfiLoading').fadeOut(300, function(){ $(this).remove(); });
+           
+            var alias = obj;
+            obj.parent().find('.dfiLoading').fadeOut(300, function(){ $(this).remove(); alias.fadeIn(200); });
           }
        });
        
@@ -43,8 +45,23 @@ jQuery(document).ready(function($){
 	 * Remove featured image meta box
 	 */
 	$(document).on('click', '.dfiRemove', function(){
-	   if( confirm('Are you sure?') )
-		  $(this).closest('.featured-meta-box').remove();
+	   if( confirm('Are you sure?') ){
+	     var dfiMetaBox = $(this).closest('.featured-meta-box');	     
+	     var totalMetaBox = $('.featured-meta-box').length;
+	     
+	     if( totalMetaBox == 1 ){	          
+	           dfiMetaBox.find('.dfiImg').attr('src', '');
+	           dfiMetaBox.find('.dfiImageHolder').val('');
+	           dfiMetaBox.find('.dfiFeaturedImage')
+	                     .removeClass('hasFeaturedImage')
+	                     .show()
+	                     .animate({ opacity: 1, display: 'inline-block' }, 600);	                     
+	     } else {
+		      dfiMetaBox.fadeOut(500, function(){
+		        $(this).remove();  
+		      });
+		 }
+	   }
 	});
 	
 	/*
@@ -69,31 +86,38 @@ jQuery(document).ready(function($){
 	 * Allow access to media uploader
 	 */
     function media_uploader(){
-       	window.send_to_editor = function(html){	    
-	        
-    		var fullSize = $('img', html).parent().attr('href');		
-    		var imgurl = $('img', html).attr('src');
+       	window.send_to_editor = function(html){       	        	             
+    		var fullSize = $('img', html).parent().attr('href');    		
+    		if( typeof fullSize === "undefined" ) fullSize = $(html).attr('src');
+    			
+    		var imgUrl, imgUrlTrimmed, fullUrlTrimmed;
     		
-    		imgUrlTrimmed = imgurl.split('wp-content');
-    		imgUrlTrimmed = '/wp-content' + imgUrlTrimmed[1];    	
+    		if( /wp-content/.test(fullSize) ){
+        		imgUrl = $('img', html).attr('src');
+        		
+        		imgUrlTrimmed = imgUrl.split('wp-content');
+        		imgUrlTrimmed = '/wp-content' + imgUrlTrimmed[1];
+        		
+        		fullUrlTrimmed = fullSize.split('wp-content');
+        		fullUrlTrimmed = '/wp-content' + fullUrlTrimmed[1];
+    		} else {
+    		    imgUrl = fullSize;
+    		    imgUrlTrimmed = fullSize;
+    		    fullUrlTrimmed = fullSize;
+    		}
     		
-    		fullUrlTrimmed = fullSize.split('wp-content');
-    		fullUrlTrimmed = '/wp-content' + fullUrlTrimmed[1];
-    		
-    		var fullImageName = fullUrlTrimmed.substring( fullUrlTrimmed.lastIndexOf('/') + 1 );    		
-    		var imageName = fullImageName.substring( 0, fullImageName.lastIndexOf('.') );
-    		var ext = fullImageName.substring( fullImageName.lastIndexOf('.') + 1 );
-    		    		
-    		var featuredBox = current.parent();
+    		var featuredBox = current.parent();    		
     		
     		featuredBox.find('.fImg').attr({
-    			'src': imgurl,
+    			'src': imgUrl,
     			'data-src': fullSize
     		});
+    		
+    		featuredBox.find('.dfiFeaturedImage').addClass('hasFeaturedImage');
     			
-    		var dfiFeaturedImages = [imgUrlTrimmed, fullUrlTrimmed, imageName, ext];
-    			
-    		featuredBox.find('img').attr('src', imgurl).fadeIn(200);
+    		var dfiFeaturedImages = [imgUrlTrimmed, fullUrlTrimmed];
+    		
+    		featuredBox.find('img').attr('src', imgUrl).fadeIn(200);
     		featuredBox.find('input.dfiImageHolder').val(dfiFeaturedImages);
     		tb_remove();
     		window.send_to_editor = restore_send_to_editor;
@@ -107,4 +131,19 @@ jQuery(document).ready(function($){
 	    $(this).parent().toggleClass('closed');
 	});
 	
+	/*
+	 * Add a hover animation in image
+	 */
+	$(document).on({
+	    mouseenter: function(){	
+	        var obj = $(this).closest('.featured-meta-box');       
+	        obj.find('.dfiImg').stop(true, true).animate({ opacity: 0.3 }, 300 );
+	        obj.find('.hasFeaturedImage').fadeIn(200);
+	    },
+	    mouseleave: function(){
+	        var obj = $(this);
+	        obj.find('.dfiImg').stop(true, true).animate({ opacity: 1 }, 300 );
+	        obj.find('.hasFeaturedImage').fadeOut(100);        	        
+	    }
+	}, '.featured-meta-box .inside');
 });

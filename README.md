@@ -1,8 +1,7 @@
+[![Latest Stable Version](https://poser.pugx.org/ankitpokhrel/Dynamic-Featured-Image/v/stable.png)](https://packagist.org/packages/ankitpokhrel/Dynamic-Featured-Image)
 ## Dynamic Featured Image (A WordPress Plugin)
 
 _Dynamically adds multiple featured image (post thumbnail) functionality to posts, pages and custom post types._
-
-> _For documentation of current version, view the [Wiki](https://github.com/ankitpokhrel/Dynamic-Featured-Image/wiki).
 
 ### Overview
 Dynamic Featured Image enables the option to have MULTIPLE featured images within a post or page. 
@@ -17,163 +16,45 @@ DFI allows you to add different number of featured images to each post and page 
   3. If you don't see new featured image box, click `Screen Options` in the upper right corner of your wordpress admin and make sure that the `Featured Image 2` box is slected.
 
 ### How it works?
-
 1. After successfull plugin activation go to `add` or `edit` page of posts or pages and you will notice a box for second featured image.
 
-   ![Snapshot 1](http://ankitpokhrel.com.np/dfi/snapshot_1.jpg)
+   ![Snapshot 1](http://ankitpokhrel.com.np/dfi/screenshot-1.jpg)
 
-2. Click `Set featured image`, select required image from media popup and click `Insert into Post`.
+2. Click `Set featured image`, select required image from media popup and click `Insert into Post`. Make sure `File URL` is selected in the `Link URL` section of media popup.
 
    ![Snapshot 2](http://ankitpokhrel.com.np/dfi/snapshot_2.jpg)
 
 3. Click on `Add New` to add new featured image or use `Remove` link to remove the featured image box.
  
-   ![Snapshot 3](http://ankitpokhrel.com.np/dfi/snapshot_3.jpg)
+   ![Snapshot 3](http://ankitpokhrel.com.np/dfi/screenshot-3.jpg)
 
 4. After adding featured images click `publish` or `update` to save featured images.
 
 ###### _Note: The featured images are only saved when you publish or update the post._
 
+### Documentation
+* [Retrieving images in a theme](/ankitpokhrel/Dynamic-Featured-Image/wiki/Retrieving-images-in-a-theme)
+* [Getting image title, alt and caption attributes](/ankitpokhrel/Dynamic-Featured-Image/wiki/Available-Functions#getting-image-title-alt-and-caption-attributes)
+* [Helpers/Utility functions](/ankitpokhrel/Dynamic-Featured-Image/wiki/Available-Functions)
 
-### Retrieving Images in a Theme
+### Other Resources
+* [Blog](http://ankitpokhrel.com.np/blog/category/dynamic-featured-image/)
+* [FAQ](http://wordpress.org/plugins/dynamic-featured-image/faq/)
 
-* To get featured images of specific post
-
-```
-if( function_exists('dfiGetFeaturedImages') )
-   $featuredImages = dfiGetFeaturedImages($postId);
-```
-
-* To get featured images in a post loop.
-
-```
-<?php 
-   while ( have_posts() ) : the_post();
-
-   if( function_exists('dfiGetFeaturedImages') ) {
-       $featuredImages = dfiGetFeaturedImages();
-   }
-   
-   endwhile;
-?>
-```
-
-* The data is returned as an array that contain selected image and full size path to the selected image.
-
-```
-array
-  0 => 
-    array
-      'thumb' => string 'http://your_site/upload_path/yourSelectedImage.jpg' (length=50)
-      'full' => string 'http://your_site/upload_path/yourSelectedImage_fullSize.jpg' (length=69)
-  1 => 
-    array
-      'thumb' => string 'http://your_site/upload_path/yourSelectedImage.jpg' (length=50)
-      'full' => string 'http://your_site/upload_path/yourSelectedImage_fullSize.jpg' (length=69)
-  2 => ...
-```
-
-## ShortCode and FancyBox Integration ( ver. 2+ - Future verison - Please ignore this for now)
-
-### Using shortcode
-The `shortcode` to get all the image with embeded fancybox support is:
-```
-[dfiFeaturedImages]
-
-//Options
-width: width of the thumbnail displayed (default: 150)
-height: height of the thumbnail displayed (default: 150)
-
-//Example
-[dfiFeaturedImages width="300" height="300"]
-```
-
-### Retrieving Images with Fancybox Support in a Theme
-
-Function syntax
-
-```
-dfiDisplayFeaturedImages($postId = null, $width = 150, $height = 150)
-```
-
-Example
-
-```
-if( function_exists('dfiDisplayFeaturedImages') ){
-    dfiDisplayFeaturedImages();
-}
-```
-
-or you can also call the shortcode directly
-
-```
-if( function_exists('dfiDisplayFeaturedImages') ){
-   echo do_shortcode('[dfiFeaturedImages]');
-}
-```
-
-### Applying Fancybox Settings
-The fancybox settings can be applied by directly pasting the settings code in the "Fancybox Settings" textbox but the settings needs to be in a special format (JSON).
-You can get the settings for fancybox from [fancybox docs](http://fancyapps.com/fancybox/).
-
-* Go to `Settings > DFI Settings`
-* Write your settings in a textbox as shown in the image and click `Save changes`
-![DFI Settings](http://ankitpokhrel.com.np/dfi/snapshot_settings.jpg)
-
-#### Required Format for Fancybox Settings
-The fancybox settings should be in a valid `JSON` format but without the opening curly braces.
-
-> These settings are fancybox specific and primarily focused to developers.
->The fancybox version used in this project is 2.1.4. 
-> Drop me a line at `ankitpokhrel@gmail.com` if you are confused with the settings. 
-> The friendly version of the settings will be included in the future release.
-
-* Example #1 - Basic Settings
-```
-"maxWidth": 800,
-"maxHeight": 600,
-"fitToView": false,
-"width": "70%",
-"height": "70%",
-"autoSize": false,
-"closeClick": false,
-"openEffect": "none",
-"closeEffect": "none"
-```
-
-* Example #2 - Using Thumbnail Helper
-```
-"openEffect": "elastic",
-"openSpeed": 150,
-"closeEffect": "elastic",
-"closeSpeed": 150,
-"closeClick": true,
-"helpers": {      
-        "thumbs": {
-            "width": 50,
-            "height": 50
-         }
- }
-```
-
-* Example #3 - Using Button Helper
-```
-"prevEffect": "none",
-"nextEffect": "none",
-"closeBtn": false,
-"helpers": {       
-      "buttons": {}
-}
-```
+#### The List of Available Functions are:
+1. [dfi_get_image_id( $image_url )](https://github.com/ankitpokhrel/Dynamic-Featured-Image/wiki/Available-Functions#1-dfi_get_image_id-image_url-)
+2. [dfi_get_image_thumb( $image_url, $size = "thumbnail" )](https://github.com/ankitpokhrel/Dynamic-Featured-Image/wiki/Available-Functions#2-dfi_get_image_thumb-image_url-size--thumbnail-)
+3. [dfi_get_image_url( $attachment_id, $size = "full" )](https://github.com/ankitpokhrel/Dynamic-Featured-Image/wiki/Available-Functions#3-dfi_get_image_url-attachment_id-size--full-)
+4. [dfi_get_post_attachment_ids( $post_id )](https://github.com/ankitpokhrel/Dynamic-Featured-Image/wiki/Available-Functions#4-dfi_get_post_attachment_ids-post_id-)
+5. [dfi_is_attached( $attachment_id, $post_id )](https://github.com/ankitpokhrel/Dynamic-Featured-Image/wiki/Available-Functions#5-dfi_is_attached-attachment_id-post_id-)
+6. [dfi_get_image_title( $image_url )](https://github.com/ankitpokhrel/Dynamic-Featured-Image/wiki/Available-Functions#6-dfi_get_image_title-image_url-)
+7. [dfi_get_image_title_by_id( $attachment_id )](https://github.com/ankitpokhrel/Dynamic-Featured-Image/wiki/Available-Functions#7-dfi_get_image_title_by_id-attachment_id-)
+8. [dfi_get_image_alt( $image_url )](https://github.com/ankitpokhrel/Dynamic-Featured-Image/wiki/Available-Functions#8-dfi_get_image_alt-image_url-)
+9. [dfi_get_image_alt_by_id( $attachment_id )](https://github.com/ankitpokhrel/Dynamic-Featured-Image/wiki/Available-Functions#9-dfi_get_image_alt_by_id-attachment_id-)
+10. [dfi_get_image_caption( $image_url )](https://github.com/ankitpokhrel/Dynamic-Featured-Image/wiki/Available-Functions#10-dfi_get_image_caption-image_url-)
+11. [dfi_get_image_caption_by_id( $attachment_id )](https://github.com/ankitpokhrel/Dynamic-Featured-Image/wiki/Available-Functions#11-dfi_get_image_caption_by_id-attachment_id-)
 
 ===================================================================================================
-
-### TODO List
-
-1. Title and Description for each featured image.
-2. Improved Settings Page.
-3. UI Change if Featured Image is More than Certain Number.
-4. and many more...
 
 ### Author available for hire
 

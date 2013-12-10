@@ -1,17 +1,11 @@
 [![Latest Stable Version](https://poser.pugx.org/ankitpokhrel/Dynamic-Featured-Image/v/stable.png)](https://packagist.org/packages/ankitpokhrel/Dynamic-Featured-Image)
-<<<<<<< HEAD
-=======
 
->>>>>>> 02de90dcc73ac2d5dde2ef0e96e286acc94025a9
 ## Dynamic Featured Image (A WordPress Plugin)
 
 _Dynamically adds multiple featured image (post thumbnail) functionality to posts, pages and custom post types._
 
-<<<<<<< HEAD
-=======
 > For documentation of current version, view the [Wiki](https://github.com/ankitpokhrel/Dynamic-Featured-Image/wiki).
 
->>>>>>> 02de90dcc73ac2d5dde2ef0e96e286acc94025a9
 ### Overview
 Dynamic Featured Image enables the option to have MULTIPLE featured images within a post or page. 
 This is especially helpful when you use other plugins, post thumbnails or sliders that use featured images.

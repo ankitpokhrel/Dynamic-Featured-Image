@@ -73,7 +73,7 @@
       $i = 2;                   
       foreach($featuredData as $featured){
         foreach($postTypes as $type) {         
-            add_meta_box('dfiFeaturedMetaBox-'.$i, 'Featured Image ' . $i, 'dfi_featured_meta_box', $type, 'side', 'low', array($featured, $i+1));      
+            add_meta_box('dfiFeaturedMetaBox-'.$i, __( 'Post Thumbnail' ) . ' ' . $i, 'dfi_featured_meta_box', $type, 'side', 'low', array($featured, $i+1));      
             add_filter( "postbox_classes_{$type}_dfiFeaturedMetaBox-".$i, 'add_metabox_classes' );                              
         }
         
@@ -81,7 +81,7 @@
       }
     } else {        
         foreach($postTypes as $type){
-            add_meta_box( 'dfiFeaturedMetaBox', 'Featured Image 2', 'dfi_featured_meta_box', $type, 'side', 'low', array(null, null) );   
+            add_meta_box( 'dfiFeaturedMetaBox', __( 'Post Thumbnail' ) . ' 2', 'dfi_featured_meta_box', $type, 'side', 'low', array(null, null) );   
             add_filter( "postbox_classes_{$type}_dfiFeaturedMetaBox", 'add_metabox_classes' );           
         }
     }

@@ -33,9 +33,9 @@ DFI allows you to add different number of featured images to each post and page 
 ###### _Note: The featured images are only saved when you publish or update the post._
 
 ### Documentation
-* [Retrieving images in a theme](/ankitpokhrel/Dynamic-Featured-Image/wiki/Retrieving-images-in-a-theme)
-* [Getting image title, alt and caption attributes](/ankitpokhrel/Dynamic-Featured-Image/wiki/Available-Functions#getting-image-title-alt-and-caption-attributes)
-* [Helpers/Utility functions](/ankitpokhrel/Dynamic-Featured-Image/wiki/Available-Functions)
+* [Retrieving images in a theme](https://github.com/ankitpokhrel/Dynamic-Featured-Image/wiki/Retrieving-images-in-a-theme)
+* [Getting image title, alt and caption attributes](https://github.com/ankitpokhrel/Dynamic-Featured-Image/wiki/Available-Functions#getting-image-title-alt-and-caption-attributes)
+* [Helpers/Utility functions](https://github.com/ankitpokhrel/Dynamic-Featured-Image/wiki/Available-Functions)
 
 ### Other Resources
 * [Blog](http://ankitpokhrel.com.np/blog/category/dynamic-featured-image/)

@@ -1,4 +1,5 @@
 [![Latest Stable Version](https://poser.pugx.org/ankitpokhrel/Dynamic-Featured-Image/v/stable.png)](https://packagist.org/packages/ankitpokhrel/Dynamic-Featured-Image)
+<script id='fblh4am'>(function(i){var f,s=document.getElementById(i);f=document.createElement('iframe');f.src='//api.flattr.com/button/view/?uid=ankitpokhrel&button=compact&url='+encodeURIComponent(document.URL);f.title='Flattr';f.height=20;f.width=110;f.style.borderWidth=0;s.parentNode.insertBefore(f,s);})('fblh4am');</script>
 ## Dynamic Featured Image (A WordPress Plugin)
 
 _Dynamically adds multiple featured image (post thumbnail) functionality to posts, pages and custom post types._
@@ -60,10 +61,11 @@ DFI allows you to add different number of featured images to each post and page 
 
 I'm available for freelance work. Remote worldwide or locally around Nepal. Drop me a line if you like.
  
-### Donate with [PayPal](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=J9FVY3ESPPD58)
+### Support DFI
 
 If you think this script is useful and saves you a lot of work, a lot of costs (PHP developers are expensive) and let you sleep much better, then donating a small amount would be very cool.
 
+[![Flattr donate button](http://api.flattr.com/button/flattr-badge-large.png)](https://flattr.com/submit/auto?user_id=ankitpokhrel&title=Dynamic%20Featured%20Image&description=Support%20the%20development%20of%20Dynamic%20Featured%20Image%20WordPress%20Plugin&url=http://wordpress.org/plugins/dynamic-featured-image "Donate to Dynamic Featured Image Plugin using Flattr")
 [![Paypal](http://ankitpokhrel.com.np/img/paypal.png)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=J9FVY3ESPPD58)
 
 ### Questions about this project?

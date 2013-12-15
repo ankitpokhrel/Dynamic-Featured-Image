@@ -65,7 +65,7 @@ I'm available for freelance work. Remote worldwide or locally around Nepal. Drop
 
 If you think this script is useful and saves you a lot of work, a lot of costs (PHP developers are expensive) and let you sleep much better, then donating a small amount would be very cool.
 
-[![Flattr donate button](http://api.flattr.com/button/flattr-badge-large.png)](https://flattr.com/submit/auto?user_id=ankitpokhrel&title=Dynamic%20Featured%20Image&description=Support%20the%20development%20of%20Dynamic%20Featured%20Image%20WordPress%20Plugin&url=http://wordpress.org/plugins/dynamic-featured-image "Donate to Dynamic Featured Image Plugin using Flattr")
+[![Flattr donate button](http://api.flattr.com/button/flattr-badge-large.png)](https://flattr.com/submit/auto?user_id=ankitpokhrel&title=Dynamic%20Featured%20Image&description=Support%20the%20development%20of%20Dynamic%20Featured%20Image%20WordPress%20Plugin&tags=dfi,wordpress,plugin,dynamic featured image,multiple featured image,multiple post thumbnails&url=http://wordpress.org/plugins/dynamic-featured-image "Donate to Dynamic Featured Image Plugin using Flattr")
 [![Paypal](http://ankitpokhrel.com.np/img/paypal.png)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=J9FVY3ESPPD58)
 
 ### Questions about this project?

@@ -77,3 +77,7 @@ If you think this script is useful and saves you a lot of work, a lot of costs (
 You can always contact me at `ankitpokhrel@gmail.com`, if you have any question or queries about the project. 
 
 Please feel free to report any bug found. Pull requests, issues, and plugin recommendations are more than welcome!
+
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/ankitpokhrel/dynamic-featured-image/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+

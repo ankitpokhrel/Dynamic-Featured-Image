@@ -1,32 +1,30 @@
 <?php
 /**
- * Plugin Name: Dynamic Featured Image
- * Plugin URI: http://wordpress.org/plugins/dynamic-featured-image/
- * Description: Dynamically adds multiple featured image or post thumbnail functionality to your posts, pages and custom post types.
- * Version: 2.0.1
- * Author: Ankit Pokhrel
- * Author URI: http://ankitpokhrel.com.np
- * License: GPL2 or later
- * License URI: http://www.gnu.org/licenses/gpl-2.0.html
- * Text Domain: dynamic-featured-image
- * Domain Path: /languages
- */
+Plugin Name: Dynamic Featured Image
+Plugin URI: http://wordpress.org/plugins/dynamic-featured-image/
+Description: Dynamically adds multiple featured image or post thumbnail functionality to your posts, pages and custom post types.
+Version: 2.0.1
+Author: Ankit Pokhrel
+Author URI: http://ankitpokhrel.com.np
+License: GPL2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
+Text Domain: dynamic-featured-image
+Domain Path: /languages
 
- /*
-   Copyright (C) 2013 Ankit Pokhrel <ankitpokhrel@gmail.com, http://ankitpokhrel.com.np>,
+	Copyright (C) 2013 Ankit Pokhrel <ankitpokhrel@gmail.com, http://ankitpokhrel.com.np>,
 
-   This program is free software; you can redistribute it and/or modify
-   it under the terms of the GNU General Public License as published by
-   the Free Software Foundation; either version 3 of the License, or
-   (at your option) any later version.
+	This program is free software; you can redistribute it and/or modify
+	it under the terms of the GNU General Public License as published by
+	the Free Software Foundation; either version 3 of the License, or
+	(at your option) any later version.
 
-   This program is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-   GNU General Public License for more details.
+	This program is distributed in the hope that it will be useful,
+	but WITHOUT ANY WARRANTY; without even the implied warranty of
+	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+	GNU General Public License for more details.
 
-   You should have received a copy of the GNU General Public License
-   along with this program.  If not, see <http://www.gnu.org/licenses/>.
+	You should have received a copy of the GNU General Public License
+	along with this program.  If not, see <http://www.gnu.org/licenses/>.
   */
 
 //avoid direct calls to this file

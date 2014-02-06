@@ -4,24 +4,22 @@
  * Copyright (c) 2013, Ankit Pokhrel <ankitpokhrel@gmail.com, http://ankitpokhrel.com.np>
  */
 
-.dfiAddNew, .dfiRemove {
-    height: 16px;
-    width: 16px;
-}
-
 .dfiAddNew {
   background: #fff url("../img/btnAdd.png") no-repeat;
   float: left;
-}
-
-.dfiRemove {
-    background: #fff url("../img/btnRemove.png") no-repeat;
-    float: right;   
-    margin: 0 !important;
+  height: 16px;
+  width: 16px;
 }
 
 .dfiAddNew:hover, .dfiRemove:hover {
     background-position: 0 -16px;
+}
+
+.dfiRemove {
+    background: #fff url("../img/btnRemove.png") no-repeat;
+    float: right;
+    height: 16px;
+    width: 16px;
 }
 
 .dfiLinks{
@@ -39,6 +37,10 @@
 
 img.dfiImg {
 	max-width: 258px;	
+}
+
+img.dfiImg[src=""]{
+  display: none;
 }
 
 img.dfiImgEmpty {
@@ -79,7 +81,7 @@ img.dfiImgEmpty {
   height: auto;
   margin: 0 !important; 
   position: absolute;
-  top: 35%;
+  top: 80px;
   left: 110px;
   display: none;
   z-index: 999;

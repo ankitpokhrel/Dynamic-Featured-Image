@@ -1,5 +1,5 @@
 <?php
-/**
+/***
 Plugin Name: Dynamic Featured Image
 Plugin URI: http://wordpress.org/plugins/dynamic-featured-image/
 Description: Dynamically adds multiple featured image or post thumbnail functionality to your posts, pages and custom post types.
@@ -34,349 +34,463 @@ if ( !defined( 'ABSPATH' ) ) {
 	exit();
 }
 
- define('DYNAMIC_FEATURED_IMAGE_VERSION', '2.0.1');
- define('DOCUMENTATION_PAGE', 'https://github.com/ankitpokhrel/Dynamic-Featured-Image/wiki');
+class Dynamic_Featured_Image {
 
- add_action('admin_init', 'dfi_initialize_components');
- function dfi_initialize_components(){
-    //enqueue styles
-    wp_enqueue_style('thickbox');
-    wp_enqueue_style( 'style-dfi', plugins_url('/css/style-dfi.css', __FILE__) );
+	/**
+	 * Current version of the plugin.
+	 *
+	 * @since	1.0.0
+	 * @static
+	 * @access	public
+	 * @var		string	$version
+	 */
+	public static $version = '2.0.1';
 
-    //register scripts
-    wp_register_script('dfi-scripts', plugins_url('/js/script-dfi.js', __FILE__), array('jquery','media-upload','thickbox'));
+	/**
+	 * Constructor. Hooks all interactions to initialize the class.
+	 *
+	 * @since	1.0.0
+	 * @access	public
+	 *
+	 * @see	add_action()
+	 *
+	 * @return	void
+	 */
+	public function __construct() {
 
-    //enqueue scripts
-    wp_enqueue_script('thickbox');
-    wp_enqueue_script('media-models');
-    wp_enqueue_script('media-upload');
-    wp_enqueue_script('dfi-scripts');
-    wp_enqueue_script( 'script-dfi.js');
- }
+		if ( is_admin() ) {
+			add_action( 'in_plugin_update_message-' . plugin_basename(__FILE__), array( $this, 'update_notice' ) );
+		}
 
- /*
-  * Add featured meta boxes dynamically
-  */
+		add_action( 'admin_enqueue_scripts',	array( $this, 'enqueue_admin_scripts' ) );
+		add_action( 'add_meta_boxes',			array( $this, 'initialize_featured_box' ) );
+		add_action( 'save_post',				array( $this, 'save_meta' ) );
+		add_action( 'plugins_loaded',			array( $this, 'load_plugin_textdomain' ) );
 
- add_action('add_meta_boxes', 'dfi_initialize_featured_box');
- function dfi_initialize_featured_box(){
-    global $post;
-    $data = get_post_custom($post->ID);
+		//handle ajax request
+		add_action( 'wp_ajax_nopriv_dfiMetaBox_callback',	array( $this, 'ajax_callback' ) );
+		add_action( 'wp_ajax_dfiMetaBox_callback',			array( $this, 'ajax_callback' ) );
 
-    $totalFeatured = 0;
-    if( isset($data['dfiFeatured'][0]) && !empty($data['dfiFeatured'][0]) ){
-     $featuredData = unserialize($data['dfiFeatured'][0]);
-     $totalFeatured = count($featuredData);
-    }
+	} // END __construct()
 
-    $filter = array('attachment', 'revision', 'nav_menu_item');
-    $postTypes = get_post_types();
-    $postTypes = array_diff($postTypes, $filter);
+	public function enqueue_admin_scripts( $hook ) {
 
-    if( $totalFeatured >= 1 ){
-      $i = 2;
-      foreach($featuredData as $featured){
-        foreach($postTypes as $type) {
-            add_meta_box('dfiFeaturedMetaBox-'.$i, __('Featured Image ') . $i, 'dfi_featured_meta_box', $type, 'side', 'low', array($featured, $i+1));
-            add_filter( "postbox_classes_{$type}_dfiFeaturedMetaBox-".$i, 'add_metabox_classes' );
-        }
+		//enqueue styles
+		wp_enqueue_style( 'thickbox' );
+		wp_enqueue_style( 'style-dfi', plugins_url( '/css/style-dfi.css', __FILE__ ), array(), self::$version );
 
-        $i++;
-      }
-    } else {
-        foreach($postTypes as $type){
-            add_meta_box( 'dfiFeaturedMetaBox', __('Featured Image 2'), 'dfi_featured_meta_box', $type, 'side', 'low', array(null, null) );
-            add_filter( "postbox_classes_{$type}_dfiFeaturedMetaBox", 'add_metabox_classes' );
-        }
-    }
- }
+		//register scripts
+		wp_register_script( 'scripts-dfi', plugins_url( '/js/script-dfi.js', __FILE__), array( 'jquery','media-upload','thickbox' ), self::$version );
 
- function dfi_featured_meta_box($post, $featured){
-    $featuredImg = is_null($featured['args'][0]) ? '' : $featured['args'][0];
-    $featuredId = is_null($featured['args'][1]) ? 2 : --$featured['args'][1];
+		//enqueue scripts
+		wp_enqueue_script( 'thickbox' );
+		wp_enqueue_script( 'media-models' );
+		wp_enqueue_script( 'media-upload' );
+		wp_enqueue_script( 'scripts-dfi' );
 
-    $featuredImgTrimmed = $featuredImgFull = $featuredImg;
-    if( !empty($featuredImg) ){
-        list($featuredImgTrimmed, $featuredImgFull) = explode(',', $featuredImg);
-    }
+	} // END initialize_components()
 
-    $thumbnail =  ( strpos($featuredImgFull, 'wp-content') !== false ) ?  dfi_get_image_thumb( site_url() . $featuredImgFull, 'medium' ) : $featuredImgFull;
+	/**
+	 * Add featured meta boxes dynamically
+	 */
+	public function initialize_featured_box() {
 
-    //Add a nonce field
-    wp_nonce_field( plugin_basename(__FILE__), 'dfi_fimageplug-' . $featuredId);
- ?>
-   <a href="javascript:void(0)" class='dfiFeaturedImage <?php if( isset($featuredImgTrimmed) && !empty($featuredImgTrimmed) ) echo 'hasFeaturedImage' ?>' title="Set Featured Image" data-post-id="<?php the_ID() ?>"><span></span></a><br/>
-   <img src="<?php if( isset($thumbnail) && !is_null($thumbnail) ) echo $thumbnail; ?>" class='dfiImg <?php if( !isset($featuredImgTrimmed) || is_null($featuredImgTrimmed) ) echo 'dfiImgEmpty' ?>'/>
-   <div class='dfiLinks'>
-    <a href="javascript:void(0)" data-id='<?php echo $featuredId ?>' class='dfiAddNew' title="Add New"></a>
-    <a href="javascript:void(0)" class='dfiRemove' title="Remove"></a>
-   </div>
-   <div class='dfiClearFloat'></div>
-   <input type='hidden' name="dfiFeatured[]" value="<?php echo $featuredImg ?>"  class="dfiImageHolder" />
- <?php }
+		global $post;
+		$data = get_post_custom( $post->ID );
 
- //handle ajax request
- add_action( 'wp_ajax_nopriv_dfiMetaBox_callback', 'dfiMetaBox_callback' );
- add_action( 'wp_ajax_dfiMetaBox_callback', 'dfiMetaBox_callback' );
- function dfiMetaBox_callback(){
-     $featuredId = isset($_POST['id']) ? (int) strip_tags( trim($_POST['id']) ) : null;
+		$totalFeatured = 0;
+		if ( isset( $data['dfiFeatured'][0] ) && !empty( $data['dfiFeatured'][0] ) ) {
+			$featuredData = unserialize($data['dfiFeatured'][0]);
+			$totalFeatured = count( $featuredData );
+		}
 
-     if( is_null($featuredId) ) return;
+		$filter = array( 'attachment', 'revision', 'nav_menu_item' );
+		$postTypes = get_post_types();
+		$postTypes = array_diff( $postTypes, $filter );
 
-     wp_nonce_field( plugin_basename(__FILE__), 'dfi_fimageplug-' . $featuredId );
- ?>
-      <a href="javascript:void(0)" class='dfiFeaturedImage' title="Set Featured Image"><span></span></a><br/>
-       <img src="" class='dfiImg dfiImgEmpty'/>
-       <div class='dfiLinks'>
-        <a href="javascript:void(0)" data-id='<?php echo $featuredId ?>' class='dfiAddNew' title="Add New"></a>
-        <a href="javascript:void(0)" class='dfiRemove' title="Remove"></a>
-       </div>
-       <div class='dfiClearFloat'></div>
-       <input type='hidden' name="dfiFeatured[]" value="" class="dfiImageHolder" />
-<?php
-     die();
- }
+		if ( $totalFeatured >= 1 ) {
+			$i = 2;
+			foreach ( $featuredData as $featured ) {
+				foreach ( $postTypes as $type ) {
+					add_meta_box(
+						'dfiFeaturedMetaBox-' . $i,
+						__('Featured Image ') . $i,
+						array( $this, 'featured_meta_box' ),
+						$type,
+						'side',
+						'low',
+						array( $featured, $i + 1 )
+					);
+					add_filter( "postbox_classes_{$type}_dfiFeaturedMetaBox-" . $i, array( $this, 'add_metabox_classes' ) );
+				}
 
- /*
-  * Add custom class, featured-meta-box to meta box
-  */
+				$i++;
+			}
+		} else {
+			foreach ( $postTypes as $type ) {
+				add_meta_box(
+					'dfiFeaturedMetaBox',
+					__( 'Featured Image 2', 'dynamic-featured-image' ),
+					array( $this, 'featured_meta_box' ),
+					$type,
+					'side',
+					'low',
+					array( null, null )
+				);
+				add_filter( "postbox_classes_{$type}_dfiFeaturedMetaBox", array( $this, 'add_metabox_classes' ) );
+			}
+		}
 
- function add_metabox_classes( $classes ) {
-    array_push( $classes, 'featured-meta-box' );
-    return $classes;
-}
+	} // END initialize_featured_box()
 
- /*
-  * Update featured images
-  */
+	public function featured_meta_box( $post, $featured ) {
 
- add_action('save_post', 'save_dfi_featured_meta');
- function save_dfi_featured_meta( $post_id ) {
-     $featuredIds = array();
-     $keys = array_keys( $_POST );
-     foreach ( $keys as $key ) {
-        if ( preg_match( '/dfi_fimageplug-.$/', $key ) ) {
-             $featuredIds[] = $key;
-        }
-     }
+		$featuredImg	= is_null( $featured['args'][0]) ? '' : $featured['args'][0];
+		$featuredId		= is_null( $featured['args'][1]) ? 2 : --$featured['args'][1];
 
-    //Verify nonce
-    foreach( $featuredIds as $nonceId ) {
-     if ( !wp_verify_nonce( $_POST[$nonceId], plugin_basename(__FILE__) ) ) {
-       return;
-     }
-    }
+		$featuredImgTrimmed = $featuredImgFull = $featuredImg;
+		if ( !empty( $featuredImg ) ) {
+			list( $featuredImgTrimmed, $featuredImgFull ) = explode( ',', $featuredImg );
+		}
 
-    //Check autosave
-    if ( defined('DOING_AUTOSAVE') && DOING_AUTOSAVE ) {
-        return;
-    }
+		$thumbnail = ( strpos( $featuredImgFull, 'wp-content' ) !== false ) ? $this->get_image_thumb( site_url() . $featuredImgFull, 'medium' ) : $featuredImgFull;
 
-    //Check permission before saving data
-    if( !empty($_POST) && current_user_can('edit_posts', $post_id) ) {
-      if( isset($_POST['dfiFeatured']) ){
-       update_post_meta($post_id, 'dfiFeatured', $_POST['dfiFeatured']);
-      }
-    }
- }
+		//Add a nonce field
+		wp_nonce_field(plugin_basename(__FILE__), 'dfi_fimageplug-' . $featuredId);
+		?>
+			<a href="javascript:void(0)" class='dfiFeaturedImage <?php if (isset($featuredImgTrimmed) && !empty($featuredImgTrimmed)) echo 'hasFeaturedImage' ?>' title="Set Featured Image" data-post-id="<?php the_ID() ?>"><span></span></a><br/>
+			<img src="<?php if (isset($thumbnail) && !is_null($thumbnail)) echo $thumbnail; ?>" class='dfiImg <?php if (!isset($featuredImgTrimmed) || is_null($featuredImgTrimmed)) echo 'dfiImgEmpty' ?>'/>
+			<div class='dfiLinks'>
+				<a href="javascript:void(0)" data-id='<?php echo $featuredId ?>' class='dfiAddNew' title="Add New"></a>
+				<a href="javascript:void(0)" class='dfiRemove' title="Remove"></a>
+			</div>
+			<div class='dfiClearFloat'></div>
+			<input type='hidden' name="dfiFeatured[]" value="<?php echo $featuredImg ?>"  class="dfiImageHolder" />
+		<?php
 
- /* ver. 2.0.0 */
+	} // END featured_meta_box()
 
- /*
-  * Add update notice
-  */
- function dfi_update_notice() {
-    $info = __( ' ATTENTION! Please read the <a href="' . DOCUMENTATION_PAGE . '" target="_blank">DOCUMENTATION</a> properly before update.', 'dfi_text_domain' );
-    echo '<div style="color:red; padding:7px 0;">' . strip_tags( $info, '<a><b><i><span>' ) . '</div>';
- }
+	public function ajax_callback() {
 
- if( is_admin() )
-    add_action( 'in_plugin_update_message-' . plugin_basename(__FILE__), 'dfi_update_notice' );
+		$featuredId = isset($_POST['id']) ? (int) strip_tags(trim($_POST['id'])) : null;
 
- /* Helper functions */
+		if ( is_null( $featuredId ) ) {
+			return;
+		}
 
- /*
-  * Get attachment id of the image by image url
-  *
-  * @return String
-  */
- function dfi_get_image_id( $image_url ) {
-    global $wpdb;
-    $prefix = $wpdb->prefix;
-    $attachment = $wpdb->get_col( $wpdb->prepare( "SELECT ID FROM " . $prefix . "posts" . " WHERE guid= %s", $image_url ) );
+		wp_nonce_field( plugin_basename(__FILE__), 'dfi_fimageplug-' . $featuredId );
+		?>
+			  <a href="javascript:void(0)" class='dfiFeaturedImage' title="Set Featured Image"><span></span></a><br/>
+			   <img src="" class='dfiImg dfiImgEmpty'/>
+			   <div class='dfiLinks'>
+				<a href="javascript:void(0)" data-id='<?php echo $featuredId ?>' class='dfiAddNew' title="Add New"></a>
+				<a href="javascript:void(0)" class='dfiRemove' title="Remove"></a>
+			   </div>
+			   <div class='dfiClearFloat'></div>
+			   <input type='hidden' name="dfiFeatured[]" value="" class="dfiImageHolder" />
+		<?php
+		die();
 
-    return empty($attachment) ? null : $attachment[0];
- }
+	} // END MetaBox_callback())
 
- /*
-  * Get image url of the image by attachment id
-  *
-  * @return String
-  */
- function dfi_get_image_url( $attachmentId, $size = 'full' ) {
-    $image_thumb = wp_get_attachment_image_src( $attachmentId, $size );
+	/**
+	 * Add custom class, featured-meta-box to meta box
+	 */
+	public function add_metabox_classes( $classes ) {
 
-    return empty($image_thumb) ? null : $image_thumb[0];
- }
+		array_push( $classes, 'featured-meta-box' );
 
- /*
-  * Get image thumbnail url of specific size by image url
-  *
-  * @return String
-  */
- function dfi_get_image_thumb( $image_url, $size = 'thumbnail' ) {
-    $attachment_id = dfi_get_image_id( $image_url );
-    $image_thumb = wp_get_attachment_image_src( $attachment_id, $size );
+		return $classes;
 
-    return empty($image_thumb) ? null : $image_thumb[0];
- }
+	} // END add_metabox_classes()
 
- /*
-  * Get image title
-  *
-  * @return String
-  */
- function dfi_get_image_title( $image_url ) {
-    global $wpdb;
-    $prefix = $wpdb->prefix;
-    $post_title = $wpdb->get_col( $wpdb->prepare( "SELECT post_title FROM " . $prefix . "posts" . " WHERE guid = %s", $image_url ) );
+	/**
+	 * Update featured images
+	 */
+	public function save_meta( $post_id ) {
 
-    return empty($post_title) ? null : $post_title[0];
- }
+		$featuredIds = array();
+		$keys = array_keys( $_POST );
 
- /*
-  * Get image title by id
-  *
-  * @return String
-  */
- function dfi_get_image_title_by_id( $attachment_id ) {
-    global $wpdb;
-    $prefix = $wpdb->prefix;
-    $post_title = $wpdb->get_col( $wpdb->prepare( "SELECT post_title FROM " . $prefix . "posts" . " WHERE ID = %d", $attachment_id ) );
+		foreach ( $keys as $key ) {
+			if ( preg_match( '/dfi_fimageplug-.$/', $key ) ) {
+				$featuredIds[] = $key;
+			}
+		}
 
-    return empty($post_title) ? null : $post_title[0];
- }
+		//Verify nonce
+		foreach ( $featuredIds as $nonceId ) {
+			if ( !wp_verify_nonce( $_POST[$nonceId], plugin_basename(__FILE__) ) ) {
+				return;
+			}
+		}
 
- /*
-  * Get image caption
-  *
-  * @return String
-  */
- function dfi_get_image_caption( $image_url ) {
-    global $wpdb;
-    $prefix = $wpdb->prefix;
-    $post_caption = $wpdb->get_col( $wpdb->prepare( "SELECT post_excerpt FROM " . $prefix . "posts" . " WHERE guid = %s", $image_url ) );
+		//Check autosave
+		if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {
+			return;
+		}
 
-    return empty($post_caption) ? null : $post_caption[0];
- }
+		//Check permission before saving data
+		if ( !empty( $_POST ) && current_user_can( 'edit_posts', $post_id ) ) {
+			if ( isset( $_POST['dfiFeatured'] ) ) {
+				update_post_meta( $post_id, 'dfiFeatured', $_POST['dfiFeatured'] );
+			}
+		}
 
- /*
-  * Get image caption by id
-  *
-  * @return String
-  */
- function dfi_get_image_caption_by_id( $attachment_id ) {
-    global $wpdb;
-    $prefix = $wpdb->prefix;
-    $post_caption = $wpdb->get_col( $wpdb->prepare( "SELECT post_excerpt FROM " . $prefix . "posts" . " WHERE ID = %d", $attachment_id ) );
+	} // END save_meta()
 
-    return empty($post_caption) ? null : $post_caption[0];
- }
+	/**
+	 * Add update notice
+	 */
+	public function update_notice() {
 
-/*
- * Get image alternate text
+		$info = __( 'ATTENTION! Please read the <a href="https://github.com/ankitpokhrel/Dynamic-Featured-Image/wiki" target="_blank">DOCUMENTATION</a> properly before update.', 'dynamic-featured-image');
+		echo '<div style="color:red; padding:7px 0;">' . strip_tags( $info, '<a><b><i><span>' ) . '</div>';
+
+	} // END update_notice()
+
+	/** Helper functions */
+	/**
+	 * Get attachment id of the image by image url
+	 *
+	 * @return String
+	 */
+	public function get_image_id( $image_url ) {
+
+		global $wpdb;
+		$prefix = $wpdb->prefix;
+		$attachment = $wpdb->get_col( $wpdb->prepare( "SELECT ID FROM " . $prefix . "posts" . " WHERE guid= %s", $image_url ) );
+
+		return empty( $attachment ) ? null : $attachment[0];
+
+	} // END get_image_id()
+
+	/**
+	 * Get image url of the image by attachment id
+	 *
+	 * @return String
+	 */
+	public function get_image_url( $attachmentId, $size = 'full' ) {
+
+		$image_thumb = wp_get_attachment_image_src( $attachmentId, $size );
+
+		return empty( $image_thumb ) ? null : $image_thumb[0];
+
+	} // END get_image_url()
+
+	/**
+	 * Get image thumbnail url of specific size by image url
+	 *
+	 * @return String
+	 */
+	public function get_image_thumb( $image_url, $size = 'thumbnail' ) {
+
+		$attachment_id = $this->get_image_id( $image_url );
+		$image_thumb = wp_get_attachment_image_src( $attachment_id, $size );
+
+		return empty( $image_thumb ) ? null : $image_thumb[0];
+
+	} // END get_image_thumb()
+
+	/**
+	 * Get image title
+	 *
+	 * @return String
+	 */
+	public function get_image_title( $image_url ) {
+
+		global $wpdb;
+		$prefix = $wpdb->prefix;
+		$post_title = $wpdb->get_col( $wpdb->prepare( "SELECT post_title FROM " . $prefix . "posts" . " WHERE guid = %s", $image_url ) );
+
+		return empty( $post_title ) ? null : $post_title[0];
+
+	} // END get_image_title()
+
+	/**
+	 * Get image title by id
+	 *
+	 * @return String
+	 */
+	public function get_image_title_by_id( $attachment_id ) {
+
+		global $wpdb;
+		$prefix = $wpdb->prefix;
+		$post_title = $wpdb->get_col( $wpdb->prepare( "SELECT post_title FROM " . $prefix . "posts" . " WHERE ID = %d", $attachment_id ) );
+
+		return empty($post_title) ? null : $post_title[0];
+
+	} // END get_image_title_by_id()
+
+	/**
+	 * Get image caption
+	 *
+	 * @return String
+	 */
+	public function get_image_caption( $image_url ) {
+
+		global $wpdb;
+		$prefix = $wpdb->prefix;
+		$post_caption = $wpdb->get_col( $wpdb->prepare("SELECT post_excerpt FROM " . $prefix . "posts" . " WHERE guid = %s", $image_url ) );
+
+		return empty( $post_caption ) ? null : $post_caption[0];
+
+	} // END get_image_caption()
+
+	/**
+	 * Get image caption by id
+	 *
+	 * @return String
+	 */
+	public function get_image_caption_by_id( $attachment_id ) {
+
+		global $wpdb;
+		$prefix = $wpdb->prefix;
+		$post_caption = $wpdb->get_col($wpdb->prepare("SELECT post_excerpt FROM " . $prefix . "posts" . " WHERE ID = %d", $attachment_id));
+
+		return empty( $post_caption ) ? null : $post_caption[0];
+
+	} // END get_image_caption_by_id()
+
+	/**
+	 * Get image alternate text
+	 *
+	 * @return String
+	 */
+	public function get_image_alt( $image_url ) {
+
+		global $wpdb;
+		$prefix = $wpdb->prefix;
+		$attachment = $wpdb->get_col( $wpdb->prepare( "SELECT ID FROM " . $prefix . "posts" . " WHERE guid = %s", $image_url ) );
+
+		$alt = null;
+		if ( !empty( $attachment ) ) {
+			$alt = get_post_meta( $attachment[0], '_wp_attachment_image_alt' );
+		}
+
+		return ( is_null( $alt ) || empty( $alt ) ) ? null : $alt[0];
+
+	} // END get_image_alt()
+
+	/**
+	 * Get image alternate text by attachment id
+	 *
+	 * @return String
+	 */
+	public function get_image_alt_by_id( $attachment_id ) {
+
+		$alt = get_post_meta($attachment_id, '_wp_attachment_image_alt');
+
+		return empty($alt) ? null : $alt[0];
+
+	} // END get_image_alt_by_id()
+
+	/**
+	 * Get all attachment ids of the post
+	 *
+	 * @return Array
+	 */
+	public function get_post_attachment_ids( $post_id ) {
+
+		$dfiImages = get_post_custom( $post_id );
+		$dfiImages = ( isset( $dfiImages['dfiFeatured'][0] ) ) ? @array_filter( unserialize( $dfiImages['dfiFeatured'][0] ) ) : array();
+
+		$retVal = array();
+		if ( !empty( $dfiImages ) && is_array( $dfiImages ) ) {
+			foreach ( $dfiImages as $dfiImage ) {
+				list( $dfiImageTrimmed, $dfiImageFull ) = explode( ',', $dfiImage );
+
+				$retVal[] = $this->get_image_id( site_url() . $dfiImageFull );
+			}
+		}
+
+		return $retVal;
+
+	} // END get_post_attachment_ids()
+
+	/**
+	 * Check if the image is attached with the particular post
+	 *
+	 * @return boolean
+	 */
+	public function is_attached( $attachment_id, $post_id ) {
+
+		$attachment_ids = $this->get_post_attachment_ids( $post_id );
+
+		return in_array( $attachment_id, $attachment_ids ) ? true : false;
+
+	} // END is_attached()
+
+	/**
+	 * Retrieve featured images for specific post(s)
+	 *
+	 * @return Array
+	 */
+	public function get_featured_images( $post_id = null ) {
+
+		if ( is_null( $post_id ) ) {
+			global $post;
+			$post_id = $post->ID;
+		}
+
+		$dfiImages = get_post_custom( $post_id );
+		$dfiImages = ( isset( $dfiImages['dfiFeatured'][0] ) ) ? @array_filter( unserialize( $dfiImages['dfiFeatured'][0] ) ) : array();
+
+		$retImages = array();
+		if ( !empty( $dfiImages ) && is_array( $dfiImages ) ) {
+			$count = 0;
+			foreach ( $dfiImages as $dfiImage ) {
+				@list( $dfiImageTrimmed, $dfiImageFull ) = explode( ',', $dfiImage );
+				if ( strpos( $dfiImageFull, 'wp-content' ) !== false ) {
+					$retImages[$count]['thumb']			= site_url() . $dfiImageTrimmed;
+					$retImages[$count]['full']			= site_url() . $dfiImageFull;
+					$retImages[$count]['attachment_id']	= $this->get_image_id( site_url() . $dfiImageFull );
+				} else {
+					$retImages[$count]['thumb']			= $dfiImageTrimmed;
+					$retImages[$count]['full']			= $dfiImageFull;
+					$retImages[$count]['attachment_id']	= $this->get_image_id( site_url() . $dfiImageFull );
+				}
+
+
+				$count++;
+			}
+		}
+
+		return ( !empty( $retImages ) ) ? $retImages : null;
+
+	} // END get_featured_images()
+
+	/**
+	 * Load the plugin's textdomain hooked to 'plugins_loaded'.
+	 *
+	 * @since	1.0.0
+	 * @access	public
+	 *
+	 * @see		load_plugin_textdomain()
+	 * @see		plugin_basename()
+	 * @action	plugins_loaded
+	 *
+	 * @return	void
+	 */
+	public function load_plugin_textdomain() {
+
+		load_plugin_textdomain(
+			'dynamic-featured-images',
+			false,
+			dirname( plugin_basename( __FILE__ ) ) . '/languages/'
+		);
+
+	} // END load_plugin_textdomain()
+
+} // END class Dynamic_Featured_Image
+
+/**
+ * Instantiate the main class
  *
- * @return String
- */
- function dfi_get_image_alt( $image_url ) {
-    global $wpdb;
-    $prefix = $wpdb->prefix;
-    $attachment = $wpdb->get_col( $wpdb->prepare( "SELECT ID FROM " . $prefix . "posts" . " WHERE guid = %s", $image_url ) );
-
-    $alt = null;
-    if( !empty($attachment) ){
-        $alt = get_post_meta($attachment[0], '_wp_attachment_image_alt');
-    }
-
-    return ( is_null($alt) || empty($alt) ) ? null : $alt[0];
- }
-
- /*
- * Get image alternate text by attachment id
+ * @since	1.0.0
+ * @access	public
  *
- * @return String
+ * @var	object	$dynamic_featured_image holds the instantiated class {@uses Dynamic_Featured_Image}
  */
- function dfi_get_image_alt_by_id( $attachment_id ) {
-    $alt = get_post_meta($attachment_id, '_wp_attachment_image_alt');
-
-    return empty($alt) ? null : $alt[0];
- }
-
- /*
-  * Get all attachment ids of the post
-  *
-  * @return Array
-  */
-  function dfi_get_post_attachment_ids( $post_id ){
-    $dfiImages = get_post_custom($post_id);
-    $dfiImages = ( isset($dfiImages['dfiFeatured'][0]) ) ? @array_filter( unserialize( $dfiImages['dfiFeatured'][0] ) ) : array();
-
-    $retVal = array();
-    if( !empty($dfiImages) && is_array($dfiImages) ) {
-      foreach($dfiImages as $dfiImage){
-        list($dfiImageTrimmed, $dfiImageFull) = explode(',', $dfiImage);
-
-        $retVal[] = dfi_get_image_id( site_url() . $dfiImageFull );
-      }
-    }
-
-    return $retVal;
-  }
-
- /*
-  * Check if the image is attached with the particular post
-  *
-  * @return boolean
-  */
- function dfi_is_attached( $attachment_id, $post_id ){
-     $attachment_ids = dfi_get_post_attachment_ids( $post_id );
-
-     return in_array($attachment_id, $attachment_ids) ? true : false;
- }
-
- /*
-  * Retrieve featured images for specific post(s)
-  *
-  * @return Array
-  */
- function dfi_get_featured_images($post_id = null){
-    if( is_null($post_id) ){
-     global $post;
-     $post_id = $post->ID;
-    }
-
-    $dfiImages = get_post_custom($post_id);
-    $dfiImages = ( isset($dfiImages['dfiFeatured'][0]) ) ? @array_filter( unserialize( $dfiImages['dfiFeatured'][0] ) ) : array();
-
-    $retImages = array();
-    if( !empty($dfiImages) && is_array($dfiImages) ) {
-      $count = 0;
-      foreach($dfiImages as $dfiImage){
-        @list($dfiImageTrimmed, $dfiImageFull) = explode(',', $dfiImage);
-        if( strpos($dfiImageFull, 'wp-content') !== false ){
-            $retImages[$count]['thumb'] = site_url() . $dfiImageTrimmed;
-            $retImages[$count]['full'] = site_url() . $dfiImageFull;
-            $retImages[$count]['attachment_id'] = dfi_get_image_id( site_url() . $dfiImageFull );
-        } else {
-            $retImages[$count]['thumb'] = $dfiImageTrimmed;
-            $retImages[$count]['full'] = $dfiImageFull;
-            $retImages[$count]['attachment_id'] = dfi_get_image_id( site_url() . $dfiImageFull );
-        }
-
-
-        $count++;
-      }
-    }
-
-    return ( !empty($retImages) ) ? $retImages : null;
- }
+global $dynamic_featured_image;
+$dynamic_featured_image = new Dynamic_Featured_Image();

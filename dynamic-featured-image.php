@@ -29,14 +29,15 @@
    along with this program.  If not, see <http://www.gnu.org/licenses/>.
   */
 
+//avoid direct calls to this file
+if ( !defined( 'ABSPATH' ) ) {
+	header( 'Status: 403 Forbidden' );
+	header( 'HTTP/1.1 403 Forbidden' );
+	exit();
+}
+
  define('DYNAMIC_FEATURED_IMAGE_VERSION', '2.0.1');
  define('DOCUMENTATION_PAGE', 'https://github.com/ankitpokhrel/Dynamic-Featured-Image/wiki');
-
- //prevent direct access
- if ( !function_exists( 'add_action' ) ) {
-    echo "Hi there!  I'm just a plugin, not much I can do when called directly.";
-    exit();
- }
 
  add_action('admin_init', 'dfi_initialize_components');
  function dfi_initialize_components(){

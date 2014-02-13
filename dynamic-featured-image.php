@@ -1,39 +1,46 @@
 <?php
 /***
-Plugin Name: Dynamic Featured Image
-Plugin URI: http://wordpress.org/plugins/dynamic-featured-image/
-Description: Dynamically adds multiple featured image or post thumbnail functionality to your posts, pages and custom post types.
-Version: 2.0.1
-Author: Ankit Pokhrel
-Author URI: http://ankitpokhrel.com.np
-License: GPL2 or later
-License URI: http://www.gnu.org/licenses/gpl-2.0.html
-Text Domain: dynamic-featured-image
-Domain Path: /languages
+ Plugin Name: Dynamic Featured Image
+ Plugin URI: http://wordpress.org/plugins/dynamic-featured-image/
+ Description: Dynamically adds multiple featured image or post thumbnail functionality to your posts, pages and custom post types.
+ Version: 2.0.1
+ Author: Ankit Pokhrel
+ Author URI: http://ankitpokhrel.com.np
+ License: GPL2 or later
+ License URI: http://www.gnu.org/licenses/gpl-2.0.html
+ Text Domain: dynamic-featured-image
+ Domain Path: /languages
 
-	Copyright (C) 2013 Ankit Pokhrel <ankitpokhrel@gmail.com, http://ankitpokhrel.com.np>,
+  	Copyright (C) 2013 Ankit Pokhrel <ankitpokhrel@gmail.com, http://ankitpokhrel.com.np>,
 
-	This program is free software; you can redistribute it and/or modify
-	it under the terms of the GNU General Public License as published by
-	the Free Software Foundation; either version 3 of the License, or
-	(at your option) any later version.
+  	This program is free software; you can redistribute it and/or modify
+  	it under the terms of the GNU General Public License as published by
+  	the Free Software Foundation; either version 3 of the License, or
+  	(at your option) any later version.
 
-	This program is distributed in the hope that it will be useful,
-	but WITHOUT ANY WARRANTY; without even the implied warranty of
-	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-	GNU General Public License for more details.
+  	This program is distributed in the hope that it will be useful,
+  	but WITHOUT ANY WARRANTY; without even the implied warranty of
+  	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  	GNU General Public License for more details.
 
-	You should have received a copy of the GNU General Public License
-	along with this program.  If not, see <http://www.gnu.org/licenses/>.
-  */
+  	You should have received a copy of the GNU General Public License
+  	along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 
-//avoid direct calls to this file
+// Avoid direct calls to this file
 if ( !defined( 'ABSPATH' ) ) {
 	header( 'Status: 403 Forbidden' );
 	header( 'HTTP/1.1 403 Forbidden' );
 	exit();
 }
 
+/**
+ * Dynamic Featured Image plugin main class
+ * 
+ * @package dynamic-featured-image
+ * @author Ankit Pokhrel <ankitpokhrel@gmail.com>
+ * @version 3.0.0
+ */
 class Dynamic_Featured_Image {
 
 	/**
@@ -41,31 +48,31 @@ class Dynamic_Featured_Image {
 	 *
 	 * @since	1.0.0
 	 * @static
-	 * @access	public
-	 * @var		string	$version
+	 * @access public
+	 * @var	string	$version
 	 */
-	public static $version = '2.0.1';
+	public static $version = '3.0.0';
 
 	/**
 	 * Constructor. Hooks all interactions to initialize the class.
 	 *
 	 * @since	1.0.0
-	 * @access	public
+	 * @access public
 	 *
-	 * @see	add_action()
+	 * @see	 add_action()
 	 *
 	 * @return	void
-	 */
+	 */  
 	public function __construct() {
 
 		if ( is_admin() ) {
 			add_action( 'in_plugin_update_message-' . plugin_basename(__FILE__), array( $this, 'update_notice' ) );
 		}
 
-		add_action( 'admin_enqueue_scripts',	array( $this, 'enqueue_admin_scripts' ) );
-		add_action( 'add_meta_boxes',			array( $this, 'initialize_featured_box' ) );
-		add_action( 'save_post',				array( $this, 'save_meta' ) );
-		add_action( 'plugins_loaded',			array( $this, 'load_plugin_textdomain' ) );
+		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_admin_scripts' ) );
+		add_action( 'add_meta_boxes',	array( $this, 'initialize_featured_box' ) );
+		add_action( 'save_post', array( $this, 'save_meta' ) );
+		add_action( 'plugins_loaded',	array( $this, 'load_plugin_textdomain' ) );
 
 		//handle ajax request
 		add_action( 'wp_ajax_nopriv_dfiMetaBox_callback',	array( $this, 'ajax_callback' ) );
@@ -73,6 +80,18 @@ class Dynamic_Featured_Image {
 
 	} // END __construct()
 
+  /**
+   * Add required admin scripts
+   *
+   * @since 1.0.0
+   * @access public
+   *
+   * @see  wp_enque_style()
+   * @see  wp_register_script()
+   * @see  wp_enqueue_script()
+   * 
+   * @return void
+   */
 	public function enqueue_admin_scripts( $hook ) {
 
 		//enqueue styles
@@ -90,9 +109,20 @@ class Dynamic_Featured_Image {
 
 	} // END initialize_components()
 
-	/**
-	 * Add featured meta boxes dynamically
-	 */
+  /**
+   * Add featured meta boxes dynamically
+   *
+   * @since 1.0.0
+   * @access public
+   * @global object $post
+   *
+   * @see  get_post_custom()
+   * @see  get_post_types()
+   * @see  add_meta_box()
+   * @see  add_filter()
+   * 
+   * @return void
+   */  
 	public function initialize_featured_box() {
 
 		global $post;
@@ -143,6 +173,20 @@ class Dynamic_Featured_Image {
 
 	} // END initialize_featured_box()
 
+  /**
+   * Featured meta box as seen in the admin
+   *
+   * @since 1.0.0
+   * @access public
+   *
+   * @see  wp_nonce_field()
+   * @see  plugin_basename()
+   *
+   * @param  $post global post object
+   * @param  $featured array containing featured image count
+   *
+   * @return void
+   */
 	public function featured_meta_box( $post, $featured ) {
 
 		$featuredImg	= is_null( $featured['args'][0]) ? '' : $featured['args'][0];
@@ -170,9 +214,20 @@ class Dynamic_Featured_Image {
 
 	} // END featured_meta_box()
 
+  /**
+   * Load new featured meta box via ajax
+   *
+   * @since 1.0.0
+   * @access public
+   *
+   * @see  wp_nonce_field()
+   * @see  plugin_basename()
+   *
+   * @return void
+   */
 	public function ajax_callback() {
 
-		$featuredId = isset($_POST['id']) ? (int) strip_tags(trim($_POST['id'])) : null;
+		$featuredId = isset($_POST['id']) ? (int) strip_tags( trim( $_POST['id'] ) ) : null;
 
 		if ( is_null( $featuredId ) ) {
 			return;
@@ -193,9 +248,18 @@ class Dynamic_Featured_Image {
 
 	} // END MetaBox_callback())
 
-	/**
-	 * Add custom class, featured-meta-box to meta box
-	 */
+  /**
+   * Add custom class 'featured-meta-box' to meta box
+   *
+   * @since 1.0.0
+   * @access public
+   *
+   * @see  add_metabox_classes
+   *
+   * @param  $classes classes to add in the meta box
+   *
+   * @return string
+   */
 	public function add_metabox_classes( $classes ) {
 
 		array_push( $classes, 'featured-meta-box' );
@@ -204,9 +268,21 @@ class Dynamic_Featured_Image {
 
 	} // END add_metabox_classes()
 
-	/**
-	 * Update featured images
-	 */
+  /**
+   * Update featured images in the database
+   *
+   * @since 1.0.0
+   * @access public
+   *
+   * @see  wp_verify_nonce()
+   * @see  plugin_basename()
+   * @see  update_post_meta()
+   * @see  current_user_can()
+   *
+   * @param  $post_id current post id
+   * 
+   * @return void
+   */
 	public function save_meta( $post_id ) {
 
 		$featuredIds = array();
@@ -239,9 +315,15 @@ class Dynamic_Featured_Image {
 
 	} // END save_meta()
 
-	/**
-	 * Add update notice
-	 */
+  /**
+   * Add update notice. Displayed in plugin update page.
+   *
+   * @since 2.0.0
+   * @access public
+   * @ignore
+   * 
+   * @return void
+   */
 	public function update_notice() {
 
 		$info = __( 'ATTENTION! Please read the <a href="https://github.com/ankitpokhrel/Dynamic-Featured-Image/wiki" target="_blank">DOCUMENTATION</a> properly before update.', 'dynamic-featured-image');
@@ -250,11 +332,18 @@ class Dynamic_Featured_Image {
 	} // END update_notice()
 
 	/** Helper functions */
+
 	/**
 	 * Get attachment id of the image by image url
-	 *
-	 * @return String
-	 */
+   *
+   * @since 2.0.0
+   * @access public
+   * @global object $wpdb
+   *
+   * @param  $image_url url of the image
+   * 
+	 * @return string
+	 */   
 	public function get_image_id( $image_url ) {
 
 		global $wpdb;
@@ -267,8 +356,16 @@ class Dynamic_Featured_Image {
 
 	/**
 	 * Get image url of the image by attachment id
+   * 
+   * @since 2.0.0
+   * @access public 
+   *
+   * @see  wp_get_attachment_image_src()
+   *
+   * @param  $attachmentId attachment id of an image
+   * @param  $size size of the image to fetch (thumbnail, medium, full)
 	 *
-	 * @return String
+	 * @return string
 	 */
 	public function get_image_url( $attachmentId, $size = 'full' ) {
 
@@ -280,8 +377,17 @@ class Dynamic_Featured_Image {
 
 	/**
 	 * Get image thumbnail url of specific size by image url
+   *
+   * @since 2.0.0
+   * @access public
+   *
+   * @see  get_image_id()
+   * @see  wp_get_attachment_image_src() 
+   *
+   * @param  $image_url url of an image
+   * @param  $size size of the image to fetch (thumbnail, medium, full)
 	 *
-	 * @return String
+	 * @return string
 	 */
 	public function get_image_thumb( $image_url, $size = 'thumbnail' ) {
 
@@ -294,8 +400,14 @@ class Dynamic_Featured_Image {
 
 	/**
 	 * Get image title
+   *
+   * @since 2.0.0
+   * @access public
+   * @global object $wpdb
+   *
+   * @param  $image_url url of an image
 	 *
-	 * @return String
+	 * @return string
 	 */
 	public function get_image_title( $image_url ) {
 
@@ -309,8 +421,14 @@ class Dynamic_Featured_Image {
 
 	/**
 	 * Get image title by id
+   *
+   * @since 2.0.0
+   * @access public
+   * @global object $wpdb
+   *
+   * @param  $attachmentId attachment id of an image
 	 *
-	 * @return String
+	 * @return string
 	 */
 	public function get_image_title_by_id( $attachment_id ) {
 
@@ -324,8 +442,14 @@ class Dynamic_Featured_Image {
 
 	/**
 	 * Get image caption
+   *
+   * @since 2.0.0
+   * @access public
+   * @global object $wpdb
+   *
+   * @param  $image_url url of an image
 	 *
-	 * @return String
+	 * @return string
 	 */
 	public function get_image_caption( $image_url ) {
 
@@ -339,8 +463,14 @@ class Dynamic_Featured_Image {
 
 	/**
 	 * Get image caption by id
-	 *
-	 * @return String
+   *
+   * @since 2.0.0
+   * @access public
+   * @global object $wpdb
+   *
+   * @param  $attachmentId attachment id of an image
+   * 
+	 * @return string
 	 */
 	public function get_image_caption_by_id( $attachment_id ) {
 
@@ -354,8 +484,16 @@ class Dynamic_Featured_Image {
 
 	/**
 	 * Get image alternate text
+   *
+   * @since 2.0.0
+   * @access public
+   * @global object $wpdb
+   *
+   * @see  get_post_meta()
+   *
+   * @param  $image_url url of an image
 	 *
-	 * @return String
+	 * @return string
 	 */
 	public function get_image_alt( $image_url ) {
 
@@ -374,8 +512,15 @@ class Dynamic_Featured_Image {
 
 	/**
 	 * Get image alternate text by attachment id
+   *
+   * @since 2.0.0
+   * @access public
+   *
+   * @see  get_post_meta()
+   *
+   * @param  $attachmentId attachment id of an image
 	 *
-	 * @return String
+	 * @return string
 	 */
 	public function get_image_alt_by_id( $attachment_id ) {
 
@@ -387,8 +532,16 @@ class Dynamic_Featured_Image {
 
 	/**
 	 * Get all attachment ids of the post
+   *
+   * @since 2.0.0
+   * @access public
+   *
+   * @see  get_post_custom()
+   * @see  site_url()
+   *
+   * @param  $post_id id of the current post
 	 *
-	 * @return Array
+	 * @return array
 	 */
 	public function get_post_attachment_ids( $post_id ) {
 
@@ -410,6 +563,12 @@ class Dynamic_Featured_Image {
 
 	/**
 	 * Check if the image is attached with the particular post
+   *
+   * @since 2.0.0
+   * @access public
+   *
+   * @param  $attachmentId attachment id of an image
+   * @param  $post_id id of the current post
 	 *
 	 * @return boolean
 	 */
@@ -423,8 +582,16 @@ class Dynamic_Featured_Image {
 
 	/**
 	 * Retrieve featured images for specific post(s)
+   *
+   * @since 2.0.0
+   * @access public
+   *
+   * @see  get_post_custom()
+   * @see  site_url()
+   *
+   * @param  $post_id id of the current post
 	 *
-	 * @return Array
+	 * @return array
 	 */
 	public function get_featured_images( $post_id = null ) {
 
@@ -451,7 +618,6 @@ class Dynamic_Featured_Image {
 					$retImages[$count]['attachment_id']	= $this->get_image_id( site_url() . $dfiImageFull );
 				}
 
-
 				$count++;
 			}
 		}
@@ -464,10 +630,10 @@ class Dynamic_Featured_Image {
 	 * Load the plugin's textdomain hooked to 'plugins_loaded'.
 	 *
 	 * @since	1.0.0
-	 * @access	public
+	 * @access public
 	 *
-	 * @see		load_plugin_textdomain()
-	 * @see		plugin_basename()
+	 * @see	load_plugin_textdomain()
+	 * @see	plugin_basename()
 	 * @action	plugins_loaded
 	 *
 	 * @return	void
@@ -488,7 +654,7 @@ class Dynamic_Featured_Image {
  * Instantiate the main class
  *
  * @since	1.0.0
- * @access	public
+ * @access public
  *
  * @var	object	$dynamic_featured_image holds the instantiated class {@uses Dynamic_Featured_Image}
  */

@@ -10,7 +10,7 @@ jQuery(document).ready(function($){
 	 * Add new meta box
 	 */
 	$(document).on('click', '.dfiAddNew', function() {
-		   		
+
        var obj = $(this);
        var id = parseInt( $('.featured-meta-box:last').find('.dfiAddNew').attr('data-id') );
        
@@ -124,9 +124,11 @@ jQuery(document).ready(function($){
 	    		featuredBox.find('img').attr('src', attachment.sizes.medium.url).fadeIn(200);
 	    		featuredBox.find('input.dfiImageHolder').val(dfiFeaturedImages);
 
+	    		wp.media.editor.send.attachment = restore_send_to_editor;
+
 			}
 
-			wp.media.editor.open(this);
+			wp.media.editor.open(this);			
 		}
 		
 		return false;

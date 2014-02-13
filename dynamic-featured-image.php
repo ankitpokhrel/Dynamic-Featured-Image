@@ -3,7 +3,7 @@
  Plugin Name: Dynamic Featured Image
  Plugin URI: http://wordpress.org/plugins/dynamic-featured-image/
  Description: Dynamically adds multiple featured image or post thumbnail functionality to your posts, pages and custom post types.
- Version: 2.0.1
+ Version: 3.0.0
  Author: Ankit Pokhrel
  Author URI: http://ankitpokhrel.com.np
  License: GPL2 or later
@@ -46,7 +46,7 @@ class Dynamic_Featured_Image {
 	/**
 	 * Current version of the plugin.
 	 *
-	 * @since	1.0.0
+	 * @since 1.0.0
 	 * @static
 	 * @access public
 	 * @var	string	$version
@@ -56,7 +56,7 @@ class Dynamic_Featured_Image {
 	/**
 	 * Constructor. Hooks all interactions to initialize the class.
 	 *
-	 * @since	1.0.0
+	 * @since 1.0.0
 	 * @access public
 	 *
 	 * @see	 add_action()
@@ -335,13 +335,13 @@ class Dynamic_Featured_Image {
 
 	/**
 	 * Get attachment id of the image by image url
-   *
-   * @since 2.0.0
-   * @access public
-   * @global object $wpdb
-   *
-   * @param  $image_url url of the image
-   * 
+     *
+     * @since 2.0.0
+     * @access public
+     * @global object $wpdb
+     *
+     * @param  $image_url url of the image
+     * 
 	 * @return string
 	 */   
 	public function get_image_id( $image_url ) {
@@ -356,14 +356,14 @@ class Dynamic_Featured_Image {
 
 	/**
 	 * Get image url of the image by attachment id
-   * 
-   * @since 2.0.0
-   * @access public 
-   *
-   * @see  wp_get_attachment_image_src()
-   *
-   * @param  $attachmentId attachment id of an image
-   * @param  $size size of the image to fetch (thumbnail, medium, full)
+     * 
+     * @since 2.0.0
+     * @access public 
+     *
+     * @see  wp_get_attachment_image_src()
+     *
+     * @param  $attachmentId attachment id of an image
+     * @param  $size size of the image to fetch (thumbnail, medium, full)
 	 *
 	 * @return string
 	 */
@@ -377,15 +377,15 @@ class Dynamic_Featured_Image {
 
 	/**
 	 * Get image thumbnail url of specific size by image url
-   *
-   * @since 2.0.0
-   * @access public
-   *
-   * @see  get_image_id()
-   * @see  wp_get_attachment_image_src() 
-   *
-   * @param  $image_url url of an image
-   * @param  $size size of the image to fetch (thumbnail, medium, full)
+     *
+     * @since 2.0.0
+     * @access public
+     *
+     * @see  get_image_id()
+     * @see  wp_get_attachment_image_src() 
+     *
+     * @param  $image_url url of an image
+     * @param  $size size of the image to fetch (thumbnail, medium, full)
 	 *
 	 * @return string
 	 */
@@ -400,12 +400,12 @@ class Dynamic_Featured_Image {
 
 	/**
 	 * Get image title
-   *
-   * @since 2.0.0
-   * @access public
-   * @global object $wpdb
-   *
-   * @param  $image_url url of an image
+     *
+     * @since 2.0.0
+     * @access public
+     * @global object $wpdb
+     *
+     * @param  $image_url url of an image
 	 *
 	 * @return string
 	 */
@@ -421,12 +421,12 @@ class Dynamic_Featured_Image {
 
 	/**
 	 * Get image title by id
-   *
-   * @since 2.0.0
-   * @access public
-   * @global object $wpdb
-   *
-   * @param  $attachmentId attachment id of an image
+     *
+     * @since 2.0.0
+     * @access public
+     * @global object $wpdb
+     *
+     * @param  $attachmentId attachment id of an image
 	 *
 	 * @return string
 	 */
@@ -442,12 +442,12 @@ class Dynamic_Featured_Image {
 
 	/**
 	 * Get image caption
-   *
-   * @since 2.0.0
-   * @access public
-   * @global object $wpdb
-   *
-   * @param  $image_url url of an image
+     *
+     * @since 2.0.0
+     * @access public
+     * @global object $wpdb
+     *
+     * @param  $image_url url of an image
 	 *
 	 * @return string
 	 */
@@ -463,13 +463,13 @@ class Dynamic_Featured_Image {
 
 	/**
 	 * Get image caption by id
-   *
-   * @since 2.0.0
-   * @access public
-   * @global object $wpdb
-   *
-   * @param  $attachmentId attachment id of an image
-   * 
+     *
+     * @since 2.0.0
+     * @access public
+     * @global object $wpdb
+     *
+     * @param  $attachmentId attachment id of an image
+     * 
 	 * @return string
 	 */
 	public function get_image_caption_by_id( $attachment_id ) {
@@ -484,14 +484,14 @@ class Dynamic_Featured_Image {
 
 	/**
 	 * Get image alternate text
-   *
-   * @since 2.0.0
-   * @access public
-   * @global object $wpdb
-   *
-   * @see  get_post_meta()
-   *
-   * @param  $image_url url of an image
+     *
+     * @since 2.0.0
+     * @access public
+     * @global object $wpdb
+     *
+     * @see  get_post_meta()
+     *
+     * @param  $image_url url of an image
 	 *
 	 * @return string
 	 */
@@ -512,13 +512,13 @@ class Dynamic_Featured_Image {
 
 	/**
 	 * Get image alternate text by attachment id
-   *
-   * @since 2.0.0
-   * @access public
-   *
-   * @see  get_post_meta()
-   *
-   * @param  $attachmentId attachment id of an image
+     *
+     * @since 2.0.0
+     * @access public
+     *
+     * @see  get_post_meta()
+     *
+     * @param  $attachmentId attachment id of an image
 	 *
 	 * @return string
 	 */
@@ -532,14 +532,14 @@ class Dynamic_Featured_Image {
 
 	/**
 	 * Get all attachment ids of the post
-   *
-   * @since 2.0.0
-   * @access public
-   *
-   * @see  get_post_custom()
-   * @see  site_url()
-   *
-   * @param  $post_id id of the current post
+     *
+     * @since 2.0.0
+     * @access public
+     *
+     * @see  get_post_custom()
+     * @see  site_url()
+     *
+     * @param  $post_id id of the current post
 	 *
 	 * @return array
 	 */
@@ -563,12 +563,12 @@ class Dynamic_Featured_Image {
 
 	/**
 	 * Check if the image is attached with the particular post
-   *
-   * @since 2.0.0
-   * @access public
-   *
-   * @param  $attachmentId attachment id of an image
-   * @param  $post_id id of the current post
+     *
+     * @since 2.0.0
+     * @access public
+     *
+     * @param  $attachmentId attachment id of an image
+     * @param  $post_id id of the current post
 	 *
 	 * @return boolean
 	 */
@@ -582,14 +582,14 @@ class Dynamic_Featured_Image {
 
 	/**
 	 * Retrieve featured images for specific post(s)
-   *
-   * @since 2.0.0
-   * @access public
-   *
-   * @see  get_post_custom()
-   * @see  site_url()
-   *
-   * @param  $post_id id of the current post
+     *
+     * @since 2.0.0
+     * @access public
+     *
+     * @see  get_post_custom()
+     * @see  site_url()
+     *
+     * @param  $post_id id of the current post
 	 *
 	 * @return array
 	 */
@@ -629,7 +629,7 @@ class Dynamic_Featured_Image {
 	/**
 	 * Load the plugin's textdomain hooked to 'plugins_loaded'.
 	 *
-	 * @since	1.0.0
+	 * @since 1.0.0
 	 * @access public
 	 *
 	 * @see	load_plugin_textdomain()
@@ -653,7 +653,7 @@ class Dynamic_Featured_Image {
 /**
  * Instantiate the main class
  *
- * @since	1.0.0
+ * @since 1.0.0
  * @access public
  *
  * @var	object	$dynamic_featured_image holds the instantiated class {@uses Dynamic_Featured_Image}

@@ -41,6 +41,10 @@ img.dfiImg {
 	max-width: 258px;	
 }
 
+img.dfiImg[src=""]{
+  display: none;
+}
+
 img.dfiImgEmpty {
 	display: none;
 }

@@ -1,3 +1,7 @@
+[![Latest Stable Version](https://poser.pugx.org/ankitpokhrel/Dynamic-Featured-Image/v/stable.png)](https://packagist.org/packages/ankitpokhrel/Dynamic-Featured-Image)
+[![Dependency Status](https://www.versioneye.com/user/projects/52d53aaeec13754cdb0003ff/badge.png)](https://www.versioneye.com/user/projects/52d53aaeec13754cdb0003ff)
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/ankitpokhrel/dynamic-featured-image/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+<script id='fblh4am'>(function(i){var f,s=document.getElementById(i);f=document.createElement('iframe');f.src='//api.flattr.com/button/view/?uid=ankitpokhrel&button=compact&url='+encodeURIComponent(document.URL);f.title='Flattr';f.height=20;f.width=110;f.style.borderWidth=0;s.parentNode.insertBefore(f,s);})('fblh4am');</script>
 ## Dynamic Featured Image (A WordPress Plugin)
 
 _Dynamically adds multiple featured image (post thumbnail) functionality to posts, pages and custom post types._
@@ -17,28 +21,29 @@ DFI allows you to add different number of featured images to each post and page 
 ### How it works?
 1. After successfull plugin activation go to `add` or `edit` page of posts or pages and you will notice a box for second featured image.
 
-   ![Snapshot 1](http://ankitpokhrel.com.np/dfi/screenshot-1.jpg)
+   ![Snapshot 1](https://dl-web.dropbox.com/get/Public/DFI/screenshot-1.jpg?w=AAAvWr-h3tEiEargch024xIZVe8Nri1UOR9en4daqEhF1A)
 
 2. Click `Set featured image`, select required image from media popup and click `Insert into Post`. Make sure `File URL` is selected in the `Link URL` section of media popup.
 
-   ![Snapshot 2](http://ankitpokhrel.com.np/dfi/snapshot_2.jpg)
+   ![Snapshot 2](https://dl-web.dropbox.com/get/Public/DFI/screenshot-2.jpg?w=AAB3R05iZlhmys9EnQyRb97wU4YyYr0BN-WOPNTnEFilZA)
 
 3. Click on `Add New` to add new featured image or use `Remove` link to remove the featured image box.
  
-   ![Snapshot 3](http://ankitpokhrel.com.np/dfi/screenshot-3.jpg)
+   ![Snapshot 3](https://dl.dropboxusercontent.com/s/0q9iwgkz1g2gdgu/screenshot-3.jpg?dl=1&token_hash=AAFZhUQvD5aKq1UAyyRGQ8fGSXNde0WyHOWw48-09OTtPg)
 
 4. After adding featured images click `publish` or `update` to save featured images.
 
 ###### _Note: The featured images are only saved when you publish or update the post._
 
 ### Documentation
-* [Retrieving images in a theme](/ankitpokhrel/Dynamic-Featured-Image/wiki/Retrieving-images-in-a-theme)
-* [Getting image title, alt and caption attributes](/ankitpokhrel/Dynamic-Featured-Image/wiki/Available-Functions#getting-image-title-alt-and-caption-attributes)
-* [Helpers/Utility functions](/ankitpokhrel/Dynamic-Featured-Image/wiki/Available-Functions)
+* [Retrieving images in a theme](https://github.com/ankitpokhrel/Dynamic-Featured-Image/wiki/Retrieving-basic-data-in-a-theme)
+* [Getting image title, alt and caption attributes](https://github.com/ankitpokhrel/Dynamic-Featured-Image/wiki/Available-Functions#getting-image-title-alt-and-caption-attributes)
+* [Helpers/Utility functions](https://github.com/ankitpokhrel/Dynamic-Featured-Image/wiki/Available-Functions)
 
 ### Other Resources
 * [Blog](http://ankitpokhrel.com.np/blog/category/dynamic-featured-image/)
-* [FAQ](http://wordpress.org/plugins/dynamic-featured-image/faq/)
+* [FAQs](http://wordpress.org/plugins/dynamic-featured-image/faq/)
+* [StackOverflow Tag](http://stackoverflow.com/questions/tagged/dynamic-featured-image)
 
 #### The List of Available Functions are:
 1. [dfi_get_image_id( $image_url )](https://github.com/ankitpokhrel/Dynamic-Featured-Image/wiki/Available-Functions#1-dfi_get_image_id-image_url-)
@@ -59,11 +64,13 @@ DFI allows you to add different number of featured images to each post and page 
 
 I'm available for freelance work. Remote worldwide or locally around Nepal. Drop me a line if you like.
  
-### Donate with [PayPal](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=J9FVY3ESPPD58)
+### Support DFI
 
 If you think this script is useful and saves you a lot of work, a lot of costs (PHP developers are expensive) and let you sleep much better, then donating a small amount would be very cool.
 
-[![Paypal](http://ankitpokhrel.com.np/img/paypal.png)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=J9FVY3ESPPD58)
+[![PayPayl donate button](http://img.shields.io/paypal/donate.png?color=green)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=J9FVY3ESPPD58)
+[![Gittip](http://img.shields.io/gittip/ankitpokhrel.png)](https://www.gittip.com/ankitpokhrel/)
+[![Flattr donate button](http://api.flattr.com/button/flattr-badge-large.png)](https://flattr.com/submit/auto?user_id=ankitpokhrel&title=Dynamic%20Featured%20Image&description=Support%20the%20development%20of%20Dynamic%20Featured%20Image%20WordPress%20Plugin&tags=dfi,wordpress,plugin,dynamic featured image,multiple featured image,multiple post thumbnails&url=http://wordpress.org/plugins/dynamic-featured-image "Donate to Dynamic Featured Image Plugin using Flattr")
 
 ### Questions about this project?
 

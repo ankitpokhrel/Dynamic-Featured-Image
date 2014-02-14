@@ -1,8 +1,11 @@
-/*
+/**
+ * @file script-dfi.js
+ * 
  * Script for dynamic featured image plugin
  * 
  * Copyright (c) 2013, Ankit Pokhrel <ankitpokhrel@gmail.com, http://ankitpokhrel.com.np>
  */
+
 jQuery(document).ready(function($){
 	var current = null;	
 	

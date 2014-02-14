@@ -96,7 +96,8 @@ class Dynamic_Featured_Image {
 
 		//enqueue styles
 		wp_enqueue_style( 'thickbox' );
-		wp_enqueue_style( 'style-dfi', plugins_url( '/css/style-dfi.css', __FILE__ ), array(), self::$version );
+    wp_enqueue_style( 'style-dfi', plugins_url( '/css/style-dfi.css', __FILE__ ), array(), self::$version );
+		wp_enqueue_style( 'dashicons', plugins_url( '/css/dashicons.css', __FILE__ ), array(), self::$version );
 
 		//register scripts
 		wp_register_script( 'scripts-dfi', plugins_url( '/js/script-dfi.js', __FILE__), array( 'jquery','media-upload','thickbox' ), self::$version );
@@ -202,11 +203,11 @@ class Dynamic_Featured_Image {
 		//Add a nonce field
 		wp_nonce_field(plugin_basename(__FILE__), 'dfi_fimageplug-' . $featuredId);
 		?>
-			<a href="javascript:void(0)" class='dfiFeaturedImage <?php if (isset($featuredImgTrimmed) && !empty($featuredImgTrimmed)) echo 'hasFeaturedImage' ?>' title="Set Featured Image" data-post-id="<?php the_ID() ?>"><span></span></a><br/>
+			<a href="javascript:void(0)" class='dfiFeaturedImage <?php if (isset($featuredImgTrimmed) && !empty($featuredImgTrimmed)) echo 'hasFeaturedImage' ?>' title="Set Featured Image" data-post-id="<?php the_ID() ?>"><span class="dashicons dashicons-camera"></span></a><br/>
 			<img src="<?php if (isset($thumbnail) && !is_null($thumbnail)) echo $thumbnail; ?>" class='dfiImg <?php if (!isset($featuredImgTrimmed) || is_null($featuredImgTrimmed)) echo 'dfiImgEmpty' ?>'/>
 			<div class='dfiLinks'>
-				<a href="javascript:void(0)" data-id='<?php echo $featuredId ?>' class='dfiAddNew' title="Add New"></a>
-				<a href="javascript:void(0)" class='dfiRemove' title="Remove"></a>
+				<a href="javascript:void(0)" data-id='<?php echo $featuredId ?>' class='dfiAddNew dashicons dashicons-plus' title="Add New"></a>
+				<a href="javascript:void(0)" class='dfiRemove dashicons dashicons-minus' title="Remove"></a>
 			</div>
 			<div class='dfiClearFloat'></div>
 			<input type='hidden' name="dfiFeatured[]" value="<?php echo $featuredImg ?>"  class="dfiImageHolder" />
@@ -235,11 +236,11 @@ class Dynamic_Featured_Image {
 
 		wp_nonce_field( plugin_basename(__FILE__), 'dfi_fimageplug-' . $featuredId );
 		?>
-			  <a href="javascript:void(0)" class='dfiFeaturedImage' title="Set Featured Image"><span></span></a><br/>
+			  <a href="javascript:void(0)" class='dfiFeaturedImage' title="Set Featured Image"><span class="dashicons dashicons-camera"></span></a><br/>
 			   <img src="" class='dfiImg dfiImgEmpty'/>
 			   <div class='dfiLinks'>
-				<a href="javascript:void(0)" data-id='<?php echo $featuredId ?>' class='dfiAddNew' title="Add New"></a>
-				<a href="javascript:void(0)" class='dfiRemove' title="Remove"></a>
+				<a href="javascript:void(0)" data-id='<?php echo $featuredId ?>' class='dfiAddNew dashicons dashicons-plus' title="Add New"></a>
+				<a href="javascript:void(0)" class='dfiRemove dashicons dashicons-minus' title="Remove"></a>
 			   </div>
 			   <div class='dfiClearFloat'></div>
 			   <input type='hidden' name="dfiFeatured[]" value="" class="dfiImageHolder" />

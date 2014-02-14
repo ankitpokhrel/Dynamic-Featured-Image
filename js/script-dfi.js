@@ -22,7 +22,7 @@ jQuery(document).ready(function($){
        var metaBoxContentObj = newMetaBox.find('.inside');
        metaBoxContentObj.html('');
        obj.hide();
-       obj.parent().append('<img src="images/wpspin_light.gif" class="dfiLoading">').hide().fadeIn(200);       
+       obj.parent().append('<span class="dfiLoading"></span>').hide().fadeIn(200);       
 
        $.ajax({
           type: 'POST',  
@@ -76,34 +76,32 @@ jQuery(document).ready(function($){
 	/*
 	 * Display media editor and allow to select featured image from the media library
 	 */	
-	var restore_send_to_editor = "";
+	var _media_uploader = "";
 	$(document).on('click', '.dfiFeaturedImage', function() {
 
 		current = $(this);
 		
 		var post_id = current.attr('data-post-id');
 		
-		restore_send_to_editor = wp.media.editor.send.attachment;
-		if( null != current){		    
+		if( null != current) {		    
 
-		    wp.media.editor.send.attachment = function(props, attachment) {
+			var dfi_uploader = wp.media({
 
-	    		var fullSize = imgUrl = attachment.url;
+		        title: 'Dynamic Featured Image - Media Selector',
+		        button: {
+		            text: 'Set Featured Image'
+		        },
+		        multiple: false,  // Set this to true to allow multiple files to be selected		       
+
+		    }).on('select', function() {
+
+		        var attachment = dfi_uploader.state().get('selection').first().toJSON();
+		        console.log(attachment);
+
+		      	var fullSize = attachment.url;
+		      	var imgUrl = attachment.sizes.thumbnail.url;
 	    		var imgUrlTrimmed, fullUrlTrimmed;
-	    	
-	    		switch( props.size ) {
-	    			case 'thumbnail':
-	    					imgUrl = attachment.sizes.thumbnail.url;
-	    					break;
-
-	    			case 'medium':
-	    					imgUrl = attachment.sizes.medium.url;
-	    					break;
-
-	    			case 'large':
-	    					imgUrl = attachment.sizes.large.url;	    					
-	    		}
-
+	    		    		
 	    		imgUrlTrimmed = imgUrl.split('wp-content');
 	        	imgUrlTrimmed = '/wp-content' + imgUrlTrimmed[1];
 
@@ -124,11 +122,7 @@ jQuery(document).ready(function($){
 	    		featuredBox.find('img').attr('src', attachment.sizes.medium.url).fadeIn(200);
 	    		featuredBox.find('input.dfiImageHolder').val(dfiFeaturedImages);
 
-	    		wp.media.editor.send.attachment = restore_send_to_editor;
-
-			}
-
-			wp.media.editor.open(this);			
+		    }).open();		
 		}
 		
 		return false;

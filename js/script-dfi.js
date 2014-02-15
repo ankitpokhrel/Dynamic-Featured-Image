@@ -45,7 +45,7 @@ jQuery(document).ready(function($){
        
 	});
 	
-	/*
+	/**
 	 * Remove featured image meta box
 	 */
 	$(document).on('click', '.dfiRemove', function() {
@@ -76,10 +76,10 @@ jQuery(document).ready(function($){
 
 	});
 	
-	/*
-	 * Display media editor and allow to select featured image from the media library
+	/**
+	 * Display custom media uploader and 
+	 * allow to select featured image from the media library	 
 	 */	
-	var _media_uploader = "";
 	$(document).on('click', '.dfiFeaturedImage', function() {
 
 		current = $(this);
@@ -94,12 +94,11 @@ jQuery(document).ready(function($){
 		        button: {
 		            text: 'Set Featured Image'
 		        },
-		        multiple: false,  // Set this to true to allow multiple files to be selected		       
+		        multiple: false,       
 
 		    }).on('select', function() {
 
 		        var attachment = dfi_uploader.state().get('selection').first().toJSON();
-		        console.log(attachment);
 
 		      	var fullSize = attachment.url;
 		      	var imgUrl = attachment.sizes.thumbnail.url;

@@ -359,14 +359,14 @@ class Dynamic_Featured_Image {
    *
    * @see  wp_get_attachment_image_src()
    *
-   * @param  $attachmentId attachment id of an image
+   * @param  $attachment_id attachment id of an image
    * @param  $size size of the image to fetch (thumbnail, medium, full)
 	 *
 	 * @return string
 	 */
-	public function get_image_url( $attachmentId, $size = 'full' ) {
+	public function get_image_url( $attachment_id, $size = 'full' ) {
 
-		$image_thumb = wp_get_attachment_image_src( $attachmentId, $size );
+		$image_thumb = wp_get_attachment_image_src( $attachment_id, $size );
 
 		return empty( $image_thumb ) ? null : $image_thumb[0];
 
@@ -423,7 +423,7 @@ class Dynamic_Featured_Image {
    * @access public
    * @global object $wpdb
    *
-   * @param  $attachmentId attachment id of an image
+   * @param  $attachment_id attachment id of an image
 	 *
 	 * @return string
 	 */
@@ -465,7 +465,7 @@ class Dynamic_Featured_Image {
    * @access public
    * @global object $wpdb
    *
-   * @param  $attachmentId attachment id of an image
+   * @param  $attachment_id attachment id of an image
    * 
 	 * @return string
 	 */
@@ -534,8 +534,6 @@ class Dynamic_Featured_Image {
    * @access public
    * @global object $wpdb
    *
-   * @see  get_post_meta()
-   *
    * @param  $image_url url of an image
    *
    * @return string
@@ -555,8 +553,7 @@ class Dynamic_Featured_Image {
    *
    * @since 3.0.0
    * @access public
-   *
-   * @see  get_post_meta()
+   * @global object $wpdb   
    *
    * @param  $attachment_id attachment id of an image
 	 *
@@ -637,7 +634,7 @@ class Dynamic_Featured_Image {
    *
    * @see  get_post_attachment_ids()
    *
-   * @param  $attachmentId attachment id of an image
+   * @param  $attachment_id attachment id of an image
    * @param  $post_id id of the current post
 	 *
 	 * @return boolean

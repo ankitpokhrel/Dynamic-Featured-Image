@@ -515,7 +515,7 @@ class Dynamic_Featured_Image {
    *
    * @see  get_post_meta()
    *
-   * @param  $attachmentId attachment id of an image
+   * @param  $attachment_id attachment id of an image
    *
    * @return string
    */

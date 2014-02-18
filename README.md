@@ -23,7 +23,7 @@ DFI allows you to add different number of featured images to each post and page 
 
   ![New featured image box](http://ankitpokhrel.com.np/dfi/screenshot-1.png)
 
-2. Click `Set featured image`, select required image from the "Dynamic Featured Image Media Selector" popup and click `Set Featured Image`.
+2. Click `Set featured image` icon, select required image from the "Dynamic Featured Image Media Selector" popup and click `Set Featured Image`.
 
   ![Dynamic Featured Image Media Selector](http://ankitpokhrel.com.np/dfi/screenshot-2.png)
 
@@ -39,7 +39,7 @@ DFI allows you to add different number of featured images to each post and page 
 ### Documentation
 * [Retrieving images in a theme](https://github.com/ankitpokhrel/Dynamic-Featured-Image/wiki/Retrieving-data-in-a-theme)
 * [Getting image title, alt and caption attributes](https://github.com/ankitpokhrel/Dynamic-Featured-Image/wiki/API-Functions#wiki-getting-image-title-alt-and-caption-attributes)
-* [Helpers/Utility functions](https://github.com/ankitpokhrel/Dynamic-Featured-Image/wiki/API-Functions)
+* [API functions](https://github.com/ankitpokhrel/Dynamic-Featured-Image/wiki/API-Functions)
 
 ### Other Resources
 * [Blog](http://ankitpokhrel.com.np/blog/category/dynamic-featured-image/)

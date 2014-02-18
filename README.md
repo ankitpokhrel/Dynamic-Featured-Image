@@ -21,24 +21,25 @@ DFI allows you to add different number of featured images to each post and page 
 ### How it works?
 1. After successfull plugin activation go to `add` or `edit` page of posts or pages and you will notice a box for second featured image.
 
-   ![Snapshot 1](https://dl-web.dropbox.com/get/Public/DFI/screenshot-1.jpg?w=AAAvWr-h3tEiEargch024xIZVe8Nri1UOR9en4daqEhF1A)
+![New featured image box](http://ankitpokhrel.com.np/dfi/screenshot-1.png)
 
 2. Click `Set featured image`, select required image from media popup and click `Insert into Post`. Make sure `File URL` is selected in the `Link URL` section of media popup.
 
-   ![Snapshot 2](https://dl-web.dropbox.com/get/Public/DFI/screenshot-2.jpg?w=AAB3R05iZlhmys9EnQyRb97wU4YyYr0BN-WOPNTnEFilZA)
+![Dynamic Featured Image Media Selector](http://ankitpokhrel.com.np/dfi/screenshot-2.png)
 
 3. Click on `Add New` to add new featured image or use `Remove` link to remove the featured image box.
  
-   ![Snapshot 3](https://dl.dropboxusercontent.com/s/0q9iwgkz1g2gdgu/screenshot-3.jpg?dl=1&token_hash=AAFZhUQvD5aKq1UAyyRGQ8fGSXNde0WyHOWw48-09OTtPg)
+![Featured Images](http://ankitpokhrel.com.np/dfi/screenshot-3.png)  
+![Featured Images](http://ankitpokhrel.com.np/dfi/screenshot-4.png)
 
 4. After adding featured images click `publish` or `update` to save featured images.
 
 ###### _Note: The featured images are only saved when you publish or update the post._
 
 ### Documentation
-* [Retrieving images in a theme](https://github.com/ankitpokhrel/Dynamic-Featured-Image/wiki/Retrieving-basic-data-in-a-theme)
-* [Getting image title, alt and caption attributes](https://github.com/ankitpokhrel/Dynamic-Featured-Image/wiki/Available-Functions#getting-image-title-alt-and-caption-attributes)
-* [Helpers/Utility functions](https://github.com/ankitpokhrel/Dynamic-Featured-Image/wiki/Available-Functions)
+* [Retrieving images in a theme](https://github.com/ankitpokhrel/Dynamic-Featured-Image/wiki/Retrieving-data-in-a-theme)
+* [Getting image title, alt and caption attributes](https://github.com/ankitpokhrel/Dynamic-Featured-Image/wiki/API-Functions#wiki-getting-image-title-alt-and-caption-attributes)
+* [Helpers/Utility functions](https://github.com/ankitpokhrel/Dynamic-Featured-Image/wiki/API-Functions)
 
 ### Other Resources
 * [Blog](http://ankitpokhrel.com.np/blog/category/dynamic-featured-image/)
@@ -46,17 +47,20 @@ DFI allows you to add different number of featured images to each post and page 
 * [StackOverflow Tag](http://stackoverflow.com/questions/tagged/dynamic-featured-image)
 
 #### The List of Available Functions are:
-1. [dfi_get_image_id( $image_url )](https://github.com/ankitpokhrel/Dynamic-Featured-Image/wiki/Available-Functions#1-dfi_get_image_id-image_url-)
-2. [dfi_get_image_thumb( $image_url, $size = "thumbnail" )](https://github.com/ankitpokhrel/Dynamic-Featured-Image/wiki/Available-Functions#2-dfi_get_image_thumb-image_url-size--thumbnail-)
-3. [dfi_get_image_url( $attachment_id, $size = "full" )](https://github.com/ankitpokhrel/Dynamic-Featured-Image/wiki/Available-Functions#3-dfi_get_image_url-attachment_id-size--full-)
-4. [dfi_get_post_attachment_ids( $post_id )](https://github.com/ankitpokhrel/Dynamic-Featured-Image/wiki/Available-Functions#4-dfi_get_post_attachment_ids-post_id-)
-5. [dfi_is_attached( $attachment_id, $post_id )](https://github.com/ankitpokhrel/Dynamic-Featured-Image/wiki/Available-Functions#5-dfi_is_attached-attachment_id-post_id-)
-6. [dfi_get_image_title( $image_url )](https://github.com/ankitpokhrel/Dynamic-Featured-Image/wiki/Available-Functions#6-dfi_get_image_title-image_url-)
-7. [dfi_get_image_title_by_id( $attachment_id )](https://github.com/ankitpokhrel/Dynamic-Featured-Image/wiki/Available-Functions#7-dfi_get_image_title_by_id-attachment_id-)
-8. [dfi_get_image_alt( $image_url )](https://github.com/ankitpokhrel/Dynamic-Featured-Image/wiki/Available-Functions#8-dfi_get_image_alt-image_url-)
-9. [dfi_get_image_alt_by_id( $attachment_id )](https://github.com/ankitpokhrel/Dynamic-Featured-Image/wiki/Available-Functions#9-dfi_get_image_alt_by_id-attachment_id-)
-10. [dfi_get_image_caption( $image_url )](https://github.com/ankitpokhrel/Dynamic-Featured-Image/wiki/Available-Functions#10-dfi_get_image_caption-image_url-)
-11. [dfi_get_image_caption_by_id( $attachment_id )](https://github.com/ankitpokhrel/Dynamic-Featured-Image/wiki/Available-Functions#11-dfi_get_image_caption_by_id-attachment_id-)
+1. [get_image_id( $image_url )](https://github.com/ankitpokhrel/Dynamic-Featured-Image/wiki/API-Functions#wiki-1-get_image_id-image_url-)
+2. [get_image_thumb( $image_url, $size = "thumbnail" )](https://github.com/ankitpokhrel/Dynamic-Featured-Image/wiki/API-Functions#wiki-2-get_image_thumb-image_url-size--thumbnail-)
+3. [get_image_url( $attachment_id, $size = "full" )](https://github.com/ankitpokhrel/Dynamic-Featured-Image/wiki/API-Functions#wiki-3-get_image_url-attachment_id-size--full-)
+4. [get_post_attachment_ids( $post_id )](https://github.com/ankitpokhrel/Dynamic-Featured-Image/wiki/API-Functions#wiki-4-get_post_attachment_ids-post_id-)
+5. [is_attached( $attachment_id, $post_id )](https://github.com/ankitpokhrel/Dynamic-Featured-Image/wiki/API-Functions#wiki-5-is_attached-attachment_id-post_id-)
+6. [get_image_title( $image_url )](https://github.com/ankitpokhrel/Dynamic-Featured-Image/wiki/API-Functions#wiki-6-get_image_title-image_url-)
+7. [get_image_title_by_id( $attachment_id )](https://github.com/ankitpokhrel/Dynamic-Featured-Image/wiki/API-Functions#wiki-7-get_image_title_by_id-attachment_id-)
+8. [get_image_alt( $image_url )](https://github.com/ankitpokhrel/Dynamic-Featured-Image/wiki/API-Functions#wiki-8-get_image_alt-image_url-)
+9. [get_image_alt_by_id( $attachment_id )](https://github.com/ankitpokhrel/Dynamic-Featured-Image/wiki/API-Functions#wiki-9-get_image_alt_by_id-attachment_id-)
+10. [get_image_caption( $image_url )](https://github.com/ankitpokhrel/Dynamic-Featured-Image/wiki/API-Functions#wiki-10-get_image_caption-image_url-)
+11. [get_image_caption_by_id( $attachment_id )](https://github.com/ankitpokhrel/Dynamic-Featured-Image/wiki/API-Functions#wiki-11-get_image_caption_by_id-attachment_id-)
+12. [get_image_description( $image_url )](https://github.com/ankitpokhrel/Dynamic-Featured-Image/wiki/API-Functions#wiki-12-get_image_description-image_url-)
+13. [get_image_description_by_id( $attachment_id )](https://github.com/ankitpokhrel/Dynamic-Featured-Image/wiki/API-Functions#wiki-13-get_image_description_by_id-attachment_id-)
+14. [get_nth_featured_image( $position, $post_id )](https://github.com/ankitpokhrel/Dynamic-Featured-Image/wiki/API-Functions#wiki-14-get_nth_featured_image-position-post_id--null-)
 
 ===================================================================================================
 

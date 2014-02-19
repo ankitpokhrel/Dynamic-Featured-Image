@@ -46,7 +46,7 @@ DFI allows you to add different number of featured images to each post and page 
 * [FAQs](http://wordpress.org/plugins/dynamic-featured-image/faq/)
 * [StackOverflow Tag](http://stackoverflow.com/questions/tagged/dynamic-featured-image)
 
-#### The List of Available Functions are:
+#### List of Available Functions
 1. [get_image_id( $image_url )](https://github.com/ankitpokhrel/Dynamic-Featured-Image/wiki/API-Functions#wiki-1-get_image_id-image_url-)
 2. [get_image_thumb( $image_url, $size = "thumbnail" )](https://github.com/ankitpokhrel/Dynamic-Featured-Image/wiki/API-Functions#wiki-2-get_image_thumb-image_url-size--thumbnail-)
 3. [get_image_url( $attachment_id, $size = "full" )](https://github.com/ankitpokhrel/Dynamic-Featured-Image/wiki/API-Functions#wiki-3-get_image_url-attachment_id-size--full-)

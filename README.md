@@ -6,6 +6,8 @@
 
 _Dynamically adds multiple featured image (post thumbnail) functionality to posts, pages and custom post types._
 
+> #### Ver. 3.0.0 is out and has  major changes which are not compatible with previous versions.
+
 ### Overview
 Dynamic Featured Image enables the option to have MULTIPLE featured images within a post or page. 
 This is especially helpful when you use other plugins, post thumbnails or sliders that use featured images.

@@ -99,9 +99,10 @@ jQuery(document).ready(function($){
 		    }).on('select', function() {
 
 		        var attachment = dfi_uploader.state().get('selection').first().toJSON();
+		        console.log(attachment);
 
 		      	var fullSize = attachment.url;
-		      	var imgUrl = attachment.sizes.thumbnail.url;
+		      	var imgUrl = (typeof attachment.sizes.thumbnail === "undefined") ? fullSize : attachment.sizes.thumbnail.url;
 	    		var imgUrlTrimmed, fullUrlTrimmed;
 	    		    		
 	    		imgUrlTrimmed = imgUrl.split('wp-content');
@@ -121,7 +122,16 @@ jQuery(document).ready(function($){
 	    			
 	    		var dfiFeaturedImages = [imgUrlTrimmed, fullUrlTrimmed];
 	    		
-	    		featuredBox.find('img').attr('src', attachment.sizes.medium.url).fadeIn(200);
+	    		/**
+	    		 * Check if medium sized image exists
+	    		 * @type object
+	    		 */
+	    		var medium = attachment.url;
+	    		if( typeof attachment.sizes.medium !== "undefined" ) {
+	    			medium = attachment.sizes.medium.url;
+	    		}
+
+	    		featuredBox.find('img').attr('src', medium).fadeIn(200);
 	    		featuredBox.find('input.dfiImageHolder').val(dfiFeaturedImages);
 
 		    }).open();		

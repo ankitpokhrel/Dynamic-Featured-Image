@@ -15,10 +15,10 @@ jQuery(document).ready(function($){
 	$(document).on('click', '.dfiAddNew', function() {
 
        var obj = $(this);
-       var id = parseInt( $('.featured-meta-box:last').find('.dfiAddNew').attr('data-id') );
+       var id = parseInt( $('.featured-meta-box:last').find('.dfiAddNew').attr('data-id'), 10 );
        
        var newMetaBox = obj.closest('.featured-meta-box').clone();
-       newMetaBox.find('.hndle span').html('Featured Image ' + ++id);
+       newMetaBox.find('.hndle span').html('Featured Image ' + (++id));
        newMetaBox.attr('id', 'dfiFeaturedMetaBox' + "-" + id);
        newMetaBox.find('.handlediv').addClass('dfiDynamicBox');
        

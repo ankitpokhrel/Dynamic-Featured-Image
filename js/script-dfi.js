@@ -85,8 +85,6 @@
     
         current = $(this);
         
-        var post_id = current.attr('data-post-id');
-        
         if( null !== current) {	
         
         var dfi_uploader = wp.media({

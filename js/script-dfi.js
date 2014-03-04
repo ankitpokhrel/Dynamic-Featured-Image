@@ -55,7 +55,7 @@
             var dfiMetaBox = $(this).closest('.featured-meta-box');	
             var totalMetaBox = $('.featured-meta-box').length;
             
-            if( totalMetaBox == 1 ) {
+            if( totalMetaBox === 1 ) {
             
                 dfiMetaBox.find('.dfiImg').attr('src', '');
                 dfiMetaBox.find('.dfiImageHolder').val('');
@@ -87,7 +87,7 @@
         
         var post_id = current.attr('data-post-id');
         
-        if( null != current) {	
+        if( null !== current) {	
         
         var dfi_uploader = wp.media({
         
@@ -100,7 +100,6 @@
         }).on('select', function() {
         
                 var attachment = dfi_uploader.state().get('selection').first().toJSON();
-                console.log(attachment);
                 
                 var fullSize = attachment.url;
                 var imgUrl = (typeof attachment.sizes.thumbnail === "undefined") ? fullSize : attachment.sizes.thumbnail.url;

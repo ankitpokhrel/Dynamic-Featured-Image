@@ -1,12 +1,11 @@
 [![Latest Stable Version](https://poser.pugx.org/ankitpokhrel/Dynamic-Featured-Image/v/stable.png)](https://packagist.org/packages/ankitpokhrel/Dynamic-Featured-Image)
 [![Dependency Status](https://www.versioneye.com/user/projects/52d53aaeec13754cdb0003ff/badge.png)](https://www.versioneye.com/user/projects/52d53aaeec13754cdb0003ff)
+[![Code Climate](https://codeclimate.com/github/ankitpokhrel/Dynamic-Featured-Image.png)](https://codeclimate.com/github/ankitpokhrel/Dynamic-Featured-Image)
 [![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/ankitpokhrel/dynamic-featured-image/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
 <script id='fblh4am'>(function(i){var f,s=document.getElementById(i);f=document.createElement('iframe');f.src='//api.flattr.com/button/view/?uid=ankitpokhrel&button=compact&url='+encodeURIComponent(document.URL);f.title='Flattr';f.height=20;f.width=110;f.style.borderWidth=0;s.parentNode.insertBefore(f,s);})('fblh4am');</script>
 ## Dynamic Featured Image (A WordPress Plugin)
 
 _Dynamically adds multiple featured image (post thumbnail) functionality to posts, pages and custom post types._
-
-> #### Ver. 3.0.0 is out and has  major changes which are not compatible with previous versions.
 
 ### Overview
 Dynamic Featured Image enables the option to have MULTIPLE featured images within a post or page. 

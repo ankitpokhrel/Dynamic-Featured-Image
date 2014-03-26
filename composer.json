@@ -16,13 +16,5 @@
             "role": "Developer"
         }
     ],
-    "repositories": [
-    {
-      "type": "composer",
-      "url": "http://wpackagist.org"
-    }
-  ],
-  "require": {     
-    "wpackagist-plugin/dynamic-featured-image": "dev-trunk"   
-  }
+  "require": {}
 }

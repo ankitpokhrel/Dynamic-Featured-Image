@@ -17,6 +17,6 @@
         }
     ],
     "require": {
-        "WordPress/WordPress": ">=3.3.0"
+        "WordPress/WordPress": ">=3.5.0"
     }
 }

@@ -16,7 +16,13 @@
             "role": "Developer"
         }
     ],
-    "require": {
-        "WordPress/WordPress": ">=3.5.0"
-    }
+    "type": "package",
+      "package": {
+        "name": "wordpress",
+        "type": "webroot",
+        "version": "3.8.1",
+        "dist": {
+          "type": "zip",
+          "url": "https://github.com/WordPress/WordPress/archive/3.8.1.zip"
+        }
 }

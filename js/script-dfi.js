@@ -60,16 +60,15 @@
                 dfiMetaBox.find('.dfiImg').attr('src', '');
                 dfiMetaBox.find('.dfiImageHolder').val('');
                 dfiMetaBox.find('.dfiFeaturedImage')
-                .removeClass('hasFeaturedImage')
-                .show()
-                .animate({ opacity: 1, display: 'inline-block' }, 600);	
+                        .removeClass('hasFeaturedImage')
+                        .show()
+                        .animate({ opacity: 1, display: 'inline-block' }, 600);	
             
             } else {
             
                 dfiMetaBox.fadeOut(500, function(){
-                $(this).remove();
-
-            });
+                    $(this).remove();
+                });
             
             }
             
@@ -84,7 +83,7 @@
     $(document).on('click', '.dfiFeaturedImage', function() {
     
         current = $(this);
-        
+        console.log(WP_SPECIFIC.siteurl);
         if( null !== current) {	
         
         var dfi_uploader = wp.media({
@@ -98,16 +97,13 @@
         }).on('select', function() {
         
                 var attachment = dfi_uploader.state().get('selection').first().toJSON();
-                
                 var fullSize = attachment.url;
                 var imgUrl = (typeof attachment.sizes.thumbnail === "undefined") ? fullSize : attachment.sizes.thumbnail.url;
                 var imgUrlTrimmed, fullUrlTrimmed;
+              
+                imgUrlTrimmed = imgUrl.replace(WP_SPECIFIC.upload_url, "");
                 
-                imgUrlTrimmed = imgUrl.split('wp-content');
-                imgUrlTrimmed = '/wp-content' + imgUrlTrimmed[1];
-                
-                fullUrlTrimmed = fullSize.split('wp-content');
-                fullUrlTrimmed = '/wp-content' + fullUrlTrimmed[1];
+                fullUrlTrimmed = fullSize.replace(WP_SPECIFIC.upload_url, "");
                 
                 var featuredBox = current.parent();
                 

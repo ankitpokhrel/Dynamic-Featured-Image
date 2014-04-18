@@ -39,17 +39,14 @@ if ( !defined( 'ABSPATH' ) ) {
  * 
  * @package dynamic-featured-image
  * @author Ankit Pokhrel <ankitpokhrel@gmail.com>
- * @version 3.0.0
+ * @version 3.0.1
  */
 class Dynamic_Featured_Image {
 
 	/**
 	 * Current version of the plugin.
 	 *
-	 * @since 1.0.0
-	 * @static
-	 * @access public
-	 * @var	string	$version
+	 * @since 3.0.0
 	 */
 	const VERSION = '3.0.1';
 	private $upload_dir, $upload_url;
@@ -354,19 +351,19 @@ class Dynamic_Featured_Image {
 
 	/**
 	 * Get attachment id of the image by image url
-   *
-   * @since 2.0.0
-   * @access public
-   * @global object $wpdb
-   *
-   * @param  $image_url url of the image
-   * 
+     *
+     * @since 2.0.0
+     * @access public
+     * @global object $wpdb
+     *
+     * @param  $image_url url of the image
+     * 
 	 * @return string
 	 */   
 	public function get_image_id( $image_url ) {
 
 		global $wpdb;
-		$prefix = $wpdb->prefix;
+		$prefix = $wpdb->prefix;		
 		$attachment = $wpdb->get_col( $wpdb->prepare( "SELECT ID FROM " . $prefix . "posts" . " WHERE guid = %s", $image_url ) );
 
 		return empty( $attachment ) ? null : $attachment[0];
@@ -375,14 +372,14 @@ class Dynamic_Featured_Image {
 
 	/**
 	 * Get image url of the image by attachment id
-   * 
-   * @since 2.0.0
-   * @access public 
-   *
-   * @see  wp_get_attachment_image_src()
-   *
-   * @param  $attachment_id attachment id of an image
-   * @param  $size size of the image to fetch (thumbnail, medium, full)
+     * 
+     * @since 2.0.0
+     * @access public 
+     *
+     * @see  wp_get_attachment_image_src()
+     *
+     * @param  $attachment_id attachment id of an image
+     * @param  $size size of the image to fetch (thumbnail, medium, full)
 	 *
 	 * @return string
 	 */
@@ -396,15 +393,15 @@ class Dynamic_Featured_Image {
 
 	/**
 	 * Get image thumbnail url of specific size by image url
-   *
-   * @since 2.0.0
-   * @access public
-   *
-   * @see  get_image_id()
-   * @see  wp_get_attachment_image_src() 
-   *
-   * @param  $image_url url of an image
-   * @param  $size size of the image to fetch (thumbnail, medium, full)
+     *
+     * @since 2.0.0
+     * @access public
+     *
+     * @see  get_image_id()
+     * @see  wp_get_attachment_image_src() 
+     *
+     * @param  $image_url url of an image
+     * @param  $size size of the image to fetch (thumbnail, medium, full)
 	 *
 	 * @return string
 	 */
@@ -419,12 +416,12 @@ class Dynamic_Featured_Image {
 
 	/**
 	 * Get image title
-   *
-   * @since 2.0.0
-   * @access public
-   * @global object $wpdb
-   *
-   * @param  $image_url url of an image
+     *
+     * @since 2.0.0
+     * @access public
+     * @global object $wpdb
+     *
+     * @param  $image_url url of an image
 	 *
 	 * @return string
 	 */
@@ -440,12 +437,12 @@ class Dynamic_Featured_Image {
 
 	/**
 	 * Get image title by id
-   *
-   * @since 2.0.0
-   * @access public
-   * @global object $wpdb
-   *
-   * @param  $attachment_id attachment id of an image
+     *
+     * @since 2.0.0
+     * @access public
+     * @global object $wpdb
+     *
+     * @param  $attachment_id attachment id of an image
 	 *
 	 * @return string
 	 */
@@ -461,12 +458,12 @@ class Dynamic_Featured_Image {
 
 	/**
 	 * Get image caption
-   *
-   * @since 2.0.0
-   * @access public
-   * @global object $wpdb
-   *
-   * @param  $image_url url of an image
+     *
+     * @since 2.0.0
+     * @access public
+     * @global object $wpdb
+     *
+     * @param  $image_url url of an image
 	 *
 	 * @return string
 	 */
@@ -482,13 +479,13 @@ class Dynamic_Featured_Image {
 
 	/**
 	 * Get image caption by id
-   *
-   * @since 2.0.0
-   * @access public
-   * @global object $wpdb
-   *
-   * @param  $attachment_id attachment id of an image
-   * 
+     *
+     * @since 2.0.0
+     * @access public
+     * @global object $wpdb
+     *
+     * @param  $attachment_id attachment id of an image
+     * 
 	 * @return string
 	 */
 	public function get_image_caption_by_id( $attachment_id ) {
@@ -503,14 +500,14 @@ class Dynamic_Featured_Image {
 
 	/**
 	 * Get image alternate text
-   *
-   * @since 2.0.0
-   * @access public
-   * @global object $wpdb
-   *
-   * @see  get_post_meta()
-   *
-   * @param  $image_url url of an image
+     *
+     * @since 2.0.0
+     * @access public
+     * @global object $wpdb
+     *
+     * @see  get_post_meta()
+     *
+     * @param  $image_url url of an image
 	 *
 	 * @return string
 	 */
@@ -642,21 +639,21 @@ class Dynamic_Featured_Image {
     }
 
     $featured_images = $this->get_featured_images( $post_id );
-
+    
     return isset($featured_images[$position - 2 ]) ? $featured_images[$position - 2] : null;
     
   } // END get_nth_featured_image()
 
 	/**
 	 * Check if the image is attached with the particular post
-   *
-   * @since 2.0.0
-   * @access public
-   *
-   * @see  get_post_attachment_ids()
-   *
-   * @param  $attachment_id attachment id of an image
-   * @param  $post_id id of the current post
+     *
+     * @since 2.0.0
+     * @access public
+     *
+     * @see  get_post_attachment_ids()
+     *
+     * @param  $attachment_id attachment id of an image
+     * @param  $post_id id of the current post
 	 *
 	 * @return boolean
 	 */

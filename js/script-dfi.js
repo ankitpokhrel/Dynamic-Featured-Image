@@ -7,7 +7,7 @@
     */
     
     jQuery(document).ready(function($){
-    var current = null;	
+    var current = null; 
     
     /*
     * Add new meta box
@@ -52,7 +52,7 @@
     
         if( confirm('Are you sure?') ) {
         
-            var dfiMetaBox = $(this).closest('.featured-meta-box');	
+            var dfiMetaBox = $(this).closest('.featured-meta-box'); 
             var totalMetaBox = $('.featured-meta-box').length;
             
             if( totalMetaBox === 1 ) {
@@ -62,7 +62,7 @@
                 dfiMetaBox.find('.dfiFeaturedImage')
                         .removeClass('hasFeaturedImage')
                         .show()
-                        .animate({ opacity: 1, display: 'inline-block' }, 600);	
+                        .animate({ opacity: 1, display: 'inline-block' }, 600); 
             
             } else {
             
@@ -79,22 +79,22 @@
     /**
     * Display custom media uploader and
     * allow to select featured image from the media library
-    */	
+    */  
     $(document).on('click', '.dfiFeaturedImage', function() {
     
         current = $(this);
-        console.log(WP_SPECIFIC.siteurl);
-        if( null !== current) {	
         
-        var dfi_uploader = wp.media({
+        if( null !== current) { 
         
-                title: 'Dynamic Featured Image - Media Selector',
-                button: {
-                text: 'Set Featured Image'
-                },
-                multiple: false,
-        
-        }).on('select', function() {
+            var dfi_uploader = wp.media({
+            
+                    title: 'Dynamic Featured Image - Media Selector',
+                    button: {
+                        text: 'Set Featured Image'
+                    },
+                    multiple: false,
+            
+            }).on('select', function() {
         
                 var attachment = dfi_uploader.state().get('selection').first().toJSON();
                 var fullSize = attachment.url;
@@ -128,7 +128,7 @@
                 featuredBox.find('img').attr('src', medium).fadeIn(200);
                 featuredBox.find('input.dfiImageHolder').val(dfiFeaturedImages);
             
-            }).open();	
+            }).open();  
         }
         
         return false;
@@ -146,7 +146,7 @@
     * Add a hover animation in image
     */
     $(document).on({
-        mouseenter: function(){	
+        mouseenter: function(){ 
             var obj = $(this).closest('.featured-meta-box');
             obj.find('.dfiImg').stop(true, true).animate({ opacity: 0.3 }, 300 );
             obj.find('.hasFeaturedImage').fadeIn(200);

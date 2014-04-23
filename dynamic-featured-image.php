@@ -93,7 +93,7 @@ class Dynamic_Featured_Image {
    * 
    * @return void
    */
-	public function enqueue_admin_scripts( $hook ) {
+	public function enqueue_admin_scripts( ) {
 
 		//enqueue styles
     	wp_enqueue_style( 'style-dfi', plugins_url( '/css/style-dfi.css', __FILE__ ), array(), self::VERSION );

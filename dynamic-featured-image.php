@@ -130,6 +130,7 @@ class Dynamic_Featured_Image {
 		$data = get_post_custom( $post->ID );
 
 		$totalFeatured = 0;
+		$featuredData = array();
 		if ( isset( $data['dfiFeatured'][0] ) && !empty( $data['dfiFeatured'][0] ) ) {
 			$featuredData = unserialize($data['dfiFeatured'][0]);
 			$totalFeatured = count( $featuredData );
@@ -699,7 +700,7 @@ class Dynamic_Featured_Image {
 					$retImages[$count]['full']			= $this->upload_url . $dfiImageFull;
 					$retImages[$count]['attachment_id']	= $this->get_image_id( $this->upload_url . $dfiImageFull );
 
-				} catch(Exception $e) {}
+				} catch(Exception $e) { /* Ignore the exception and continue with other featured images */ }
 
 				$count++;
 			}

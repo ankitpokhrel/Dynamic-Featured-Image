@@ -49,7 +49,7 @@ class Dynamic_Featured_Image {
 	 * @since 3.0.0
 	 */
 	const VERSION = '3.0.1';
-	private $upload_dir, $upload_url, $table_prefix, $db;
+	private $upload_dir, $upload_url, $prefix, $db;
 
 	/**
 	 * Constructor. Hooks all interactions to initialize the class.

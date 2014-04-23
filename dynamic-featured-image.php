@@ -49,13 +49,14 @@ class Dynamic_Featured_Image {
 	 * @since 3.0.0
 	 */
 	const VERSION = '3.0.1';
-	private $upload_dir, $upload_url;
+	private $upload_dir, $upload_url, $table_prefix, $db;
 
 	/**
 	 * Constructor. Hooks all interactions to initialize the class.
 	 *
 	 * @since 1.0.0
 	 * @access public
+	 * @global object $wpdb
 	 *
 	 * @see	 add_action()
 	 *
@@ -78,6 +79,10 @@ class Dynamic_Featured_Image {
 
 		$this->upload_dir = wp_upload_dir();
 		$this->upload_url = $this->upload_dir['baseurl'];
+
+		global $wpdb;
+		$this->db = $wpdb;
+		$this->prefix = $wpdb->prefix;
 
 	} // END __construct()
 
@@ -196,7 +201,7 @@ class Dynamic_Featured_Image {
 
 		$featuredImgTrimmed = $featuredImgFull = $featuredImg;
 		if ( !empty( $featuredImg ) ) {
-			list( $featuredImgTrimmed, $featuredImgFull ) = explode( ',', $featuredImg );
+			@list( $featuredImgTrimmed, $featuredImgFull ) = explode( ',', $featuredImg );
 		}
 
 		try {		
@@ -362,10 +367,8 @@ class Dynamic_Featured_Image {
 	 * @return string
 	 */   
 	public function get_image_id( $image_url ) {
-
-		global $wpdb;
-		$prefix = $wpdb->prefix;		
-		$attachment = $wpdb->get_col( $wpdb->prepare( "SELECT ID FROM " . $prefix . "posts" . " WHERE guid = %s", $image_url ) );
+		
+		$attachment = $this->db->get_col( $this->db->prepare( "SELECT ID FROM " . $this->prefix . "posts" . " WHERE guid = %s", $image_url ) );
 
 		return empty( $attachment ) ? null : $attachment[0];
 
@@ -420,17 +423,14 @@ class Dynamic_Featured_Image {
      *
      * @since 2.0.0
      * @access public
-     * @global object $wpdb
      *
      * @param  $image_url url of an image
 	 *
 	 * @return string
 	 */
 	public function get_image_title( $image_url ) {
-
-		global $wpdb;
-		$prefix = $wpdb->prefix;
-		$post_title = $wpdb->get_col( $wpdb->prepare( "SELECT post_title FROM " . $prefix . "posts" . " WHERE guid = %s", $image_url ) );
+		
+		$post_title = $this->db->get_col( $this->db->prepare( "SELECT post_title FROM " . $this->prefix . "posts" . " WHERE guid = %s", $image_url ) );
 
 		return empty( $post_title ) ? null : $post_title[0];
 
@@ -441,17 +441,14 @@ class Dynamic_Featured_Image {
      *
      * @since 2.0.0
      * @access public
-     * @global object $wpdb
      *
      * @param  $attachment_id attachment id of an image
 	 *
 	 * @return string
 	 */
 	public function get_image_title_by_id( $attachment_id ) {
-
-		global $wpdb;
-		$prefix = $wpdb->prefix;
-		$post_title = $wpdb->get_col( $wpdb->prepare( "SELECT post_title FROM " . $prefix . "posts" . " WHERE ID = %d", $attachment_id ) );
+		
+		$post_title = $this->db->get_col( $this->db->prepare( "SELECT post_title FROM " . $this->prefix . "posts" . " WHERE ID = %d", $attachment_id ) );
 
 		return empty($post_title) ? null : $post_title[0];
 
@@ -462,17 +459,14 @@ class Dynamic_Featured_Image {
      *
      * @since 2.0.0
      * @access public
-     * @global object $wpdb
      *
      * @param  $image_url url of an image
 	 *
 	 * @return string
 	 */
 	public function get_image_caption( $image_url ) {
-
-		global $wpdb;
-		$prefix = $wpdb->prefix;
-		$post_caption = $wpdb->get_col( $wpdb->prepare("SELECT post_excerpt FROM " . $prefix . "posts" . " WHERE guid = %s", $image_url ) );
+		
+		$post_caption = $this->db->get_col( $this->db->prepare("SELECT post_excerpt FROM " . $this->prefix . "posts" . " WHERE guid = %s", $image_url ) );
 
 		return empty( $post_caption ) ? null : $post_caption[0];
 
@@ -482,18 +476,15 @@ class Dynamic_Featured_Image {
 	 * Get image caption by id
      *
      * @since 2.0.0
-     * @access public
-     * @global object $wpdb
+     * @access public  
      *
      * @param  $attachment_id attachment id of an image
      * 
 	 * @return string
 	 */
 	public function get_image_caption_by_id( $attachment_id ) {
-
-		global $wpdb;
-		$prefix = $wpdb->prefix;
-		$post_caption = $wpdb->get_col($wpdb->prepare("SELECT post_excerpt FROM " . $prefix . "posts" . " WHERE ID = %d", $attachment_id));
+	
+		$post_caption = $this->db->get_col($this->db->prepare("SELECT post_excerpt FROM " . $this->prefix . "posts" . " WHERE ID = %d", $attachment_id));
 
 		return empty( $post_caption ) ? null : $post_caption[0];
 
@@ -504,7 +495,6 @@ class Dynamic_Featured_Image {
      *
      * @since 2.0.0
      * @access public
-     * @global object $wpdb
      *
      * @see  get_post_meta()
      *
@@ -513,10 +503,8 @@ class Dynamic_Featured_Image {
 	 * @return string
 	 */
 	public function get_image_alt( $image_url ) {
-
-		global $wpdb;
-		$prefix = $wpdb->prefix;
-		$attachment = $wpdb->get_col( $wpdb->prepare( "SELECT ID FROM " . $prefix . "posts" . " WHERE guid = %s", $image_url ) );
+		
+		$attachment = $this->db->get_col( $this->db->prepare( "SELECT ID FROM " . $this->prefix . "posts" . " WHERE guid = %s", $image_url ) );
 
 		$alt = null;
 		if ( !empty( $attachment ) ) {
@@ -552,17 +540,14 @@ class Dynamic_Featured_Image {
    *
    * @since 3.0.0
    * @access public
-   * @global object $wpdb
    *
    * @param  $image_url url of an image
    *
    * @return string
    */
   public function get_image_description( $image_url ) {
-
-    global $wpdb;
-    $prefix = $wpdb->prefix;
-    $post_description = $wpdb->get_col( $wpdb->prepare( "SELECT post_content FROM " . $prefix . "posts" . " WHERE guid = %s", $image_url ) );
+  
+    $post_description = $this->db->get_col( $this->db->prepare( "SELECT post_content FROM " . $this->prefix . "posts" . " WHERE guid = %s", $image_url ) );
 
     return empty( $post_description ) ? null : $post_description[0];
 
@@ -573,17 +558,14 @@ class Dynamic_Featured_Image {
 	*
 	* @since 3.0.0
 	* @access public
-	* @global object $wpdb   
 	*
 	* @param  $attachment_id attachment id of an image
 	*
 	* @return string
 	*/
 	public function get_image_description_by_id( $attachment_id ) {
-
-		global $wpdb;
-	    $prefix = $wpdb->prefix;
-	    $post_description = $wpdb->get_col( $wpdb->prepare( "SELECT post_content FROM " . $prefix . "posts" . " WHERE ID = %d", $attachment_id ) );
+		
+	    $post_description = $this->db->get_col( $this->db->prepare( "SELECT post_content FROM " . $this->prefix . "posts" . " WHERE ID = %d", $attachment_id ) );
 
 	    return empty($post_description) ? null : $post_description[0];
 
@@ -609,7 +591,7 @@ class Dynamic_Featured_Image {
 		$retVal = array();
 		if ( !empty( $dfiImages ) && is_array( $dfiImages ) ) {
 			foreach ( $dfiImages as $dfiImage ) {
-				list( $dfiImageTrimmed, $dfiImageFull ) = explode( ',', $dfiImage );
+				@list( $dfiImageTrimmed, $dfiImageFull ) = explode( ',', $dfiImage );
 
 				$retVal[] = $this->get_image_id( $this->upload_url . $dfiImageFull );
 			}

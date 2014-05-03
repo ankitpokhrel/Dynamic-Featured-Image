@@ -355,6 +355,12 @@ class Dynamic_Featured_Image {
 
 	/** Helper functions */
 
+	private function execute_query( $query ) {
+		$resultSet = $this->db->get_col( $query );
+
+		return empty( $resultSet ) ? null : $resultSet[0];
+	}
+
 	/**
 	 * Get attachment id of the image by image url
      *
@@ -366,11 +372,9 @@ class Dynamic_Featured_Image {
      * 
 	 * @return string
 	 */   
-	public function get_image_id( $image_url ) {
-		
-		$attachment = $this->db->get_col( $this->db->prepare( "SELECT ID FROM " . $this->prefix . "posts" . " WHERE guid = %s", $image_url ) );
+	public function get_image_id( $image_url ) {		
 
-		return empty( $attachment ) ? null : $attachment[0];
+		return self::execute_query($this->db->prepare( "SELECT ID FROM " . $this->prefix . "posts" . " WHERE guid = %s", $image_url ));
 
 	} // END get_image_id()
 
@@ -430,9 +434,7 @@ class Dynamic_Featured_Image {
 	 */
 	public function get_image_title( $image_url ) {
 		
-		$post_title = $this->db->get_col( $this->db->prepare( "SELECT post_title FROM " . $this->prefix . "posts" . " WHERE guid = %s", $image_url ) );
-
-		return empty( $post_title ) ? null : $post_title[0];
+		return self::execute_query( $this->db->prepare( "SELECT post_title FROM " . $this->prefix . "posts" . " WHERE guid = %s", $image_url ) );
 
 	} // END get_image_title()
 
@@ -446,11 +448,9 @@ class Dynamic_Featured_Image {
 	 *
 	 * @return string
 	 */
-	public function get_image_title_by_id( $attachment_id ) {
-		
-		$post_title = $this->db->get_col( $this->db->prepare( "SELECT post_title FROM " . $this->prefix . "posts" . " WHERE ID = %d", $attachment_id ) );
+	public function get_image_title_by_id( $attachment_id ) {		
 
-		return empty($post_title) ? null : $post_title[0];
+		return self::execute_query( $this->db->prepare( "SELECT post_title FROM " . $this->prefix . "posts" . " WHERE ID = %d", $attachment_id ) );
 
 	} // END get_image_title_by_id()
 
@@ -466,9 +466,7 @@ class Dynamic_Featured_Image {
 	 */
 	public function get_image_caption( $image_url ) {
 		
-		$post_caption = $this->db->get_col( $this->db->prepare("SELECT post_excerpt FROM " . $this->prefix . "posts" . " WHERE guid = %s", $image_url ) );
-
-		return empty( $post_caption ) ? null : $post_caption[0];
+		return self::execute_query( $this->db->prepare("SELECT post_excerpt FROM " . $this->prefix . "posts" . " WHERE guid = %s", $image_url ) );
 
 	} // END get_image_caption()
 
@@ -484,9 +482,7 @@ class Dynamic_Featured_Image {
 	 */
 	public function get_image_caption_by_id( $attachment_id ) {
 	
-		$post_caption = $this->db->get_col($this->db->prepare("SELECT post_excerpt FROM " . $this->prefix . "posts" . " WHERE ID = %d", $attachment_id));
-
-		return empty( $post_caption ) ? null : $post_caption[0];
+		return self::execute_query( $this->db->prepare("SELECT post_excerpt FROM " . $this->prefix . "posts" . " WHERE ID = %d", $attachment_id) );
 
 	} // END get_image_caption_by_id()
 
@@ -547,9 +543,7 @@ class Dynamic_Featured_Image {
    */
   public function get_image_description( $image_url ) {
   
-    $post_description = $this->db->get_col( $this->db->prepare( "SELECT post_content FROM " . $this->prefix . "posts" . " WHERE guid = %s", $image_url ) );
-
-    return empty( $post_description ) ? null : $post_description[0];
+    return self::execute_query( $this->db->prepare( "SELECT post_content FROM " . $this->prefix . "posts" . " WHERE guid = %s", $image_url ) );
 
   } // END get_image_description()
 
@@ -565,9 +559,7 @@ class Dynamic_Featured_Image {
 	*/
 	public function get_image_description_by_id( $attachment_id ) {
 		
-	    $post_description = $this->db->get_col( $this->db->prepare( "SELECT post_content FROM " . $this->prefix . "posts" . " WHERE ID = %d", $attachment_id ) );
-
-	    return empty($post_description) ? null : $post_description[0];
+	    return self::execute_query( $this->db->prepare( "SELECT post_content FROM " . $this->prefix . "posts" . " WHERE ID = %d", $attachment_id ) );
 
 	} // END get_image_description_by_id()
 

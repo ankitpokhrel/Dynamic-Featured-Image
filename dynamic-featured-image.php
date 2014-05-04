@@ -209,32 +209,51 @@ class Dynamic_Featured_Image {
 			$thumbnail = $this->get_image_thumb( $this->upload_url . $featuredImgFull, 'medium' );			
 			if( is_null($thumbnail) ) {
 
-				//thumbnail image is missing, try to find medium sized image				
+				//medium sized thumbnail image is missing				
 				throw new Exception("Medium size image not found", 1);				
 
 			}
 
 		} catch (Exception $e) {	
 
-			//since thumbnail image is not found, we set full image url as thumbnail
+			//since medium sized thumbnail image was not found, 
+			//let's set full image url as thumbnail
 			$thumbnail = $featuredImgFull;
 
 		}
 		
 		//Add a nonce field
 		wp_nonce_field(plugin_basename(__FILE__), 'dfi_fimageplug-' . $featuredId);
-		?>
-			<a href="javascript:void(0)" class='dfiFeaturedImage <?php if (isset($featuredImgTrimmed) && !empty($featuredImgTrimmed)) echo 'hasFeaturedImage' ?>' title="Set Featured Image" data-post-id="<?php the_ID() ?>"><span class="dashicons dashicons-camera"></span></a><br/>
-			<img src="<?php if (isset($thumbnail) && !is_null($thumbnail)) echo $thumbnail; ?>" class='dfiImg <?php if (!isset($featuredImgTrimmed) || is_null($featuredImgTrimmed)) echo 'dfiImgEmpty' ?>'/>
-			<div class='dfiLinks'>
-				<a href="javascript:void(0)" data-id='<?php echo $featuredId ?>' class='dfiAddNew dashicons dashicons-plus' title="Add New"></a>
-				<a href="javascript:void(0)" class='dfiRemove dashicons dashicons-minus' title="Remove"></a>
-			</div>
-			<div class='dfiClearFloat'></div>
-			<input type='hidden' name="dfiFeatured[]" value="<?php echo $featuredImg ?>"  class="dfiImageHolder" />
-		<?php
+		echo self::_get_featured_box($featuredImgTrimmed, $featuredImg, $featuredId, $thumbnail);
 
 	} // END featured_meta_box()
+
+	/**
+	 * Returns featured box html content
+	 * @since  3.1.0
+	 * @access private
+	 * 
+	 * @param  String $featuredImgTrimmed Medium sized image
+	 * @param  String $featuredImg        Full sized image
+	 * @param  String $featuredId         Attachment Id
+	 * @param  String $thumbnail          Thumb sized image
+	 * 
+	 * @return String                     Html content
+	 */
+	private function _get_featured_box($featuredImgTrimmed, $featuredImg, $featuredId, $thumbnail) {
+		$hasFeaturedImage = !empty($featuredImgTrimmed) ? 'hasFeaturedImage' : '';
+		$thumbnail = !is_null($thumbnail) ? $thumbnail : '';
+		$dfiEmpty = is_null($featuredImgTrimmed) ? 'dfiImgEmpty' : '';
+
+		return "<a href='javascript:void(0)' class='dfiFeaturedImage {$hasFeaturedImage}' title='Set Featured Image' data-post-id='" . get_the_ID() . "'><span class='dashicons dashicons-camera'></span></a><br/>
+			<img src='" . $thumbnail . "' class='dfiImg {$dfiEmpty}'/>
+			<div class='dfiLinks'>
+				<a href='javascript:void(0)'' data-id='{$featuredId}' class='dfiAddNew dashicons dashicons-plus' title='Add New'></a>
+				<a href='javascript:void(0)' class='dfiRemove dashicons dashicons-minus' title='Remove'></a>
+			</div>
+			<div class='dfiClearFloat'></div>
+			<input type='hidden' name='dfiFeatured[]' value='{$featuredImg}'  class='dfiImageHolder' />";
+	}
 
   /**
    * Load new featured meta box via ajax

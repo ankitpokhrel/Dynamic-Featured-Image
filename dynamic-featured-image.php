@@ -196,11 +196,11 @@ class Dynamic_Featured_Image {
    */
 	public function featured_meta_box( $post, $featured ) {
 
-		$featuredImg	= is_null( $featured['args'][0]) ? '' : $featured['args'][0];
-		$featuredId		= is_null( $featured['args'][1]) ? 2 : --$featured['args'][1];
+		$featuredImg = $featured['args'][0];
+		$featuredId	= is_null( $featured['args'][1]) ? 2 : --$featured['args'][1];
 
 		$featuredImgTrimmed = $featuredImgFull = $featuredImg;
-		if ( !empty( $featuredImg ) ) {
+		if ( !is_null( $featured['args'][0] ) ) {
 			@list( $featuredImgTrimmed, $featuredImgFull ) = explode( ',', $featuredImg );
 		}
 
@@ -348,7 +348,7 @@ class Dynamic_Featured_Image {
 		}
 
 		//Check permission before saving data
-		if ( !empty( $_POST ) && current_user_can( 'edit_posts', $post_id ) ) {
+		if ( current_user_can( 'edit_posts', $post_id ) ) {
 			if ( isset( $_POST['dfiFeatured'] ) ) {
 				update_post_meta( $post_id, 'dfiFeatured', $_POST['dfiFeatured'] );
 			}

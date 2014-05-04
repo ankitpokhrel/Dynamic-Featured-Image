@@ -331,16 +331,13 @@ class Dynamic_Featured_Image {
 
 		foreach ( $keys as $key ) {
 			if ( preg_match( '/dfi_fimageplug-.$/', $key ) ) {
-				$featuredIds[] = $key;
-			}
-		}
+				//Verify nonce
+				if ( !wp_verify_nonce( $_POST[$key], plugin_basename(__FILE__) ) ) {
+					return;
+				}			
 
-		//Verify nonce
-		foreach ( $featuredIds as $nonceId ) {
-			if ( !wp_verify_nonce( $_POST[$nonceId], plugin_basename(__FILE__) ) ) {
-				return;
 			}
-		}
+		}		
 
 		//Check autosave
 		if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {

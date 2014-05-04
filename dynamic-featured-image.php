@@ -325,8 +325,7 @@ class Dynamic_Featured_Image {
    * @return Void
    */
 	public function save_meta( $post_id ) {
-
-		$featuredIds = array();
+		
 		$keys = array_keys( $_POST );
 
 		foreach ( $keys as $key ) {

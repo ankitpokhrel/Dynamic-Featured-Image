@@ -152,7 +152,7 @@ class Dynamic_Featured_Image {
 				$i++;
 			}
 		} else {
-			self::_dfi_add_meta_box($postTypes, $featured, $i);
+			self::_dfi_add_meta_box($postTypes);
 		}
 
 	} // END initialize_featured_box()

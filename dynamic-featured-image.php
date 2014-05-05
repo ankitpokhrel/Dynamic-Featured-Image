@@ -342,9 +342,13 @@ class Dynamic_Featured_Image {
    * @return Void
    */
 	public function save_meta( $post_id ) {
+
+		//Check autosave
+		if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {
+			return;
+		}
 		
 		$keys = array_keys( $_POST );
-
 		foreach ( $keys as $key ) {
 			if ( preg_match( '/dfi_fimageplug-.$/', $key ) ) {
 				//Verify nonce
@@ -352,18 +356,11 @@ class Dynamic_Featured_Image {
 					return;
 				}			
 			}
-		}		
-
-		//Check autosave
-		if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {
-			return;
-		}
+		}				
 
 		//Check permission before saving data
-		if ( current_user_can( 'edit_posts', $post_id ) ) {
-			if ( isset( $_POST['dfiFeatured'] ) ) {
-				update_post_meta( $post_id, 'dfiFeatured', $_POST['dfiFeatured'] );
-			}
+		if ( current_user_can( 'edit_posts', $post_id ) && isset( $_POST['dfiFeatured']) ) {			
+			update_post_meta( $post_id, 'dfiFeatured', $_POST['dfiFeatured'] );			
 		}
 
 	} // END save_meta()

@@ -334,7 +334,6 @@ class Dynamic_Featured_Image {
 				if ( !wp_verify_nonce( $_POST[$key], plugin_basename(__FILE__) ) ) {
 					return;
 				}			
-
 			}
 		}		
 
@@ -695,7 +694,7 @@ class Dynamic_Featured_Image {
 			}
 		}
 
-		return ( !empty( $retImages ) ) ? $retImages : null;
+		return $retImages;
 
 	} // END get_featured_images()
 

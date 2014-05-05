@@ -147,22 +147,39 @@ class Dynamic_Featured_Image {
 
 		if ( $totalFeatured >= 1 ) {
 			$i = 2;
-			foreach ( $featuredData as $featured ) {
-				foreach ( $postTypes as $type ) {
-					add_meta_box(
-						'dfiFeaturedMetaBox-' . $i,
-						__('Featured Image ') . $i,
-						array( $this, 'featured_meta_box' ),
-						$type,
-						'side',
-						'low',
-						array( $featured, $i + 1 )
-					);
-					add_filter( "postbox_classes_{$type}_dfiFeaturedMetaBox-" . $i, array( $this, 'add_metabox_classes' ) );
-				}
-
+			foreach ( $featuredData as $featured ) {				
+				self::_dfi_add_meta_box($postTypes, $featured, $i);
 				$i++;
 			}
+		} else {
+			self::_dfi_add_meta_box($postTypes, $featured, $i);
+		}
+
+	} // END initialize_featured_box()
+
+	/**
+	 * adds meta boxes
+	 * @param  Array $postTypes     post types to show featured image box	 
+	 * @param  Object $featured     callback arguments
+	 * @param  Integer $i           index of the featured image
+	 * @return Void
+	 */
+	private function _dfi_add_meta_box( $postTypes, $featured = null, $i = null ) {
+
+		if ( !is_null($i) ) {
+			foreach ( $postTypes as $type ) {
+				add_meta_box(
+					'dfiFeaturedMetaBox-' . $i,
+					__('Featured Image ') . $i,
+					array( $this, 'featured_meta_box' ),
+					$type,
+					'side',
+					'low',
+					array( $featured, $i + 1 )
+				);
+				add_filter( "postbox_classes_{$type}_dfiFeaturedMetaBox-" . $i, array( $this, 'add_metabox_classes' ) );
+			}
+				
 		} else {
 			foreach ( $postTypes as $type ) {
 				add_meta_box(
@@ -178,7 +195,7 @@ class Dynamic_Featured_Image {
 			}
 		}
 
-	} // END initialize_featured_box()
+	}
 
   /**
    * Featured meta box as seen in the admin

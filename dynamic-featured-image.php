@@ -442,13 +442,35 @@ class Dynamic_Featured_Image {
 	 * @return String
 	 */
 	public function get_image_thumb( $image_url, $size = 'thumbnail' ) {
-
-		$attachment_id = $this->get_image_id( $image_url );
+		
+		$attachment_id = self::_get_attachment_id( $image_url );		
 		$image_thumb = wp_get_attachment_image_src( $attachment_id, $size );
-
+		
 		return empty( $image_thumb ) ? null : $image_thumb[0];
 
 	} // END get_image_thumb()
+
+	/**
+	 * Gets attachment id from given image url
+	 * @param  String $image_url url of an image
+	 * @return Integer|Null            attachment id of an image
+	 */
+	private function _get_attachment_id( $image_url ) {
+
+		$attachment_id = $this->get_image_id( $image_url );
+		if( is_null($attachment_id) ) {
+			//check if the image is edited image
+			//and try to get the attachment id	
+			$image_url = str_replace($this->upload_url . "/", '', $image_url);				
+			$row = self::execute_query( $this->db->prepare( "SELECT post_id, meta_key FROM " . $this->prefix . "postmeta WHERE meta_value = %s", $image_url ) );
+			if( !is_null($row) ) {
+				$attachment_id = $row['post_id'];
+			}
+		}
+
+		return $attachment_id;
+		
+	}
 
 	/**
 	 * Get image title

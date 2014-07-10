@@ -3,7 +3,7 @@
  Plugin Name: Dynamic Featured Image
  Plugin URI: http://wordpress.org/plugins/dynamic-featured-image/
  Description: Dynamically adds multiple featured image or post thumbnail functionality to your posts, pages and custom post types.
- Version: 3.1.0
+ Version: 3.0.0
  Author: Ankit Pokhrel
  Author URI: http://ankitpokhrel.com.np
  License: GPL2 or later
@@ -11,20 +11,20 @@
  Text Domain: dynamic-featured-image
  Domain Path: /languages
 
-  	Copyright (C) 2013 Ankit Pokhrel <ankitpokhrel@gmail.com, http://ankitpokhrel.com.np>,
+	Copyright (C) 2013 Ankit Pokhrel <ankitpokhrel@gmail.com, http://ankitpokhrel.com.np>,
 
-  	This program is free software; you can redistribute it and/or modify
-  	it under the terms of the GNU General Public License as published by
-  	the Free Software Foundation; either version 3 of the License, or
-  	(at your option) any later version.
+	This program is free software; you can redistribute it and/or modify
+	it under the terms of the GNU General Public License as published by
+	the Free Software Foundation; either version 3 of the License, or
+	(at your option) any later version.
 
-  	This program is distributed in the hope that it will be useful,
-  	but WITHOUT ANY WARRANTY; without even the implied warranty of
-  	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-  	GNU General Public License for more details.
+	This program is distributed in the hope that it will be useful,
+	but WITHOUT ANY WARRANTY; without even the implied warranty of
+	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+	GNU General Public License for more details.
 
-  	You should have received a copy of the GNU General Public License
-  	along with this program.  If not, see <http://www.gnu.org/licenses/>.
+	You should have received a copy of the GNU General Public License
+	along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
 // Avoid direct calls to this file
@@ -48,7 +48,7 @@ class Dynamic_Featured_Image {
 	 *
 	 * @since 3.0.0
 	 */
-	const VERSION = '3.1.0';
+	const VERSION = '3.0.1';
 	private $upload_dir, $upload_url, $prefix, $db;
 
 	/**
@@ -101,7 +101,7 @@ class Dynamic_Featured_Image {
 	public function enqueue_admin_scripts( ) {
 
 		//enqueue styles
-    	wp_enqueue_style( 'style-dfi', plugins_url( '/css/style-dfi.css', __FILE__ ), array(), self::VERSION );
+		wp_enqueue_style( 'style-dfi', plugins_url( '/css/style-dfi.css', __FILE__ ), array(), self::VERSION );
 		wp_enqueue_style( 'dashicons', plugins_url( '/css/dashicons.css', __FILE__ ), array(), self::VERSION );
 
 		//register script
@@ -223,7 +223,7 @@ class Dynamic_Featured_Image {
 
 		try {		
 
-			$thumbnail = $this->get_image_thumb( $this->upload_url . $featuredImgFull, 'medium' );			
+			$thumbnail = $this->get_image_thumb( $this->upload_url . $featuredImgFull, 'medium' );				
 			if( is_null($thumbnail) ) {
 
 				//medium sized thumbnail image is missing				
@@ -391,13 +391,13 @@ class Dynamic_Featured_Image {
 
 	/**
 	 * Get attachment id of the image by image url
-     *
-     * @since 2.0.0
-     * @access public
-     * @global object $wpdb
-     *
-     * @param  String $image_url url of the image
-     * 
+	 *
+	 * @since 2.0.0
+	 * @access public
+	 * @global object $wpdb
+	 *
+	 * @param  String $image_url url of the image
+	 * 
 	 * @return string
 	 */   
 	public function get_image_id( $image_url ) {		
@@ -408,14 +408,14 @@ class Dynamic_Featured_Image {
 
 	/**
 	 * Get image url of the image by attachment id
-     * 
-     * @since 2.0.0
-     * @access public 
-     *
-     * @see  wp_get_attachment_image_src()
-     *
-     * @param  Integer $attachment_id attachment id of an image
-     * @param  String $size size of the image to fetch (thumbnail, medium, full)
+	 * 
+	 * @since 2.0.0
+	 * @access public 
+	 *
+	 * @see  wp_get_attachment_image_src()
+	 *
+	 * @param  Integer $attachment_id attachment id of an image
+	 * @param  String $size size of the image to fetch (thumbnail, medium, full)
 	 *
 	 * @return String
 	 */
@@ -429,15 +429,15 @@ class Dynamic_Featured_Image {
 
 	/**
 	 * Get image thumbnail url of specific size by image url
-     *
-     * @since 2.0.0
-     * @access public
-     *
-     * @see  get_image_id()
-     * @see  wp_get_attachment_image_src() 
-     *
-     * @param  String $image_url url of an image
-     * @param  String $size size of the image to fetch (thumbnail, medium, full)
+	 *
+	 * @since 2.0.0
+	 * @access public
+	 *
+	 * @see  get_image_id()
+	 * @see  wp_get_attachment_image_src() 
+	 *
+	 * @param  String $image_url url of an image
+	 * @param  String $size size of the image to fetch (thumbnail, medium, full)
 	 *
 	 * @return String
 	 */
@@ -456,7 +456,7 @@ class Dynamic_Featured_Image {
 	 * @return Integer|Null            attachment id of an image
 	 */
 	private function _get_attachment_id( $image_url ) {
-
+		
 		$attachment_id = $this->get_image_id( $image_url );
 		if( is_null($attachment_id) ) {
 			//check if the image is edited image
@@ -469,16 +469,15 @@ class Dynamic_Featured_Image {
 		}
 
 		return $attachment_id;
-		
 	}
 
 	/**
 	 * Get image title
-     *
-     * @since 2.0.0
-     * @access public
-     *
-     * @param  String $image_url url of an image
+	 *
+	 * @since 2.0.0
+	 * @access public
+	 *
+	 * @param  String $image_url url of an image
 	 *
 	 * @return String
 	 */
@@ -490,11 +489,11 @@ class Dynamic_Featured_Image {
 
 	/**
 	 * Get image title by id
-     *
-     * @since 2.0.0
-     * @access public
-     *
-     * @param  Integer $attachment_id attachment id of an image
+	 *
+	 * @since 2.0.0
+	 * @access public
+	 *
+	 * @param  Integer $attachment_id attachment id of an image
 	 *
 	 * @return String
 	 */
@@ -506,11 +505,11 @@ class Dynamic_Featured_Image {
 
 	/**
 	 * Get image caption
-     *
-     * @since 2.0.0
-     * @access public
-     *
-     * @param  String $image_url url of an image
+	 *
+	 * @since 2.0.0
+	 * @access public
+	 *
+	 * @param  String $image_url url of an image
 	 *
 	 * @return String
 	 */
@@ -522,12 +521,12 @@ class Dynamic_Featured_Image {
 
 	/**
 	 * Get image caption by id
-     *
-     * @since 2.0.0
-     * @access public  
-     *
-     * @param  Integer $attachment_id attachment id of an image
-     * 
+	 *
+	 * @since 2.0.0
+	 * @access public  
+	 *
+	 * @param  Integer $attachment_id attachment id of an image
+	 * 
 	 * @return String
 	 */
 	public function get_image_caption_by_id( $attachment_id ) {
@@ -538,13 +537,13 @@ class Dynamic_Featured_Image {
 
 	/**
 	 * Get image alternate text
-     *
-     * @since 2.0.0
-     * @access public
-     *
-     * @see  get_post_meta()
-     *
-     * @param  String $image_url url of an image
+	 *
+	 * @since 2.0.0
+	 * @access public
+	 *
+	 * @see  get_post_meta()
+	 *
+	 * @param  String $image_url url of an image
 	 *
 	 * @return String
 	 */
@@ -575,9 +574,9 @@ class Dynamic_Featured_Image {
    */
   public function get_image_alt_by_id( $attachment_id ) {
 
-    $alt = get_post_meta($attachment_id, '_wp_attachment_image_alt');
+	$alt = get_post_meta($attachment_id, '_wp_attachment_image_alt');
 
-    return empty($alt) ? null : $alt[0];
+	return empty($alt) ? null : $alt[0];
 
   } // END get_image_alt_by_id()
 
@@ -593,7 +592,7 @@ class Dynamic_Featured_Image {
    */
   public function get_image_description( $image_url ) {
   
-    return self::execute_query( $this->db->prepare( "SELECT post_content FROM " . $this->prefix . "posts" . " WHERE guid = %s", $image_url ) );
+	return self::execute_query( $this->db->prepare( "SELECT post_content FROM " . $this->prefix . "posts" . " WHERE guid = %s", $image_url ) );
 
   } // END get_image_description()
 
@@ -609,7 +608,7 @@ class Dynamic_Featured_Image {
 	*/
 	public function get_image_description_by_id( $attachment_id ) {
 		
-	    return self::execute_query( $this->db->prepare( "SELECT post_content FROM " . $this->prefix . "posts" . " WHERE ID = %d", $attachment_id ) );
+		return self::execute_query( $this->db->prepare( "SELECT post_content FROM " . $this->prefix . "posts" . " WHERE ID = %d", $attachment_id ) );
 
 	} // END get_image_description_by_id()
 
@@ -658,27 +657,27 @@ class Dynamic_Featured_Image {
    */
   public function get_nth_featured_image( $position, $post_id = null ) {
 
-    if ( is_null( $post_id ) ) {
-      global $post;
-      $post_id = $post->ID;
-    }
+	if ( is_null( $post_id ) ) {
+	  global $post;
+	  $post_id = $post->ID;
+	}
 
-    $featured_images = $this->get_featured_images( $post_id );
-    
-    return isset($featured_images[$position - 2 ]) ? $featured_images[$position - 2] : null;
-    
+	$featured_images = $this->get_featured_images( $post_id );
+	
+	return isset($featured_images[$position - 2 ]) ? $featured_images[$position - 2] : null;
+	
   } // END get_nth_featured_image()
 
 	/**
 	 * Check if the image is attached with the particular post
-     *
-     * @since 2.0.0
-     * @access public
-     *
-     * @see  get_post_attachment_ids()
-     *
-     * @param  $attachment_id attachment id of an image
-     * @param  $post_id id of the current post
+	 *
+	 * @since 2.0.0
+	 * @access public
+	 *
+	 * @see  get_post_attachment_ids()
+	 *
+	 * @param  $attachment_id attachment id of an image
+	 * @param  $post_id id of the current post
 	 *
 	 * @return boolean
 	 */
@@ -722,7 +721,7 @@ class Dynamic_Featured_Image {
 
 					$retImages[$count]['thumb']			= $this->upload_url . $dfiImageTrimmed;
 					$retImages[$count]['full']			= $this->upload_url . $dfiImageFull;
-					$retImages[$count]['attachment_id']	= $this->get_image_id( $this->upload_url . $dfiImageFull );
+					$retImages[$count]['attachment_id']	= $this->_get_attachment_id( $this->upload_url . $dfiImageFull );
 
 				} catch(Exception $e) { /* Ignore the exception and continue with other featured images */ }
 

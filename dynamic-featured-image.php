@@ -3,7 +3,7 @@
  Plugin Name: Dynamic Featured Image
  Plugin URI: http://wordpress.org/plugins/dynamic-featured-image/
  Description: Dynamically adds multiple featured image or post thumbnail functionality to your posts, pages and custom post types.
- Version: 3.0.0
+ Version: 3.1.2
  Author: Ankit Pokhrel
  Author URI: http://ankitpokhrel.com.np
  License: GPL2 or later
@@ -48,7 +48,7 @@ class Dynamic_Featured_Image {
 	 *
 	 * @since 3.0.0
 	 */
-	const VERSION = '3.0.1';
+	const VERSION = '3.1.2';
 	private $upload_dir, $upload_url, $prefix, $db;
 
 	/**
@@ -574,9 +574,9 @@ class Dynamic_Featured_Image {
 	 */
 	public function get_image_alt_by_id( $attachment_id ) {
 
-	$alt = get_post_meta($attachment_id, '_wp_attachment_image_alt');
+		$alt = get_post_meta($attachment_id, '_wp_attachment_image_alt');
 
-	return empty($alt) ? null : $alt[0];
+		return empty($alt) ? null : $alt[0];
 
 	} // END get_image_alt_by_id()
 
@@ -592,7 +592,7 @@ class Dynamic_Featured_Image {
 	 */
 	public function get_image_description( $image_url ) {
 	
-	return self::execute_query( $this->db->prepare( "SELECT post_content FROM " . $this->prefix . "posts" . " WHERE guid = %s", $image_url ) );
+		return self::execute_query( $this->db->prepare( "SELECT post_content FROM " . $this->prefix . "posts" . " WHERE guid = %s", $image_url ) );
 
 	} // END get_image_description()
 

@@ -86,18 +86,18 @@ class Dynamic_Featured_Image {
 
 	} // END __construct()
 
-  /**
-   * Add required admin scripts
-   *
-   * @since 1.0.0
-   * @access public
-   *
-   * @see  wp_enque_style()
-   * @see  wp_register_script()
-   * @see  wp_enqueue_script()
-   * 
-   * @return Void
-   */
+	/**
+	 * Add required admin scripts
+	 *
+	 * @since 1.0.0
+	 * @access public
+	 *
+	 * @see  wp_enque_style()
+	 * @see  wp_register_script()
+	 * @see  wp_enqueue_script()
+	 * 
+	 * @return Void
+	 */
 	public function enqueue_admin_scripts( ) {
 
 		//enqueue styles
@@ -115,20 +115,20 @@ class Dynamic_Featured_Image {
 
 	} // END initialize_components()
 
-  /**
-   * Add featured meta boxes dynamically
-   *
-   * @since 1.0.0
-   * @access public
-   * @global object $post
-   *
-   * @see  get_post_custom()
-   * @see  get_post_types()
-   * @see  add_meta_box()
-   * @see  add_filter()
-   * 
-   * @return Void
-   */  
+	/**
+	 * Add featured meta boxes dynamically
+	 *
+	 * @since 1.0.0
+	 * @access public
+	 * @global object $post
+	 *
+	 * @see  get_post_custom()
+	 * @see  get_post_types()
+	 * @see  add_meta_box()
+	 * @see  add_filter()
+	 * 
+	 * @return Void
+	 */  
 	public function initialize_featured_box() {
 
 		global $post;
@@ -197,20 +197,20 @@ class Dynamic_Featured_Image {
 
 	}
 
-  /**
-   * Featured meta box as seen in the admin
-   *
-   * @since 1.0.0
-   * @access public
-   *
-   * @see  wp_nonce_field()
-   * @see  plugin_basename()
-   *
-   * @param  Object $post global post object
-   * @param  Array $featured array containing featured image count
-   *
-   * @return Void
-   */
+	/**
+	 * Featured meta box as seen in the admin
+	 *
+	 * @since 1.0.0
+	 * @access public
+	 *
+	 * @see  wp_nonce_field()
+	 * @see  plugin_basename()
+	 *
+	 * @param  Object $post global post object
+	 * @param  Array $featured array containing featured image count
+	 *
+	 * @return Void
+	 */
 	public function featured_meta_box( $post, $featured ) {
 
 		$featuredImg = $featured['args'][0];
@@ -272,17 +272,17 @@ class Dynamic_Featured_Image {
 			<input type='hidden' name='dfiFeatured[]' value='{$featuredImg}'  class='dfiImageHolder' />";
 	}
 
-  /**
-   * Load new featured meta box via ajax
-   *
-   * @since 1.0.0
-   * @access public
-   *
-   * @see  wp_nonce_field()
-   * @see  plugin_basename()
-   *
-   * @return Void
-   */
+	/**
+	 * Load new featured meta box via ajax
+	 *
+	 * @since 1.0.0
+	 * @access public
+	 *
+	 * @see  wp_nonce_field()
+	 * @see  plugin_basename()
+	 *
+	 * @return Void
+	 */
 	public function ajax_callback() {
 
 		$featuredId = isset($_POST['id']) ? (int) strip_tags( trim( $_POST['id'] ) ) : null;
@@ -293,31 +293,31 @@ class Dynamic_Featured_Image {
 
 		wp_nonce_field( plugin_basename(__FILE__), 'dfi_fimageplug-' . $featuredId );
 		?>
-			  <a href="javascript:void(0)" class='dfiFeaturedImage' title="Set Featured Image"><span class="dashicons dashicons-camera"></span></a><br/>
-			   <img src="" class='dfiImg dfiImgEmpty'/>
-			   <div class='dfiLinks'>
+				<a href="javascript:void(0)" class='dfiFeaturedImage' title="Set Featured Image"><span class="dashicons dashicons-camera"></span></a><br/>
+				 <img src="" class='dfiImg dfiImgEmpty'/>
+				 <div class='dfiLinks'>
 				<a href="javascript:void(0)" data-id='<?php echo $featuredId ?>' class='dfiAddNew dashicons dashicons-plus' title="Add New"></a>
 				<a href="javascript:void(0)" class='dfiRemove dashicons dashicons-minus' title="Remove"></a>
-			   </div>
-			   <div class='dfiClearFloat'></div>
-			   <input type='hidden' name="dfiFeatured[]" value="" class="dfiImageHolder" />
+				 </div>
+				 <div class='dfiClearFloat'></div>
+				 <input type='hidden' name="dfiFeatured[]" value="" class="dfiImageHolder" />
 		<?php
 		die();
 
 	} // END MetaBox_callback())
 
-  /**
-   * Add custom class 'featured-meta-box' to meta box
-   *
-   * @since 1.0.0
-   * @access public
-   *
-   * @see  add_metabox_classes
-   *
-   * @param  $classes classes to add in the meta box
-   *
-   * @return string
-   */
+	/**
+	 * Add custom class 'featured-meta-box' to meta box
+	 *
+	 * @since 1.0.0
+	 * @access public
+	 *
+	 * @see  add_metabox_classes
+	 *
+	 * @param  $classes classes to add in the meta box
+	 *
+	 * @return string
+	 */
 	public function add_metabox_classes( $classes ) {
 
 		array_push( $classes, 'featured-meta-box' );
@@ -326,21 +326,21 @@ class Dynamic_Featured_Image {
 
 	} // END add_metabox_classes()
 
-  /**
-   * Update featured images in the database
-   *
-   * @since 1.0.0
-   * @access public
-   *
-   * @see  wp_verify_nonce()
-   * @see  plugin_basename()
-   * @see  update_post_meta()
-   * @see  current_user_can()
-   *
-   * @param  Integer $post_id current post id
-   * 
-   * @return Void
-   */
+	/**
+	 * Update featured images in the database
+	 *
+	 * @since 1.0.0
+	 * @access public
+	 *
+	 * @see  wp_verify_nonce()
+	 * @see  plugin_basename()
+	 * @see  update_post_meta()
+	 * @see  current_user_can()
+	 *
+	 * @param  Integer $post_id current post id
+	 * 
+	 * @return Void
+	 */
 	public function save_meta( $post_id ) {
 
 		//Check autosave
@@ -359,21 +359,21 @@ class Dynamic_Featured_Image {
 		}				
 
 		//Check permission before saving data
-		if ( current_user_can( 'edit_posts', $post_id ) && isset( $_POST['dfiFeatured']) ) {			
+		if ( current_user_can( 'edit_posts', $post_id ) && isset( $_POST['dfiFeatured'] ) ) {			
 			update_post_meta( $post_id, 'dfiFeatured', $_POST['dfiFeatured'] );			
 		}
 
 	} // END save_meta()
 
-  /**
-   * Add update notice. Displayed in plugin update page.
-   *
-   * @since 2.0.0
-   * @access public
-   * @ignore
-   * 
-   * @return Void
-   */
+	/**
+	 * Add update notice. Displayed in plugin update page.
+	 *
+	 * @since 2.0.0
+	 * @access public
+	 * @ignore
+	 * 
+	 * @return Void
+	 */
 	public function update_notice() {
 
 		$info = __( 'ATTENTION! Please read the <a href="https://github.com/ankitpokhrel/Dynamic-Featured-Image/wiki" target="_blank">DOCUMENTATION</a> properly before update.', 'dynamic-featured-image');
@@ -560,43 +560,43 @@ class Dynamic_Featured_Image {
 
 	} // END get_image_alt()
 
-  /**
-   * Get image alternate text by attachment id
-   *
-   * @since 2.0.0
-   * @access public
-   *
-   * @see  get_post_meta()
-   *
-   * @param  Integer $attachment_id attachment id of an image
-   *
-   * @return String
-   */
-  public function get_image_alt_by_id( $attachment_id ) {
+	/**
+	 * Get image alternate text by attachment id
+	 *
+	 * @since 2.0.0
+	 * @access public
+	 *
+	 * @see  get_post_meta()
+	 *
+	 * @param  Integer $attachment_id attachment id of an image
+	 *
+	 * @return String
+	 */
+	public function get_image_alt_by_id( $attachment_id ) {
 
 	$alt = get_post_meta($attachment_id, '_wp_attachment_image_alt');
 
 	return empty($alt) ? null : $alt[0];
 
-  } // END get_image_alt_by_id()
+	} // END get_image_alt_by_id()
 
-  /**
-   * Get image description
-   *
-   * @since 3.0.0
-   * @access public
-   *
-   * @param  String $image_url url of an image
-   *
-   * @return String
-   */
-  public function get_image_description( $image_url ) {
-  
+	/**
+	 * Get image description
+	 *
+	 * @since 3.0.0
+	 * @access public
+	 *
+	 * @param  String $image_url url of an image
+	 *
+	 * @return String
+	 */
+	public function get_image_description( $image_url ) {
+	
 	return self::execute_query( $this->db->prepare( "SELECT post_content FROM " . $this->prefix . "posts" . " WHERE guid = %s", $image_url ) );
 
-  } // END get_image_description()
+	} // END get_image_description()
 
-   /**
+	 /**
 	* Get image description by id
 	*
 	* @since 3.0.0
@@ -612,7 +612,7 @@ class Dynamic_Featured_Image {
 
 	} // END get_image_description_by_id()
 
-   /**
+	 /**
 	* Get all attachment ids of the post
 	*
 	* @since 2.0.0
@@ -642,31 +642,31 @@ class Dynamic_Featured_Image {
 
 	} // END get_post_attachment_ids()
 
-  /**
-   * Fetches featured image data of nth position
-   *
-   * @since  3.0.0
-   * @access  public
-   * 
-   * @see  get_featured_images()
-   * 
-   * @param  Integer $position position of the featured image
-   * @param  Integer $post_id  id of the current post
-   * 
-   * @return Array if found, null otherwise
-   */
-  public function get_nth_featured_image( $position, $post_id = null ) {
+	/**
+	 * Fetches featured image data of nth position
+	 *
+	 * @since  3.0.0
+	 * @access  public
+	 * 
+	 * @see  get_featured_images()
+	 * 
+	 * @param  Integer $position position of the featured image
+	 * @param  Integer $post_id  id of the current post
+	 * 
+	 * @return Array if found, null otherwise
+	 */
+	public function get_nth_featured_image( $position, $post_id = null ) {
 
 	if ( is_null( $post_id ) ) {
-	  global $post;
-	  $post_id = $post->ID;
+		global $post;
+		$post_id = $post->ID;
 	}
 
 	$featured_images = $this->get_featured_images( $post_id );
 	
 	return isset($featured_images[$position - 2 ]) ? $featured_images[$position - 2] : null;
 	
-  } // END get_nth_featured_image()
+	} // END get_nth_featured_image()
 
 	/**
 	 * Check if the image is attached with the particular post
@@ -689,7 +689,7 @@ class Dynamic_Featured_Image {
 
 	} // END is_attached()
 
-   /**
+	 /**
 	* Retrieve featured images for specific post(s)
 	*
 	* @since 2.0.0

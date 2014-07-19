@@ -15,11 +15,14 @@
     $(document).on('click', '.dfiAddNew', function() {
     
            var obj = $(this);
-           var id = parseInt( $('.featured-meta-box:last').find('.dfiAddNew').attr('data-id'), 10 );
+           //var id = parseInt( $('.featured-meta-box:last').find('.dfiAddNew').attr('data-id'), 10 );
+           var id = parseInt( $('.featured-meta-box:last').find('.dfiAddNew').data('id'), 10 );           
+           var idLocal = $('.featured-meta-box:last').find('.dfiAddNew').attr('data-id-local');
            
            var newMetaBox = obj.closest('.featured-meta-box').clone();
-           newMetaBox.find('.hndle span').html('Featured Image ' + (++id));
-           newMetaBox.attr('id', 'dfiFeaturedMetaBox' + "-" + id);
+           newMetaBox.find('.hndle span').html( WP_SPECIFIC.metabox_title + idLocal );
+
+           newMetaBox.attr('id', 'dfiFeaturedMetaBox' + "-" + (++id) );
            newMetaBox.find('.handlediv').addClass('dfiDynamicBox');
            
            var metaBoxContentObj = newMetaBox.find('.inside');
@@ -88,9 +91,9 @@
         
             var dfi_uploader = wp.media({
             
-                    title: 'Dynamic Featured Image - Media Selector',
+                    title: WP_SPECIFIC.mediaSelector_title,
                     button: {
-                        text: 'Set Featured Image'
+                        text: WP_SPECIFIC.mediaSelector_buttonText
                     },
                     multiple: false,
             

@@ -49,7 +49,7 @@ class Dynamic_Featured_Image {
 	 * @since 3.0.0
 	 */
 	const VERSION = '3.1.2';
-	private $upload_dir, $upload_url, $prefix, $db;
+	private $upload_dir, $upload_url, $prefix, $db, $textDomain;	
 
 	/**
 	 * Constructor. Hooks all interactions to initialize the class.
@@ -63,6 +63,8 @@ class Dynamic_Featured_Image {
 	 * @return	Void
 	 */  
 	public function __construct() {
+
+		$this->textDomain = 'dynamic-featured-image';
 
 		if ( is_admin() ) {
 			add_action( 'in_plugin_update_message-' . plugin_basename(__FILE__), array( $this, 'update_notice' ) );
@@ -108,7 +110,16 @@ class Dynamic_Featured_Image {
 		wp_register_script( 'scripts-dfi', plugins_url( '/js/script-dfi.js', __FILE__), array( 'jquery' ), self::VERSION );
 
 		//localize the script with required data			
-		wp_localize_script( 'scripts-dfi', 'WP_SPECIFIC', array( 'upload_url' => $this->upload_url  ) );
+		wp_localize_script( 
+			'scripts-dfi', 
+			'WP_SPECIFIC', 
+			array( 
+				'upload_url' => $this->upload_url,
+				'metabox_title' => __('Featured Image ', $this->textDomain),
+				'mediaSelector_title' => __('Dynamic Featured Image - Media Selector', $this->textDomain),
+				'mediaSelector_buttonText' => __('Set Featured Image', $this->textDomain)
+			)
+		);
 
 		//enqueue scripts		
 		wp_enqueue_script( 'scripts-dfi' );
@@ -158,6 +169,25 @@ class Dynamic_Featured_Image {
 	} // END initialize_featured_box()
 
 	/**
+	 * Translates more than one digit number digit by digit.
+	 * @param  Integer $number Integer to be translated
+	 * @return String         Translated number
+	 */
+	private function _get_number_translation( $number ) {
+		if( $number <= 9 ) {
+			return __($number, $this->textDomain);
+		} else {
+			$pieces = str_split($number, 1);
+			$buffer = '';
+			foreach($pieces as $piece) {
+				$buffer .= __($piece, $this->textDomain);
+			}
+
+			return $buffer;
+		}
+	}
+
+	/**
 	 * adds meta boxes
 	 * @param  Array $postTypes     post types to show featured image box	 
 	 * @param  Object $featured     callback arguments
@@ -170,7 +200,7 @@ class Dynamic_Featured_Image {
 			foreach ( $postTypes as $type ) {
 				add_meta_box(
 					'dfiFeaturedMetaBox-' . $i,
-					__('Featured Image ') . $i,
+					__("Featured Image ", $this->textDomain) . self::_get_number_translation($i),
 					array( $this, 'featured_meta_box' ),
 					$type,
 					'side',
@@ -184,7 +214,7 @@ class Dynamic_Featured_Image {
 			foreach ( $postTypes as $type ) {
 				add_meta_box(
 					'dfiFeaturedMetaBox',
-					__( 'Featured Image 2', 'dynamic-featured-image' ),
+					__( 'Featured Image ', $this->textDomain ) . __(2, $this->textDomain),
 					array( $this, 'featured_meta_box' ),
 					$type,
 					'side',
@@ -262,11 +292,11 @@ class Dynamic_Featured_Image {
 		$thumbnail = !is_null($thumbnail) ? $thumbnail : '';
 		$dfiEmpty = is_null($featuredImgTrimmed) ? 'dfiImgEmpty' : '';
 
-		return "<a href='javascript:void(0)' class='dfiFeaturedImage {$hasFeaturedImage}' title='Set Featured Image' data-post-id='" . get_the_ID() . "'><span class='dashicons dashicons-camera'></span></a><br/>
+		return "<a href='javascript:void(0)' class='dfiFeaturedImage {$hasFeaturedImage}' title='". __('Set Featured Image', $this->textDomain) . "' data-post-id='" . get_the_ID() . "'><span class='dashicons dashicons-camera'></span></a><br/>
 			<img src='" . $thumbnail . "' class='dfiImg {$dfiEmpty}'/>
 			<div class='dfiLinks'>
-				<a href='javascript:void(0)'' data-id='{$featuredId}' class='dfiAddNew dashicons dashicons-plus' title='Add New'></a>
-				<a href='javascript:void(0)' class='dfiRemove dashicons dashicons-minus' title='Remove'></a>
+				<a href='javascript:void(0)'' data-id='{$featuredId}' data-id-local='" . self::_get_number_translation( ($featuredId + 1) ) . "' class='dfiAddNew dashicons dashicons-plus' title='" . __('Add New', $this->textDomain) ."'></a>
+				<a href='javascript:void(0)' class='dfiRemove dashicons dashicons-minus' title='" . __('Remove', $this->textDomain) . "'></a>
 			</div>
 			<div class='dfiClearFloat'></div>
 			<input type='hidden' name='dfiFeatured[]' value='{$featuredImg}'  class='dfiImageHolder' />";
@@ -293,11 +323,11 @@ class Dynamic_Featured_Image {
 
 		wp_nonce_field( plugin_basename(__FILE__), 'dfi_fimageplug-' . $featuredId );
 		?>
-				<a href="javascript:void(0)" class='dfiFeaturedImage' title="Set Featured Image"><span class="dashicons dashicons-camera"></span></a><br/>
+				<a href="javascript:void(0)" class='dfiFeaturedImage' title="<?php echo __('Set Featured Image', $this->textDomain) ?>"><span class="dashicons dashicons-camera"></span></a><br/>
 				 <img src="" class='dfiImg dfiImgEmpty'/>
 				 <div class='dfiLinks'>
-				<a href="javascript:void(0)" data-id='<?php echo $featuredId ?>' class='dfiAddNew dashicons dashicons-plus' title="Add New"></a>
-				<a href="javascript:void(0)" class='dfiRemove dashicons dashicons-minus' title="Remove"></a>
+				<a href="javascript:void(0)" data-id='<?php echo $featuredId ?>' data-id-local='<?php echo self::_get_number_translation( ($featuredId + 1) ) ?>' class='dfiAddNew dashicons dashicons-plus' title="<?php echo __('Add New', $this->textDomain) ?>"></a>
+				<a href="javascript:void(0)" class='dfiRemove dashicons dashicons-minus' title="<?php echo __('Remove', $this->textDomain) ?>"></a>
 				 </div>
 				 <div class='dfiClearFloat'></div>
 				 <input type='hidden' name="dfiFeatured[]" value="" class="dfiImageHolder" />
@@ -376,7 +406,7 @@ class Dynamic_Featured_Image {
 	 */
 	public function update_notice() {
 
-		$info = __( 'ATTENTION! Please read the <a href="https://github.com/ankitpokhrel/Dynamic-Featured-Image/wiki" target="_blank">DOCUMENTATION</a> properly before update.', 'dynamic-featured-image');
+		$info = __( 'ATTENTION! Please read the <a href="https://github.com/ankitpokhrel/Dynamic-Featured-Image/wiki" target="_blank">DOCUMENTATION</a> properly before update.', $this->textDomain );
 		echo '<div style="color:red; padding:7px 0;">' . strip_tags( $info, '<a><b><i><span>' ) . '</div>';
 
 	} // END update_notice()
@@ -457,17 +487,17 @@ class Dynamic_Featured_Image {
 	 */
 	private function _get_attachment_id( $image_url ) {
 		
-		$attachment_id = $this->get_image_id( $image_url );
+		$attachment_id = $this->get_image_id( $image_url );		
 		if( is_null($attachment_id) ) {
 			//check if the image is edited image
 			//and try to get the attachment id	
-			$image_url = str_replace($this->upload_url . "/", '', $image_url);				
-			$row = self::execute_query( $this->db->prepare( "SELECT post_id, meta_key FROM " . $this->prefix . "postmeta WHERE meta_value = %s", $image_url ) );
+			$image_url = str_replace($this->upload_url . "/", '', $image_url);					
+			$row = self::execute_query( $this->db->prepare( "SELECT post_id FROM " . $this->prefix . "postmeta WHERE meta_value = %s", $image_url ) );			
 			if( !is_null($row) ) {
-				$attachment_id = $row['post_id'];
+				$attachment_id = $row;
 			}
 		}
-
+		
 		return $attachment_id;
 	}
 
@@ -689,7 +719,7 @@ class Dynamic_Featured_Image {
 
 	} // END is_attached()
 
-	 /**
+ /**
 	* Retrieve featured images for specific post(s)
 	*
 	* @since 2.0.0
@@ -748,7 +778,7 @@ class Dynamic_Featured_Image {
 	public function load_plugin_textdomain() {
 
 		load_plugin_textdomain(
-			'dynamic-featured-images',
+			$this->textDomain,
 			false,
 			dirname( plugin_basename( __FILE__ ) ) . '/languages/'
 		);

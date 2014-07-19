@@ -15,7 +15,6 @@
     $(document).on('click', '.dfiAddNew', function() {
     
            var obj = $(this);
-           //var id = parseInt( $('.featured-meta-box:last').find('.dfiAddNew').attr('data-id'), 10 );
            var id = parseInt( $('.featured-meta-box:last').find('.dfiAddNew').data('id'), 10 );           
            var idLocal = $('.featured-meta-box:last').find('.dfiAddNew').attr('data-id-local');
            

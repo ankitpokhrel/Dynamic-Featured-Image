@@ -14,39 +14,21 @@ msgstr ""
 "X-Poedit-SearchPath-0: D:\\Program Files\\VertrigoServ\\www\\wp39\\wp-content"
 "\\plugins\\dynamic-featured-image\n"
 
-#: D:\Program
-#: Files\VertrigoServ\www\wp39\wp-content\plugins\dynamic-featured-image/dynamic-featured-image.php:118
-#: Files\VertrigoServ\www\wp39\wp-content\plugins\dynamic-featured-image/dynamic-featured-image.php:202
-#: Files\VertrigoServ\www\wp39\wp-content\plugins\dynamic-featured-image/dynamic-featured-image.php:216
 msgid "Featured Image "
 msgstr "फीचर्ड इमेज "
 
-#: D:\Program
-#: Files\VertrigoServ\www\wp39\wp-content\plugins\dynamic-featured-image/dynamic-featured-image.php:119
-#: Files\VertrigoServ\www\wp39\wp-content\plugins\dynamic-featured-image/dynamic-featured-image.php:810
 msgid "Dynamic Featured Image - Media Selector"
 msgstr "डाइनामिक फीचर्ड इमेज - मिडिया सेलेक्टर"
 
-#: D:\Program
-#: Files\VertrigoServ\www\wp39\wp-content\plugins\dynamic-featured-image/dynamic-featured-image.php:294
-#: Files\VertrigoServ\www\wp39\wp-content\plugins\dynamic-featured-image/dynamic-featured-image.php:325
 msgid "Set Featured Image"
 msgstr "फीचर्ड इमेज राख्नुहोस्"
 
-#: D:\Program
-#: Files\VertrigoServ\www\wp39\wp-content\plugins\dynamic-featured-image/dynamic-featured-image.php:297
-#: Files\VertrigoServ\www\wp39\wp-content\plugins\dynamic-featured-image/dynamic-featured-image.php:328
 msgid "Add New"
 msgstr "नयाँ"
 
-#: D:\Program
-#: Files\VertrigoServ\www\wp39\wp-content\plugins\dynamic-featured-image/dynamic-featured-image.php:298
-#: Files\VertrigoServ\www\wp39\wp-content\plugins\dynamic-featured-image/dynamic-featured-image.php:329
 msgid "Remove"
 msgstr "हटाउनुहोस्"
 
-#: D:\Program
-#: Files\VertrigoServ\www\wp39\wp-content\plugins\dynamic-featured-image/dynamic-featured-image.php:408
 msgid ""
 "ATTENTION! Please read the <a href=\"https://github.com/ankitpokhrel/Dynamic-"
 "Featured-Image/wiki\" target=\"_blank\">DOCUMENTATION</a> properly before "
@@ -55,79 +37,32 @@ msgstr ""
 "साबधन! कृपया अपडेट गर्नु अगाडि <a href=\"https://github.com/ankitpokhrel/Dynamic-"
 "Featured-Image/wiki\" target=\"_blank\">डकुमेन्टेसन</a> राम्रोसँग पढ्नु होला |"
 
-#: D:\Program
-#: Files\VertrigoServ\www\wp39\wp-content\plugins\dynamic-featured-image/dynamic-featured-image.php:800
 msgid "0"
 msgstr "०"
 
-#: D:\Program
-#: Files\VertrigoServ\www\wp39\wp-content\plugins\dynamic-featured-image/dynamic-featured-image.php:801
 msgid "1"
 msgstr "१"
 
-#: D:\Program
-#: Files\VertrigoServ\www\wp39\wp-content\plugins\dynamic-featured-image/dynamic-featured-image.php:802
 msgid "2"
 msgstr "२"
 
-#: D:\Program
-#: Files\VertrigoServ\www\wp39\wp-content\plugins\dynamic-featured-image/dynamic-featured-image.php:803
 msgid "3"
 msgstr "३"
 
-#: D:\Program
-#: Files\VertrigoServ\www\wp39\wp-content\plugins\dynamic-featured-image/dynamic-featured-image.php:804
 msgid "4"
 msgstr "४"
 
-#: D:\Program
-#: Files\VertrigoServ\www\wp39\wp-content\plugins\dynamic-featured-image/dynamic-featured-image.php:805
 msgid "5"
 msgstr "५"
 
-#: D:\Program
-#: Files\VertrigoServ\www\wp39\wp-content\plugins\dynamic-featured-image/dynamic-featured-image.php:806
 msgid "6"
 msgstr "६"
 
-#: D:\Program
-#: Files\VertrigoServ\www\wp39\wp-content\plugins\dynamic-featured-image/dynamic-featured-image.php:807
 msgid "7"
 msgstr "७"
 
-#: D:\Program
-#: Files\VertrigoServ\www\wp39\wp-content\plugins\dynamic-featured-image/dynamic-featured-image.php:808
 msgid "8"
 msgstr "८"
 
-#: D:\Program
-#: Files\VertrigoServ\www\wp39\wp-content\plugins\dynamic-featured-image/dynamic-featured-image.php:809
 msgid "9"
 msgstr "९"
-
-#~ msgid "Featured Image 2"
-#~ msgstr "फीचर्ड इमेज २"
-
-#~ msgid "Featured Image 3"
-#~ msgstr "फीचर्ड इमेज ३"
-
-#~ msgid "Featured Image 4"
-#~ msgstr "फीचर्ड इमेज ४"
-
-#~ msgid "Featured Image 5"
-#~ msgstr "फीचर्ड इमेज ५"
-
-#~ msgid "Featured Image 6"
-#~ msgstr "फीचर्ड इमेज ६"
-
-#~ msgid "Featured Image 7"
-#~ msgstr "फीचर्ड इमेज ७"
-
-#~ msgid "Featured Image 8"
-#~ msgstr "फीचर्ड इमेज ८"
-
-#~ msgid "Featured Image 9"
-#~ msgstr "फीचर्ड इमेज ९"
-
-#~ msgid "Featured Image 10"
-#~ msgstr "फीचर्ड इमेज १०"

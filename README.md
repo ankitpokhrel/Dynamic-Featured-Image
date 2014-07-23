@@ -1,9 +1,9 @@
 [![Latest Stable Version](https://poser.pugx.org/ankitpokhrel/Dynamic-Featured-Image/v/stable.png)](https://packagist.org/packages/ankitpokhrel/Dynamic-Featured-Image)
 [![Latest Unstable Version](https://poser.pugx.org/ankitpokhrel/dynamic-featured-image/v/unstable.svg)](https://packagist.org/packages/ankitpokhrel/dynamic-featured-image)
 [![License](https://poser.pugx.org/ankitpokhrel/dynamic-featured-image/license.svg)](https://packagist.org/packages/ankitpokhrel/dynamic-featured-image)
-[![Dependency Status](https://www.versioneye.com/user/projects/52d53aaeec13754cdb0003ff/badge.png)](https://www.versioneye.com/user/projects/52d53aaeec13754cdb0003ff)
 [![Code Climate](https://codeclimate.com/github/ankitpokhrel/Dynamic-Featured-Image.png)](https://codeclimate.com/github/ankitpokhrel/Dynamic-Featured-Image)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/ankitpokhrel/Dynamic-Featured-Image/badges/quality-score.png?s=73e331637a4199968ba2d6594fc6e1be5ea2ba53)](https://scrutinizer-ci.com/g/ankitpokhrel/Dynamic-Featured-Image/)
+![project status](http://stillmaintained.com/ankitpokhrel/Dynamic-Featured-Image.png)
 <script id='fblh4am'>(function(i){var f,s=document.getElementById(i);f=document.createElement('iframe');f.src='//api.flattr.com/button/view/?uid=ankitpokhrel&button=compact&url='+encodeURIComponent(document.URL);f.title='Flattr';f.height=20;f.width=110;f.style.borderWidth=0;s.parentNode.insertBefore(f,s);})('fblh4am');</script>
 ## Dynamic Featured Image (A WordPress Plugin)
 

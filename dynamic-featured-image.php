@@ -763,6 +763,45 @@ class Dynamic_Featured_Image {
 
 	} // END get_featured_images()
 
+
+	/**
+	 * Retrieve featured images for specific post(s) including the default Featured Image
+	 *
+	 * @since 3.1.2
+	 * @access public
+	 *
+	 * @see  $this->get_featured_images()
+	 *
+	 * @param Integer $post_id id of the current post
+	 *
+	 * @return Array An array of images or an empty array on failure
+	 */
+	public function get_all_featured_images( $post_id = null ) {
+
+		if ( is_null( $post_id ) ) {
+			global $post;
+			$post_id = $post->ID;
+		}
+
+		$thumbnail_id = get_post_thumbnail_id( $post_id );
+		if ( empty( $thumbnail_id ) ) {
+			return array();
+		}
+
+		$featured_image = array(
+			'thumb' => wp_get_attachment_thumb_url( $thumbnail_id ),
+			'full' => wp_get_attachment_url( $thumbnail_id ),
+			'attachment_id' => $thumbnail_id
+		);
+
+		$dfiImages = $this->get_featured_images( $post_id );
+
+		$all_featured_images = array_merge( array( $featured_image ), $dfiImages );
+
+		return $all_featured_images;
+
+	}
+
 	/**
 	 * Load the plugin's textdomain hooked to 'plugins_loaded'.
 	 *

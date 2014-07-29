@@ -784,19 +784,20 @@ class Dynamic_Featured_Image {
 		}
 
 		$thumbnail_id = get_post_thumbnail_id( $post_id );
-		if ( empty( $thumbnail_id ) ) {
-			return array();
-		}
 
-		$featured_image = array(
-			'thumb' => wp_get_attachment_thumb_url( $thumbnail_id ),
-			'full' => wp_get_attachment_url( $thumbnail_id ),
-			'attachment_id' => $thumbnail_id
-		);
+		$featured_image_array = array();
+		if ( ! empty( $thumbnail_id ) ) {
+			$featured_image = array(
+				'thumb' => wp_get_attachment_thumb_url( $thumbnail_id ),
+				'full' => wp_get_attachment_url( $thumbnail_id ),
+				'attachment_id' => $thumbnail_id
+			);
+			$featured_image_array[] = $featured_image;
+		}
 
 		$dfiImages = $this->get_featured_images( $post_id );
 
-		$all_featured_images = array_merge( array( $featured_image ), $dfiImages );
+		$all_featured_images = array_merge( $featured_image_array, $dfiImages );
 
 		return $all_featured_images;
 

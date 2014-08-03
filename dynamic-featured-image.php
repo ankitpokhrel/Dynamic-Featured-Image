@@ -711,18 +711,18 @@ class Dynamic_Featured_Image {
 
 	} // END is_attached()
 
- /**
-	* Retrieve featured images for specific post(s)
-	*
-	* @since 2.0.0
-	* @access public
-	*
-	* @see  get_post_meta()
-	*
-	* @param  Integer $post_id id of the current post
-	*
-	* @return Array
-	*/
+	/**
+	 * Retrieve featured images for specific post(s)
+	 *
+	 * @since 2.0.0
+	 * @access public
+	 *
+	 * @see  get_post_meta()
+	 *
+	 * @param  Integer $post_id id of the current post
+	 *
+	 * @return Array
+	 */
 	public function get_featured_images( $post_id = null ) {
 
 		if ( is_null( $post_id ) ) {

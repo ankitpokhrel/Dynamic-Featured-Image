@@ -3,7 +3,7 @@
  Plugin Name: Dynamic Featured Image
  Plugin URI: http://wordpress.org/plugins/dynamic-featured-image/
  Description: Dynamically adds multiple featured image or post thumbnail functionality to your posts, pages and custom post types.
- Version: 3.1.2
+ Version: 3.1.7
  Author: Ankit Pokhrel
  Author URI: http://ankitpokhrel.com.np
  License: GPL2 or later
@@ -48,7 +48,7 @@ class Dynamic_Featured_Image {
 	 *
 	 * @since 3.0.0
 	 */
-	const VERSION = '3.1.2';
+	const VERSION = '3.1.7';
 	private $upload_dir, $upload_url, $prefix, $db, $textDomain;	
 
 	/**
@@ -76,7 +76,6 @@ class Dynamic_Featured_Image {
 		add_action( 'plugins_loaded',	array( $this, 'load_plugin_textdomain' ) );
 
 		//handle ajax request
-		add_action( 'wp_ajax_nopriv_dfiMetaBox_callback',	array( $this, 'ajax_callback' ) );
 		add_action( 'wp_ajax_dfiMetaBox_callback', array( $this, 'ajax_callback' ) );
 
 		$this->upload_dir = wp_upload_dir();
@@ -133,7 +132,7 @@ class Dynamic_Featured_Image {
 	 * @access public
 	 * @global object $post
 	 *
-	 * @see  get_post_custom()
+	 * @see  get_post_meta()
 	 * @see  get_post_types()
 	 * @see  add_meta_box()
 	 * @see  add_filter()
@@ -143,20 +142,15 @@ class Dynamic_Featured_Image {
 	public function initialize_featured_box() {
 
 		global $post;
-		$data = get_post_custom( $post->ID );
-
-		$totalFeatured = 0;
-		$featuredData = array();
-		if ( isset( $data['dfiFeatured'][0] ) && !empty( $data['dfiFeatured'][0] ) ) {
-			$featuredData = unserialize($data['dfiFeatured'][0]);
-			$totalFeatured = count( $featuredData );
-		}
+		
+		$featuredData = get_post_meta( $post->ID, 'dfiFeatured', true );
+		$totalFeatured = count( $featuredData );
 
 		$filter = array( 'attachment', 'revision', 'nav_menu_item' );
 		$postTypes = get_post_types();
 		$postTypes = array_diff( $postTypes, $filter );
 
-		if ( $totalFeatured >= 1 ) {
+		if ( !empty($featuredData) && $totalFeatured >= 1 ) {
 			$i = 2;
 			foreach ( $featuredData as $featured ) {				
 				self::_dfi_add_meta_box($postTypes, $featured, $i);
@@ -415,26 +409,25 @@ class Dynamic_Featured_Image {
 
 	private function execute_query( $query ) {
 		$resultSet = $this->db->get_col( $query );
-
 		return empty( $resultSet ) ? null : $resultSet[0];
 	}
 
 	/**
 	 * Get attachment id of the image by image url
 	 *
-	 * @since 2.0.0
-	 * @access public
+	 * @since 3.1.7
+	 * @access private
 	 * @global object $wpdb
 	 *
 	 * @param  String $image_url url of the image
 	 * 
 	 * @return string
 	 */   
-	public function get_image_id( $image_url ) {		
+	private function _get_attachment_id( $image_url ) {		
 
 		return self::execute_query($this->db->prepare( "SELECT ID FROM " . $this->prefix . "posts" . " WHERE guid = %s", $image_url ));
 
-	} // END get_image_id()
+	} // END _get_attachment_id()
 
 	/**
 	 * Get image url of the image by attachment id
@@ -473,7 +466,7 @@ class Dynamic_Featured_Image {
 	 */
 	public function get_image_thumb( $image_url, $size = 'thumbnail' ) {
 		
-		$attachment_id = self::_get_attachment_id( $image_url );		
+		$attachment_id = self::get_image_id( $image_url );		
 		$image_thumb = wp_get_attachment_image_src( $attachment_id, $size );
 		
 		return empty( $image_thumb ) ? null : $image_thumb[0];
@@ -485,9 +478,9 @@ class Dynamic_Featured_Image {
 	 * @param  String $image_url url of an image
 	 * @return Integer|Null            attachment id of an image
 	 */
-	private function _get_attachment_id( $image_url ) {
+	private function get_image_id( $image_url ) {
 		
-		$attachment_id = $this->get_image_id( $image_url );		
+		$attachment_id = self::_get_attachment_id( $image_url );		
 		if( is_null($attachment_id) ) {
 			//check if the image is edited image
 			//and try to get the attachment id	
@@ -648,7 +641,7 @@ class Dynamic_Featured_Image {
 	* @since 2.0.0
 	* @access public
 	*
-	* @see  get_post_custom()
+	* @see  get_post_meta()
 	*
 	* @param  Integer $post_id id of the current post
 	*
@@ -656,8 +649,7 @@ class Dynamic_Featured_Image {
 	*/
 	public function get_post_attachment_ids( $post_id ) {
 
-		$dfiImages = get_post_custom( $post_id );
-		$dfiImages = ( isset( $dfiImages['dfiFeatured'][0] ) ) ? @array_filter( unserialize( $dfiImages['dfiFeatured'][0] ) ) : array();
+		$dfiImages = get_post_meta($post_id, 'dfiFeatured', true);
 
 		$retVal = array();
 		if ( !empty( $dfiImages ) && is_array( $dfiImages ) ) {
@@ -725,7 +717,7 @@ class Dynamic_Featured_Image {
 	* @since 2.0.0
 	* @access public
 	*
-	* @see  get_post_custom()
+	* @see  get_post_meta()
 	*
 	* @param  Integer $post_id id of the current post
 	*
@@ -738,8 +730,7 @@ class Dynamic_Featured_Image {
 			$post_id = $post->ID;
 		}
 
-		$dfiImages = get_post_custom( $post_id );
-		$dfiImages = ( isset( $dfiImages['dfiFeatured'][0] ) ) ? @array_filter( unserialize( $dfiImages['dfiFeatured'][0] ) ) : array();
+		$dfiImages = get_post_meta($post_id, 'dfiFeatured', true);
 
 		$retImages = array();
 		if ( !empty( $dfiImages ) && is_array( $dfiImages ) ) {
@@ -751,7 +742,7 @@ class Dynamic_Featured_Image {
 
 					$retImages[$count]['thumb']			= $this->upload_url . $dfiImageTrimmed;
 					$retImages[$count]['full']			= $this->upload_url . $dfiImageFull;
-					$retImages[$count]['attachment_id']	= $this->_get_attachment_id( $this->upload_url . $dfiImageFull );
+					$retImages[$count]['attachment_id']	= $this->get_image_id( $this->upload_url . $dfiImageFull );
 
 				} catch(Exception $e) { /* Ignore the exception and continue with other featured images */ }
 
@@ -763,11 +754,10 @@ class Dynamic_Featured_Image {
 
 	} // END get_featured_images()
 
-
 	/**
 	 * Retrieve featured images for specific post(s) including the default Featured Image
 	 *
-	 * @since 3.1.2
+	 * @since 3.1.7
 	 * @access public
 	 *
 	 * @see  $this->get_featured_images()
@@ -826,6 +816,7 @@ class Dynamic_Featured_Image {
 	} // END load_plugin_textdomain()
 
 } // END class Dynamic_Featured_Image
+
 
 /**
  * Instantiate the main class

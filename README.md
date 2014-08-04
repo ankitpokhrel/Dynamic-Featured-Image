@@ -64,6 +64,12 @@ DFI allows you to add different number of featured images to each post and page 
 12. [get_image_description( $image_url )](https://github.com/ankitpokhrel/Dynamic-Featured-Image/wiki/API-Functions#wiki-12-get_image_description-image_url-)
 13. [get_image_description_by_id( $attachment_id )](https://github.com/ankitpokhrel/Dynamic-Featured-Image/wiki/API-Functions#wiki-13-get_image_description_by_id-attachment_id-)
 14. [get_nth_featured_image( $position, $post_id )](https://github.com/ankitpokhrel/Dynamic-Featured-Image/wiki/API-Functions#wiki-14-get_nth_featured_image-position-post_id--null-)
+  
+
+### Translation Guidelines
+The translations live in the `languages` folder.
+
+If you are interested in translating the plugin in your language, first make sure if the translation is not already available. The name of the file is important because there’s a particular format you should follow for consistency. For example, if you’re translating Nepali for Nepal, the file should be dynamic-featured-image-ne_NP.po – dynamic-featured-image for the plugin itself, ne for the language and NP for the country.
 
 ===================================================================================================
 

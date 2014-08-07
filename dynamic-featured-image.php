@@ -477,8 +477,11 @@ class Dynamic_Featured_Image {
 	 * Gets attachment id from given image url
 	 * @param  String $image_url url of an image
 	 * @return Integer|Null            attachment id of an image
+	 *
+	 * @since  2.0.0
+	 * @access public
 	 */
-	private function get_image_id( $image_url ) {
+	public function get_image_id( $image_url ) {
 		
 		$attachment_id = self::_get_attachment_id( $image_url );		
 		if( is_null($attachment_id) ) {

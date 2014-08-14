@@ -150,6 +150,8 @@ class Dynamic_Featured_Image {
 		$postTypes = get_post_types();
 		$postTypes = array_diff( $postTypes, $filter );
 
+        $postTypes = apply_filters('dfi_post_types', $postTypes);
+
 		if ( !empty($featuredData) && $totalFeatured >= 1 ) {
 			$i = 2;
 			foreach ( $featuredData as $featured ) {				

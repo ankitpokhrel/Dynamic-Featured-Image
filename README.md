@@ -64,6 +64,7 @@ DFI allows you to add different number of featured images to each post and page 
 12. [get_image_description( $image_url )](https://github.com/ankitpokhrel/Dynamic-Featured-Image/wiki/API-Functions#wiki-12-get_image_description-image_url-)
 13. [get_image_description_by_id( $attachment_id )](https://github.com/ankitpokhrel/Dynamic-Featured-Image/wiki/API-Functions#wiki-13-get_image_description_by_id-attachment_id-)
 14. [get_nth_featured_image( $position, $post_id )](https://github.com/ankitpokhrel/Dynamic-Featured-Image/wiki/API-Functions#wiki-14-get_nth_featured_image-position-post_id--null-)
+15. [get_all_featured_images( $post_id )](https://github.com/ankitpokhrel/Dynamic-Featured-Image/wiki/API-Functions#15-get_all_featured_images-post_id-)
   
 
 ### Translation Guidelines

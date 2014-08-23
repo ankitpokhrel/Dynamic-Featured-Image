@@ -736,10 +736,11 @@ class Dynamic_Featured_Image {
 		}
 
 		$dfiImages = get_post_meta($post_id, 'dfiFeatured', true);
-		$dfiImages = array_filter($dfiImages);
 
 		$retImages = array();
 		if ( !empty( $dfiImages ) && is_array( $dfiImages ) ) {
+			$dfiImages = array_filter($dfiImages);
+			
 			$count = 0;
 			foreach ( $dfiImages as $dfiImage ) {
 				@list( $dfiImageTrimmed, $dfiImageFull ) = explode( ',', $dfiImage );

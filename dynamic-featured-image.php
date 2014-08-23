@@ -150,7 +150,7 @@ class Dynamic_Featured_Image {
 		$postTypes = get_post_types();
 		$postTypes = array_diff( $postTypes, $filter );
 
-        $postTypes = apply_filters('dfi_post_types', $postTypes);
+		$postTypes = apply_filters('dfi_post_types', $postTypes);
 
 		if ( !empty($featuredData) && $totalFeatured >= 1 ) {
 			$i = 2;
@@ -736,6 +736,7 @@ class Dynamic_Featured_Image {
 		}
 
 		$dfiImages = get_post_meta($post_id, 'dfiFeatured', true);
+		$dfiImages = array_filter($dfiImages);
 
 		$retImages = array();
 		if ( !empty( $dfiImages ) && is_array( $dfiImages ) ) {

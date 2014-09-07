@@ -78,8 +78,15 @@ class Dynamic_Featured_Image {
 		//handle ajax request
 		add_action( 'wp_ajax_dfiMetaBox_callback', array( $this, 'ajax_callback' ) );
 
+		//get the site protocol
+		$protocol = ( (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') || 
+   						$_SERVER['SERVER_PORT'] == 443 ) ? "https://" : "http://";
+
 		$this->upload_dir = wp_upload_dir();
-		$this->upload_url = $this->upload_dir['baseurl'];
+		$this->upload_url = preg_replace('#^https?://#', '', $this->upload_dir['baseurl']);
+
+		//add protocol to the upload url
+		$this->upload_url = $protocol . $this->upload_url;
 
 		global $wpdb;
 		$this->db = $wpdb;

@@ -655,18 +655,18 @@ class Dynamic_Featured_Image
 
     } // END get_image_description_by_id()
 
-   /**
-	* Get all attachment ids of the post
-	*
-	* @since 2.0.0
-	* @access public
-	*
-	* @see  get_post_meta()
-	*
-	* @param  Integer $post_id id of the current post
-	*
-	* @return Array
-	*/
+	/**
+	 * Get all attachment ids of the post
+	 *
+	 * @since 2.0.0
+	 * @access public
+	 *
+	 * @see  get_post_meta()
+	 *
+	 * @param  Integer $post_id id of the current post
+	 *
+	 * @return Array
+	 */
     public function get_post_attachment_ids($post_id)
     {
         $dfiImages = get_post_meta($post_id, 'dfiFeatured', true);

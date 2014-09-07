@@ -419,14 +419,8 @@ class Dynamic_Featured_Image
 	/** Helper functions */
 
     private function execute_query($query)
-    {
-        $resultSet = $this->db->get_col( $query );
-        var_dump($resultSet);
-
-        $resultSet = $this->db->get_var( $query );
-        var_dump($resultSet);
-
-        return empty( $resultSet ) ? null : $resultSet[0];
+    {       
+        return $this->db->get_var( $query );
     }
 
 	/**
@@ -442,7 +436,7 @@ class Dynamic_Featured_Image
 	 */
     private function _get_attachment_id($image_url)
     {
-        return self::execute_query($this->db->prepare( "SELECT ID FROM " . $this->prefix . "posts" . " WHERE guid = %s", $image_url ));
+        return self::execute_query($this->db->prepare( "SELECT ID FROM " . $this->db->posts . " WHERE guid = %s", $image_url ));
 
     } // END _get_attachment_id()
 
@@ -505,7 +499,7 @@ class Dynamic_Featured_Image
             //check if the image is edited image
             //and try to get the attachment id
             $image_url = str_replace($this->upload_url . "/", '', $image_url);
-            $row = self::execute_query( $this->db->prepare( "SELECT post_id FROM " . $this->prefix . "postmeta WHERE meta_value = %s", $image_url ) );
+            $row = self::execute_query( $this->db->prepare( "SELECT post_id FROM " . $this->db->postmeta . " WHERE meta_value = %s", $image_url ) );
             if ( !is_null($row) ) {
                 $attachment_id = $row;
             }
@@ -526,7 +520,7 @@ class Dynamic_Featured_Image
 	 */
     public function get_image_title($image_url)
     {
-        return self::execute_query( $this->db->prepare( "SELECT post_title FROM " . $this->prefix . "posts" . " WHERE guid = %s", $image_url ) );
+        return self::execute_query( $this->db->prepare( "SELECT post_title FROM " . $this->db->posts . " WHERE guid = %s", $image_url ) );
 
     } // END get_image_title()
 
@@ -542,7 +536,7 @@ class Dynamic_Featured_Image
 	 */
     public function get_image_title_by_id($attachment_id)
     {
-        return self::execute_query( $this->db->prepare( "SELECT post_title FROM " . $this->prefix . "posts" . " WHERE ID = %d", $attachment_id ) );
+        return self::execute_query( $this->db->prepare( "SELECT post_title FROM " . $this->db->posts . " WHERE ID = %d", $attachment_id ) );
 
     } // END get_image_title_by_id()
 
@@ -558,7 +552,7 @@ class Dynamic_Featured_Image
 	 */
     public function get_image_caption($image_url)
     {
-        return self::execute_query( $this->db->prepare("SELECT post_excerpt FROM " . $this->prefix . "posts" . " WHERE guid = %s", $image_url ) );
+        return self::execute_query( $this->db->prepare("SELECT post_excerpt FROM " . $this->db->posts . " WHERE guid = %s", $image_url ) );
 
     } // END get_image_caption()
 
@@ -574,7 +568,7 @@ class Dynamic_Featured_Image
 	 */
     public function get_image_caption_by_id($attachment_id)
     {
-        return self::execute_query( $this->db->prepare("SELECT post_excerpt FROM " . $this->prefix . "posts" . " WHERE ID = %d", $attachment_id) );
+        return self::execute_query( $this->db->prepare("SELECT post_excerpt FROM " . $this->db->posts . " WHERE ID = %d", $attachment_id) );
 
     } // END get_image_caption_by_id()
 
@@ -592,7 +586,7 @@ class Dynamic_Featured_Image
 	 */
     public function get_image_alt($image_url)
     {
-        $attachment = $this->db->get_col( $this->db->prepare( "SELECT ID FROM " . $this->prefix . "posts" . " WHERE guid = %s", $image_url ) );
+        $attachment = $this->db->get_col( $this->db->prepare( "SELECT ID FROM " . $this->db->posts . " WHERE guid = %s", $image_url ) );
 
         $alt = null;
         if ( !empty( $attachment ) ) {
@@ -635,7 +629,7 @@ class Dynamic_Featured_Image
 	 */
     public function get_image_description($image_url)
     {
-        return self::execute_query( $this->db->prepare( "SELECT post_content FROM " . $this->prefix . "posts" . " WHERE guid = %s", $image_url ) );
+        return self::execute_query( $this->db->prepare( "SELECT post_content FROM " . $this->db->posts . " WHERE guid = %s", $image_url ) );
 
     } // END get_image_description()
 
@@ -651,7 +645,7 @@ class Dynamic_Featured_Image
 	 */
     public function get_image_description_by_id($attachment_id)
     {
-        return self::execute_query( $this->db->prepare( "SELECT post_content FROM " . $this->prefix . "posts" . " WHERE ID = %d", $attachment_id ) );
+        return self::execute_query( $this->db->prepare( "SELECT post_content FROM " . $this->db->posts . " WHERE ID = %d", $attachment_id ) );
 
     } // END get_image_description_by_id()
 

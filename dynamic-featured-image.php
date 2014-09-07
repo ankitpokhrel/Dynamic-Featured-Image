@@ -43,7 +43,7 @@ if ( !defined( 'ABSPATH' ) ) {
  */
 class Dynamic_Featured_Image
 {
-    /**
+	/**
 	 * Current version of the plugin.
 	 *
 	 * @since 3.0.0
@@ -51,7 +51,7 @@ class Dynamic_Featured_Image
     const VERSION = '3.1.9';
     private $upload_dir, $upload_url, $prefix, $db, $textDomain;
 
-    /**
+	/**
 	 * Constructor. Hooks all interactions to initialize the class.
 	 *
 	 * @since 1.0.0
@@ -94,7 +94,7 @@ class Dynamic_Featured_Image
 
     } // END __construct()
 
-    /**
+	/**
 	 * Add required admin scripts
 	 *
 	 * @since 1.0.0
@@ -132,7 +132,7 @@ class Dynamic_Featured_Image
 
     } // END initialize_components()
 
-    /**
+	/**
 	 * Add featured meta boxes dynamically
 	 *
 	 * @since 1.0.0
@@ -171,7 +171,7 @@ class Dynamic_Featured_Image
 
     } // END initialize_featured_box()
 
-    /**
+	/**
 	 * Translates more than one digit number digit by digit.
 	 * @param  Integer $number Integer to be translated
 	 * @return String         Translated number
@@ -191,7 +191,7 @@ class Dynamic_Featured_Image
         }
     }
 
-    /**
+	/**
 	 * adds meta boxes
 	 * @param  Array $postTypes     post types to show featured image box
 	 * @param  Object $featured     callback arguments
@@ -231,7 +231,7 @@ class Dynamic_Featured_Image
 
     }
 
-    /**
+	/**
 	 * Featured meta box as seen in the admin
 	 *
 	 * @since 1.0.0
@@ -279,7 +279,7 @@ class Dynamic_Featured_Image
 
     } // END featured_meta_box()
 
-    /**
+	/**
 	 * Returns featured box html content
 	 * @since  3.1.0
 	 * @access private
@@ -307,7 +307,7 @@ class Dynamic_Featured_Image
 			<input type='hidden' name='dfiFeatured[]' value='{$featuredImg}'  class='dfiImageHolder' />";
     }
 
-    /**
+	/**
 	 * Load new featured meta box via ajax
 	 *
 	 * @since 1.0.0
@@ -341,7 +341,7 @@ class Dynamic_Featured_Image
 
     } // END MetaBox_callback())
 
-    /**
+	/**
 	 * Add custom class 'featured-meta-box' to meta box
 	 *
 	 * @since 1.0.0
@@ -361,7 +361,7 @@ class Dynamic_Featured_Image
 
     } // END add_metabox_classes()
 
-    /**
+	/**
 	 * Update featured images in the database
 	 *
 	 * @since 1.0.0
@@ -400,7 +400,7 @@ class Dynamic_Featured_Image
 
     } // END save_meta()
 
-    /**
+	/**
 	 * Add update notice. Displayed in plugin update page.
 	 *
 	 * @since 2.0.0
@@ -416,16 +416,20 @@ class Dynamic_Featured_Image
 
     } // END update_notice()
 
-    /** Helper functions */
+	/** Helper functions */
 
     private function execute_query($query)
     {
         $resultSet = $this->db->get_col( $query );
+        var_dump($resultSet);
+
+        $resultSet = $this->db->get_var( $query );
+        var_dump($resultSet);
 
         return empty( $resultSet ) ? null : $resultSet[0];
     }
 
-    /**
+	/**
 	 * Get attachment id of the image by image url
 	 *
 	 * @since 3.1.7
@@ -442,7 +446,7 @@ class Dynamic_Featured_Image
 
     } // END _get_attachment_id()
 
-    /**
+	/**
 	 * Get image url of the image by attachment id
 	 *
 	 * @since 2.0.0
@@ -463,7 +467,7 @@ class Dynamic_Featured_Image
 
     } // END get_image_url()
 
-    /**
+	/**
 	 * Get image thumbnail url of specific size by image url
 	 *
 	 * @since 2.0.0
@@ -486,7 +490,7 @@ class Dynamic_Featured_Image
 
     } // END get_image_thumb()
 
-    /**
+	/**
 	 * Gets attachment id from given image url
 	 * @param  String $image_url url of an image
 	 * @return Integer|Null            attachment id of an image
@@ -510,7 +514,7 @@ class Dynamic_Featured_Image
         return $attachment_id;
     }
 
-    /**
+	/**
 	 * Get image title
 	 *
 	 * @since 2.0.0
@@ -526,7 +530,7 @@ class Dynamic_Featured_Image
 
     } // END get_image_title()
 
-    /**
+	/**
 	 * Get image title by id
 	 *
 	 * @since 2.0.0
@@ -542,7 +546,7 @@ class Dynamic_Featured_Image
 
     } // END get_image_title_by_id()
 
-    /**
+	/**
 	 * Get image caption
 	 *
 	 * @since 2.0.0
@@ -558,7 +562,7 @@ class Dynamic_Featured_Image
 
     } // END get_image_caption()
 
-    /**
+	/**
 	 * Get image caption by id
 	 *
 	 * @since 2.0.0
@@ -574,7 +578,7 @@ class Dynamic_Featured_Image
 
     } // END get_image_caption_by_id()
 
-    /**
+	/**
 	 * Get image alternate text
 	 *
 	 * @since 2.0.0
@@ -599,7 +603,7 @@ class Dynamic_Featured_Image
 
     } // END get_image_alt()
 
-    /**
+	/**
 	 * Get image alternate text by attachment id
 	 *
 	 * @since 2.0.0
@@ -619,7 +623,7 @@ class Dynamic_Featured_Image
 
     } // END get_image_alt_by_id()
 
-    /**
+	/**
 	 * Get image description
 	 *
 	 * @since 3.0.0
@@ -635,23 +639,23 @@ class Dynamic_Featured_Image
 
     } // END get_image_description()
 
-     /**
-	* Get image description by id
-	*
-	* @since 3.0.0
-	* @access public
-	*
-	* @param  Integer $attachment_id attachment id of an image
-	*
-	* @return String
-	*/
+	/**
+	 * Get image description by id
+	 *
+	 * @since 3.0.0
+	 * @access public
+	 *
+	 * @param  Integer $attachment_id attachment id of an image
+	 *
+	 * @return String
+	 */
     public function get_image_description_by_id($attachment_id)
     {
         return self::execute_query( $this->db->prepare( "SELECT post_content FROM " . $this->prefix . "posts" . " WHERE ID = %d", $attachment_id ) );
 
     } // END get_image_description_by_id()
 
-     /**
+   /**
 	* Get all attachment ids of the post
 	*
 	* @since 2.0.0
@@ -680,7 +684,7 @@ class Dynamic_Featured_Image
 
     } // END get_post_attachment_ids()
 
-    /**
+	/**
 	 * Fetches featured image data of nth position
 	 *
 	 * @since  3.0.0
@@ -706,7 +710,7 @@ class Dynamic_Featured_Image
 
     } // END get_nth_featured_image()
 
-    /**
+	/**
 	 * Check if the image is attached with the particular post
 	 *
 	 * @since 2.0.0
@@ -727,7 +731,7 @@ class Dynamic_Featured_Image
 
     } // END is_attached()
 
-    /**
+	/**
 	 * Retrieve featured images for specific post(s)
 	 *
 	 * @since 2.0.0
@@ -772,7 +776,7 @@ class Dynamic_Featured_Image
 
     } // END get_featured_images()
 
-    /**
+	/**
 	 * Retrieve featured images for specific post(s) including the default Featured Image
 	 *
 	 * @since 3.1.7
@@ -811,7 +815,7 @@ class Dynamic_Featured_Image
 
     }
 
-    /**
+	/**
 	 * Load the plugin's textdomain hooked to 'plugins_loaded'.
 	 *
 	 * @since 1.0.0

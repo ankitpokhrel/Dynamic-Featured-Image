@@ -90,7 +90,6 @@ class Dynamic_Featured_Image
 
         global $wpdb;
         $this->db = $wpdb;
-        $this->prefix = $wpdb->prefix;
 
     } // END __construct()
 

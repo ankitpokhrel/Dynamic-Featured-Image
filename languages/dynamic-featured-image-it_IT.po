@@ -1,0 +1,69 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: dynamic-featured-image\n"
+"POT-Creation-Date: 2014-07-19 16:43+0545\n"
+"PO-Revision-Date: 2014-09-14 20:16+0545\n"
+"Last-Translator: Ankit Pokhrel <ankitpokhrel@gmail.com>\n"
+"Language-Team: Ankit Pokhrel <ankitpokhrel@gmail.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.5.7\n"
+"X-Poedit-KeywordsList: _;gettext;gettext_noop;__;_e\n"
+"X-Poedit-Basepath: .\n"
+"X-Poedit-SearchPath-0: D:\\Program Files\\VertrigoServ\\www\\wp39\\wp-content"
+"\\plugins\\dynamic-featured-image\n"
+
+msgid "Featured Image "
+msgstr "Immagine in Primo Piano "
+
+msgid "Dynamic Featured Image - Media Selector"
+msgstr "Dynamic Featured Image - Selettore Multimediale"
+
+msgid "Set Featured Image"
+msgstr "Imposta Immagine in Primo Piano"
+
+msgid "Add New"
+msgstr "Aggiungi Nuova"
+
+msgid "Remove"
+msgstr "Rimuovere"
+
+msgid ""
+"ATTENTION! Please read the <a href=\"https://github.com/ankitpokhrel/Dynamic-"
+"Featured-Image/wiki\" target=\"_blank\">DOCUMENTATION</a> properly before "
+"update."
+msgstr ""
+"ATTENZIONE! Si prega di leggere la <a href=\"https://github.com/ankitpokhrel/"
+"Dynamic-Featured-Image/wiki\" target=\"_blank\">DOCUMENTAZIONE</a> prima di "
+"effettuare l'aggiornamento."
+
+msgid "0"
+msgstr "0"
+
+msgid "1"
+msgstr "1"
+
+msgid "2"
+msgstr "2"
+
+msgid "3"
+msgstr "3"
+
+msgid "4"
+msgstr "4"
+
+msgid "5"
+msgstr "5"
+
+msgid "6"
+msgstr "6"
+
+msgid "7"
+msgstr "7"
+
+msgid "8"
+msgstr "8"
+
+msgid "9"
+msgstr "9"

@@ -754,9 +754,19 @@ class Dynamic_Featured_Image
                 @list( $dfiImageTrimmed, $dfiImageFull ) = explode( ',', $dfiImage );
 
                 try {
-                    $retImages[$count]['thumb']            = strpos($dfiImageTrimmed, $this->upload_url) ? $this->upload_url . $dfiImageTrimmed : $dfiImageTrimmed;
-                    $retImages[$count]['full']             = strpos($dfiImageTrimmed, $this->upload_url) ? $this->upload_url . $dfiImageFull : $dfiImageFull;
-                    $retImages[$count]['attachment_id']    = $this->get_image_id( $retImages[$count]['full'] );
+                    if ( strpos($dfiImageTrimmed, $this->upload_url) !== False ) {
+                        $retImages[$count]['thumb'] = $dfiImageTrimmed;
+                    } else {
+                        $retImages[$count]['thumb'] = $this->upload_url . $dfiImageTrimmed;
+                    }
+
+                    if ( strpos($dfiImageFull, $this->upload_url) !== False ) {
+                        $retImages[$count]['full'] = $dfiImageFull;
+                    } else {
+                        $retImages[$count]['full'] = $this->upload_url . $dfiImageFull;
+                    }
+                    
+                    $retImages[$count]['attachment_id'] = $this->get_image_id( $retImages[$count]['full'] );
 
                 } catch (Exception $e) { /* Ignore the exception and continue with other featured images */ }
 

@@ -19,7 +19,7 @@
             var idLocal = $('.featured-meta-box:last').find('.dfiAddNew').attr('data-id-local');
 
             var newMetaBox = obj.closest('.featured-meta-box').clone();
-            newMetaBox.find('.hndle span').html( WP_SPECIFIC.metabox_title + idLocal );
+            newMetaBox.find('.hndle span').html( WP_SPECIFIC.metabox_title + " " + idLocal );
 
             newMetaBox.attr('id', 'dfiFeaturedMetaBox' + "-" + (++id) );
             newMetaBox.find('.handlediv').addClass('dfiDynamicBox');

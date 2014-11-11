@@ -49,7 +49,7 @@ class Dynamic_Featured_Image
 	 * @since 3.0.0
 	 */
 	const VERSION = '3.1.13';
-	private $upload_dir, $upload_url, $prefix, $db, $textDomain;
+	private $upload_dir, $upload_url, $prefix, $db, $textDomain, $_metabox_title;
 
 	/**
 	 * Constructor. Hooks all interactions to initialize the class.
@@ -120,7 +120,7 @@ class Dynamic_Featured_Image
 			'WP_SPECIFIC',
 			array(
 				'upload_url' => $this->upload_url,
-				'metabox_title' => __('Featured Image ', $this->textDomain),
+				'metabox_title' => __($this->_metabox_title, $this->textDomain),
 				'mediaSelector_title' => __('Dynamic Featured Image - Media Selector', $this->textDomain),
 				'mediaSelector_buttonText' => __('Set Featured Image', $this->textDomain)
 			)
@@ -148,6 +148,9 @@ class Dynamic_Featured_Image
 	public function initialize_featured_box()
 	{
 		global $post;
+
+		//make metabox title dynamic
+		$this->_metabox_title =  apply_filters('dfi_set_metabox_title', "Featured Image");
 
 		$featuredData = get_post_meta( $post->ID, 'dfiFeatured', true );
 		$totalFeatured = count( $featuredData );
@@ -203,7 +206,7 @@ class Dynamic_Featured_Image
 			foreach ($postTypes as $type) {
 				add_meta_box(
 					'dfiFeaturedMetaBox-' . $i,
-					__("Featured Image ", $this->textDomain) . self::_get_number_translation($i),
+					__($this->_metabox_title, $this->textDomain) . " " . self::_get_number_translation($i),
 					array( $this, 'featured_meta_box' ),
 					$type,
 					'side',
@@ -217,7 +220,7 @@ class Dynamic_Featured_Image
 			foreach ($postTypes as $type) {
 				add_meta_box(
 					'dfiFeaturedMetaBox',
-					__( 'Featured Image ', $this->textDomain ) . __(2, $this->textDomain),
+					__( $this->_metabox_title, $this->textDomain ) . " " . __(2, $this->textDomain),
 					array( $this, 'featured_meta_box' ),
 					$type,
 					'side',

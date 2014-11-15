@@ -155,7 +155,10 @@ class Dynamic_Featured_Image
 		$featuredData = get_post_meta( $post->ID, 'dfiFeatured', true );
 		$totalFeatured = count( $featuredData );
 
-		$filter = array( 'attachment', 'revision', 'nav_menu_item' );
+		$defaultFilter = array( 'attachment', 'revision', 'nav_menu_item' );
+		$userFilter = apply_filters('dfi_post_type_user_filter', $userFilter);
+		$filter = array_merge($defaultFilter, $userFilter);
+
 		$postTypes = get_post_types();
 		$postTypes = array_diff( $postTypes, $filter );
 

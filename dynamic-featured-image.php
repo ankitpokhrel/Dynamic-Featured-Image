@@ -49,7 +49,7 @@ class Dynamic_Featured_Image
 	 * @since 3.0.0
 	 */
 	const VERSION = '3.1.13';
-	private $upload_dir, $upload_url, $prefix, $db, $textDomain, $_metabox_title;
+	private $upload_dir, $upload_url, $prefix, $db, $textDomain, $_metabox_title, $_userFilter;
 
 	/**
 	 * Constructor. Hooks all interactions to initialize the class.
@@ -87,6 +87,9 @@ class Dynamic_Featured_Image
 
 		//add protocol to the upload url
 		$this->upload_url = $protocol . $this->upload_url;
+
+		//post type filter added by user
+		$this->_userFilter = array();
 
 		global $wpdb;
 		$this->db = $wpdb;
@@ -156,8 +159,8 @@ class Dynamic_Featured_Image
 		$totalFeatured = count( $featuredData );
 
 		$defaultFilter = array( 'attachment', 'revision', 'nav_menu_item' );
-		$userFilter = apply_filters('dfi_post_type_user_filter', $userFilter);
-		$filter = array_merge($defaultFilter, $userFilter);
+		$this->_userFilter = apply_filters('dfi_post_type_user_filter', $this->_userFilter);
+		$filter = array_merge($defaultFilter, $this->_userFilter);
 
 		$postTypes = get_post_types();
 		$postTypes = array_diff( $postTypes, $filter );

@@ -66,6 +66,32 @@ DFI allows you to add different number of featured images to each post and page 
 14. [get_nth_featured_image( $position, $post_id )](https://github.com/ankitpokhrel/Dynamic-Featured-Image/wiki/API-Functions#wiki-14-get_nth_featured_image-position-post_id--null-)
 15. [get_all_featured_images( $post_id )](https://github.com/ankitpokhrel/Dynamic-Featured-Image/wiki/API-Functions#15-get_all_featured_images-post_id-)
   
+### Allowing DFI only in specific post types
+You can use `dfi_post_types` filter to allow DFI only in a specific post types.
+```
+add_filter('dfi_post_types', 'allowed_post_types');
+function allowed_post_types() {
+	return array('post'); //show DFI only in post
+}
+```
+
+### Blocking DFI
+Use `dfi_post_type_user_filter` filter to block DFI from post types.
+```
+add_filter('dfi_post_type_user_filter', 'blocked_post_types');
+function blocked_post_types() {
+	return array('page'); //block DFI page
+}
+```
+
+### Changing the metabox default text
+Use `dfi_set_metabox_title` filter to change the metabox default title (Featured Image)
+```
+add_filter('dfi_set_metabox_title', 'set_metabox_title');
+function set_metabox_title( $title ) {
+	return "My custom metabox title";
+}
+```
 
 ### Translation Guidelines
 The translations live in the `languages` folder.
@@ -87,7 +113,5 @@ If you think this script is useful and saves you a lot of work, a lot of costs (
 [![Flattr donate button](http://api.flattr.com/button/flattr-badge-large.png)](https://flattr.com/submit/auto?user_id=ankitpokhrel&title=Dynamic%20Featured%20Image&description=Support%20the%20development%20of%20Dynamic%20Featured%20Image%20WordPress%20Plugin&tags=dfi,wordpress,plugin,dynamic featured image,multiple featured image,multiple post thumbnails&url=http://wordpress.org/plugins/dynamic-featured-image "Donate to Dynamic Featured Image Plugin using Flattr")
 
 ### Questions about this project?
-
-You can always contact me at `ankitpokhrel@gmail.com`, if you have any question or queries about the project. 
 
 Please feel free to report any bug found. Pull requests, issues, and plugin recommendations are more than welcome!

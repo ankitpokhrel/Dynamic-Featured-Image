@@ -80,7 +80,7 @@ Use `dfi_post_type_user_filter` filter to block DFI from post types.
 ```
 add_filter('dfi_post_type_user_filter', 'blocked_post_types');
 function blocked_post_types() {
-	return array('page'); //block DFI page
+	return array('page'); //block DFI in page
 }
 ```
 

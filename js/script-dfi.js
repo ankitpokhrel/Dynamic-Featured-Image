@@ -7,7 +7,7 @@
  */
 
 jQuery(document).ready(function($) {
-    var current = null; 
+    var current = null;
 
     /**
      * Add new meta box

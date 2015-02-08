@@ -701,14 +701,14 @@ class Dynamic_Featured_Image
 	 */
 	public function get_nth_featured_image($position, $post_id = null)
 	{
-	if ( is_null( $post_id ) ) {
-		global $post;
-		$post_id = $post->ID;
-	}
+		if ( is_null( $post_id ) ) {
+			global $post;
+			$post_id = $post->ID;
+		}
 
-	$featured_images = $this->get_featured_images( $post_id );
+		$featured_images = $this->get_featured_images( $post_id );
 
-	return isset($featured_images[$position - 2 ]) ? $featured_images[$position - 2] : null;
+		return isset($featured_images[$position - 2 ]) ? $featured_images[$position - 2] : null;
 
 	} // END get_nth_featured_image()
 

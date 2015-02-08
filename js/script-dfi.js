@@ -14,13 +14,12 @@
          */
         $(document).on('click', '.dfiAddNew', function() {
 
-            var obj = $(this);
-            var id = parseInt( $('.featured-meta-box:last').find('.dfiAddNew').data('id'), 10 );           
-            var idLocal = $('.featured-meta-box:last').find('.dfiAddNew').attr('data-id-local');
+            var obj = $(this),
+                id = parseInt( $('.featured-meta-box:last').find('.dfiAddNew').data('id'), 10 ),
+                idLocal = $('.featured-meta-box:last').find('.dfiAddNew').attr('data-id-local'),
+                newMetaBox = obj.closest('.featured-meta-box').clone();
 
-            var newMetaBox = obj.closest('.featured-meta-box').clone();
             newMetaBox.find('.hndle span').html( WP_SPECIFIC.metabox_title + " " + idLocal );
-
             newMetaBox.attr('id', 'dfiFeaturedMetaBox' + "-" + (++id) );
             newMetaBox.find('.handlediv').addClass('dfiDynamicBox');
 
@@ -54,8 +53,8 @@
 
             if( confirm('Are you sure?') ) {
 
-                var dfiMetaBox = $(this).closest('.featured-meta-box'); 
-                var totalMetaBox = $('.featured-meta-box').length;
+                var dfiMetaBox = $(this).closest('.featured-meta-box'),
+                    totalMetaBox = $('.featured-meta-box').length;
 
                 if( totalMetaBox === 1 ) {
 
@@ -98,13 +97,12 @@
 
                 }).on('select', function() {
 
-                    var attachment = dfi_uploader.state().get('selection').first().toJSON();
-                    var fullSize = attachment.url;
-                    var imgUrl = (typeof attachment.sizes.thumbnail === "undefined") ? fullSize : attachment.sizes.thumbnail.url;
-                    var imgUrlTrimmed, fullUrlTrimmed;
+                    var attachment = dfi_uploader.state().get('selection').first().toJSON(),
+                        fullSize = attachment.url,
+                        imgUrl = (typeof attachment.sizes.thumbnail === "undefined") ? fullSize : attachment.sizes.thumbnail.url,
+                        imgUrlTrimmed, fullUrlTrimmed;
 
                     imgUrlTrimmed = imgUrl.replace(WP_SPECIFIC.upload_url, "");
-
                     fullUrlTrimmed = fullSize.replace(WP_SPECIFIC.upload_url, "");
 
                     var featuredBox = current.parent();

@@ -257,7 +257,7 @@ class Dynamic_Featured_Image
 		$featuredId    = is_null( $featured['args'][1]) ? 2 : --$featured['args'][1];
 
 		$featuredImgTrimmed = $featuredImgFull = $featuredImg;
-		if ( !is_null( $featured['args'][0] ) ) {
+		if ( !is_null( $featuredImg ) ) {
 			@list( $featuredImgTrimmed, $featuredImgFull ) = explode( ',', $featuredImg );
 		}
 

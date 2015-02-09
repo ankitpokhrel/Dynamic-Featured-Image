@@ -59,8 +59,6 @@ class Dynamic_Featured_Image
 	 * @global object $wpdb
 	 *
 	 * @see	 add_action()
-	 *
-	 * @return	Void
 	 */
 	public function __construct()
 	{

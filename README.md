@@ -1,7 +1,6 @@
 [![Latest Stable Version](https://img.shields.io/wordpress/plugin/v/dynamic-featured-image.svg?style=flat-square)](https://packagist.org/packages/ankitpokhrel/Dynamic-Featured-Image)
 [![WordPress](https://img.shields.io/wordpress/v/dynamic-featured-image.svg?style=flat-square)](https://wordpress.org/plugins/dynamic-featured-image/)
 [![WordPress Rating](https://img.shields.io/wordpress/plugin/r/dynamic-featured-image.svg?style=flat-square)](https://wordpress.org/plugins/dynamic-featured-image/)
-[![Latest Unstable Version](https://poser.pugx.org/ankitpokhrel/dynamic-featured-image/v/unstable.svg)](https://packagist.org/packages/ankitpokhrel/dynamic-featured-image)
 [![License](https://img.shields.io/packagist/l/ankitpokhrel/dynamic-featured-image.svg?style=flat-square)](https://packagist.org/packages/ankitpokhrel/dynamic-featured-image)
 [![Code Climate](https://img.shields.io/codeclimate/github/ankitpokhrel/Dynamic-Featured-Image.svg?style=flat-square)](https://codeclimate.com/github/ankitpokhrel/Dynamic-Featured-Image)
 [![Scrutinizer Code Quality](https://img.shields.io/scrutinizer/g/ankitpokhrel/Dynamic-Featured-Image.svg?style=flat-square)](https://scrutinizer-ci.com/g/ankitpokhrel/Dynamic-Featured-Image/)

@@ -1,5 +1,6 @@
 [![Latest Stable Version](https://poser.pugx.org/ankitpokhrel/Dynamic-Featured-Image/v/stable.png)](https://packagist.org/packages/ankitpokhrel/Dynamic-Featured-Image)
 [![Latest Unstable Version](https://poser.pugx.org/ankitpokhrel/dynamic-featured-image/v/unstable.svg)](https://packagist.org/packages/ankitpokhrel/dynamic-featured-image)
+[![License](https://img.shields.io/wordpress/plugin/dt/dynamic-featured-image.svg)](https://wordpress.org/plugins/dynamic-featured-image)
 [![License](https://poser.pugx.org/ankitpokhrel/dynamic-featured-image/license.svg)](https://packagist.org/packages/ankitpokhrel/dynamic-featured-image)
 [![Code Climate](https://codeclimate.com/github/ankitpokhrel/Dynamic-Featured-Image.png)](https://codeclimate.com/github/ankitpokhrel/Dynamic-Featured-Image)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/ankitpokhrel/Dynamic-Featured-Image/badges/quality-score.png?s=73e331637a4199968ba2d6594fc6e1be5ea2ba53)](https://scrutinizer-ci.com/g/ankitpokhrel/Dynamic-Featured-Image/)

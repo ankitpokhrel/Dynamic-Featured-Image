@@ -1,12 +1,13 @@
-[![Latest Stable Version](https://poser.pugx.org/ankitpokhrel/Dynamic-Featured-Image/v/stable.png)](https://packagist.org/packages/ankitpokhrel/Dynamic-Featured-Image)
+[![Latest Stable Version](https://img.shields.io/wordpress/plugin/v/dynamic-featured-image.svg?style=flat-square)](https://packagist.org/packages/ankitpokhrel/Dynamic-Featured-Image)
+[![WordPress](https://img.shields.io/wordpress/v/dynamic-featured-image.svg?style=flat-square)](https://wordpress.org/plugins/dynamic-featured-image/)
+[![WordPress Rating](https://img.shields.io/wordpress/plugin/r/dynamic-featured-image.svg?style=flat-square)](https://wordpress.org/plugins/dynamic-featured-image/)
 [![Latest Unstable Version](https://poser.pugx.org/ankitpokhrel/dynamic-featured-image/v/unstable.svg)](https://packagist.org/packages/ankitpokhrel/dynamic-featured-image)
-[![License](https://img.shields.io/wordpress/plugin/dt/dynamic-featured-image.svg)](https://wordpress.org/plugins/dynamic-featured-image)
-[![License](https://poser.pugx.org/ankitpokhrel/dynamic-featured-image/license.svg)](https://packagist.org/packages/ankitpokhrel/dynamic-featured-image)
-[![Code Climate](https://codeclimate.com/github/ankitpokhrel/Dynamic-Featured-Image.png)](https://codeclimate.com/github/ankitpokhrel/Dynamic-Featured-Image)
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/ankitpokhrel/Dynamic-Featured-Image/badges/quality-score.png?s=73e331637a4199968ba2d6594fc6e1be5ea2ba53)](https://scrutinizer-ci.com/g/ankitpokhrel/Dynamic-Featured-Image/)
-![project status](http://stillmaintained.com/ankitpokhrel/Dynamic-Featured-Image.png)
+[![License](https://img.shields.io/packagist/l/ankitpokhrel/dynamic-featured-image.svg?style=flat-square)](https://packagist.org/packages/ankitpokhrel/dynamic-featured-image)
+[![Code Climate](https://img.shields.io/codeclimate/github/ankitpokhrel/Dynamic-Featured-Image.svg?style=flat-square)](https://codeclimate.com/github/ankitpokhrel/Dynamic-Featured-Image)
+[![Scrutinizer Code Quality](https://img.shields.io/scrutinizer/g/ankitpokhrel/Dynamic-Featured-Image.svg?style=flat-square)](https://scrutinizer-ci.com/g/ankitpokhrel/Dynamic-Featured-Image/)
+
 <script id='fblh4am'>(function(i){var f,s=document.getElementById(i);f=document.createElement('iframe');f.src='//api.flattr.com/button/view/?uid=ankitpokhrel&button=compact&url='+encodeURIComponent(document.URL);f.title='Flattr';f.height=20;f.width=110;f.style.borderWidth=0;s.parentNode.insertBefore(f,s);})('fblh4am');</script>
-## Dynamic Featured Image (A WordPress Plugin)
+## Dynamic Featured Image (A WordPress Plugin) [![License](https://img.shields.io/wordpress/plugin/dt/dynamic-featured-image.svg?style=flat-square)](https://wordpress.org/plugins/dynamic-featured-image)
 
 _Dynamically adds multiple featured image (post thumbnail) functionality to posts, pages and custom post types._
 

@@ -76,6 +76,10 @@ class Dynamic_Featured_Image
 		//handle ajax request
 		add_action( 'wp_ajax_dfiMetaBox_callback', array( $this, 'ajax_callback' ) );
 
+		//media uploader custom fields
+		add_filter( 'attachment_fields_to_edit', array($this, 'media_attachment_custom_fields'), 10, 2 );
+		add_filter( 'attachment_fields_to_save', array($this, 'media_attachment_custom_fields_save'), 10, 2 );
+
 		//get the site protocol
 		$protocol = ( (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') ||
 						$_SERVER['SERVER_PORT'] == 443 ) ? "https://" : "http://";
@@ -388,6 +392,48 @@ class Dynamic_Featured_Image
 		return $classes;
 
 	} // END add_metabox_classes()
+
+	/**
+	 * Add custom fields in media uploader
+	 *
+	 * @since  3.4.0
+	 * 
+	 * @param $form_fields Array Fields to include in media attachment form
+	 * @param $post Array Post data
+	 * 
+	 * @return Array
+	 */
+	public function media_attachment_custom_fields( $form_fields, $post )
+	{
+		$form_fields['dfi-link-to-image'] = array(
+			'label' => _('Link to Image'),
+			'input' => 'text',
+			'value' => get_post_meta( $post->ID, '_dfi_link_to_image', true )
+		);
+
+		return $form_fields;
+
+	} // END media_attachment_custom_fields()
+
+	/**
+	 * Save values of media uploader custom fields
+	 *
+	 * @since 3.4.0
+	 *
+	 * @param $post Array The post data for database
+	 * @param $attachment Array Attachment fields from $_POST form
+	 * 
+	 * @return Array
+	 */
+	public function media_attachment_custom_fields_save( $post, $attachment ) 
+	{
+		if( isset( $attachment['dfi-link-to-image'] ) ) {
+			update_post_meta( $post['ID'], '_dfi_link_to_image', $attachment['dfi-link-to-image'] );
+		}
+		
+		return $post;
+
+	} // END media_attachment_custom_fields_save()
 
 	/**
 	 * Update featured images in the database

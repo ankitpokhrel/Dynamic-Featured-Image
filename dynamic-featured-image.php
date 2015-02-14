@@ -238,6 +238,27 @@ class Dynamic_Featured_Image
 	}
 
 	/**
+	 * Separate thumb and full image url from given URL string
+	 *
+	 * @since  3.3.1
+	 * 
+	 * @param  string $urlString   [description]
+	 * @param  string $state Thumb or full
+	 * 
+	 * @return string|null
+	 */
+	private function _separate($urlString, $state = 'thumb') 
+	{
+		$imagePiece = explode( ',', $urlString );
+
+		if( $state == 'thumb' ) {
+			return isset($imagePiece[0]) ? $imagePiece[0] : null;
+		}
+
+		return isset($imagePiece[1]) ? $imagePiece[1] : null;
+	}
+
+	/**
 	 * Featured meta box as seen in the admin
 	 *
 	 * @since 1.0.0
@@ -258,9 +279,8 @@ class Dynamic_Featured_Image
 
 		$featuredImgTrimmed = $featuredImgFull = $featuredImg;
 		if ( !is_null( $featuredImg ) ) {
-			$imagePiece = explode( ',', $featuredImg );				
-			$featuredImgTrimmed = isset($imagePiece[0]) ? $imagePiece[0] : null;
-			$featuredImgFull = isset($imagePiece[1]) ? $imagePiece[1] : null;
+			$featuredImgTrimmed = self::_separate($featuredImg);
+			$featuredImgFull = self::_separate($featuredImg, 'full');
 		}
 
 		try {
@@ -676,9 +696,7 @@ class Dynamic_Featured_Image
 		$retVal = array();
 		if ( !empty( $dfiImages ) && is_array( $dfiImages ) ) {
 			foreach ($dfiImages as $dfiImage) {
-				$imagePiece = explode( ',', $dfiImage );				
-				$dfiImageFull = isset($imagePiece[1]) ? $imagePiece[1] : null;
-
+				$dfiImageFull = self::_separate($dfiImage, 'full');
 				$retVal[] = $this->get_image_id( $this->upload_url . $dfiImageFull );
 			}
 		}
@@ -761,9 +779,8 @@ class Dynamic_Featured_Image
 
 			$count = 0;
 			foreach ($dfiImages as $dfiImage) {
-				$imagePiece = explode( ',', $dfiImage );				
-				$dfiImageTrimmed = isset($imagePiece[0]) ? $imagePiece[0] : null;
-				$dfiImageFull = isset($imagePiece[1]) ? $imagePiece[1] : null;
+				$dfiImageTrimmed = self::_separate($dfiImage);
+				$dfiImageFull = self::_separate($dfiImage, 'full');
 
 				try {
 

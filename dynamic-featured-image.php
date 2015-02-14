@@ -258,7 +258,9 @@ class Dynamic_Featured_Image
 
 		$featuredImgTrimmed = $featuredImgFull = $featuredImg;
 		if ( !is_null( $featuredImg ) ) {
-			@list( $featuredImgTrimmed, $featuredImgFull ) = explode( ',', $featuredImg );
+			$imagePiece = explode( ',', $featuredImg );				
+			$featuredImgTrimmed = isset($imagePiece[0]) ? $imagePiece[0] : null;
+			$featuredImgFull = isset($imagePiece[1]) ? $imagePiece[1] : null;
 		}
 
 		try {
@@ -674,7 +676,8 @@ class Dynamic_Featured_Image
 		$retVal = array();
 		if ( !empty( $dfiImages ) && is_array( $dfiImages ) ) {
 			foreach ($dfiImages as $dfiImage) {
-				@list( $dfiImageTrimmed, $dfiImageFull ) = explode( ',', $dfiImage );
+				$imagePiece = explode( ',', $dfiImage );				
+				$dfiImageFull = isset($imagePiece[1]) ? $imagePiece[1] : null;
 
 				$retVal[] = $this->get_image_id( $this->upload_url . $dfiImageFull );
 			}
@@ -758,7 +761,9 @@ class Dynamic_Featured_Image
 
 			$count = 0;
 			foreach ($dfiImages as $dfiImage) {
-				@list( $dfiImageTrimmed, $dfiImageFull ) = explode( ',', $dfiImage );
+				$imagePiece = explode( ',', $dfiImage );				
+				$dfiImageTrimmed = isset($imagePiece[0]) ? $imagePiece[0] : null;
+				$dfiImageFull = isset($imagePiece[1]) ? $imagePiece[1] : null;
 
 				try {
 

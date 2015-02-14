@@ -724,6 +724,22 @@ class Dynamic_Featured_Image
 	} // END get_image_description_by_id()
 
 	/**
+	 * Get link to image
+	 *
+	 * @since 3.4.0
+	 * @access public
+	 *
+	 * @param  Integer $attachment_id attachment id of an image
+	 *
+	 * @return string|null
+	 */
+	public function get_link_to_image($attachment_id) 
+	{
+		return get_post_meta( $attachment_id, '_dfi_link_to_image', true );
+
+	} // END get_link_to_image()
+
+	/**
 	 * Get all attachment ids of the post
 	 *
 	 * @since 2.0.0

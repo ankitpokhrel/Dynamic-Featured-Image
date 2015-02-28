@@ -1,0 +1,55 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Dynamic Featured Image\n"
+"POT-Creation-Date: 2015-02-28 09:09-0300\n"
+"PO-Revision-Date: 2015-02-28 09:10-0300\n"
+"Last-Translator: \n"
+"Language-Team: Indexis <bruno@idx.is>\n"
+"Language: pt\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.7.4\n"
+"X-Poedit-Basepath: .\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Poedit-KeywordsList: __;_e\n"
+"X-Poedit-SearchPath-0: /users/bruno/Code/wp/wp-content/plugins/Dynamic-"
+"Featured-Image\n"
+
+#: /users/bruno/Code/wp/wp-content/plugins/Dynamic-Featured-Image/dynamic-featured-image.php:129
+msgid "Dynamic Featured Image - Media Selector"
+msgstr "Dynamic Featured Image - Seletor de Mídia"
+
+#: /users/bruno/Code/wp/wp-content/plugins/Dynamic-Featured-Image/dynamic-featured-image.php:130
+#: /users/bruno/Code/wp/wp-content/plugins/Dynamic-Featured-Image/dynamic-featured-image.php:332
+#: /users/bruno/Code/wp/wp-content/plugins/Dynamic-Featured-Image/dynamic-featured-image.php:363
+msgid "Set Featured Image"
+msgstr "Definir Imagem Destacada"
+
+#: /users/bruno/Code/wp/wp-content/plugins/Dynamic-Featured-Image/dynamic-featured-image.php:158
+msgid "Featured Image"
+msgstr "Imagem Destacada"
+
+#: /users/bruno/Code/wp/wp-content/plugins/Dynamic-Featured-Image/dynamic-featured-image.php:335
+#: /users/bruno/Code/wp/wp-content/plugins/Dynamic-Featured-Image/dynamic-featured-image.php:366
+msgid "Add New"
+msgstr "Adicionar"
+
+#: /users/bruno/Code/wp/wp-content/plugins/Dynamic-Featured-Image/dynamic-featured-image.php:336
+#: /users/bruno/Code/wp/wp-content/plugins/Dynamic-Featured-Image/dynamic-featured-image.php:367
+msgid "Remove"
+msgstr "Remover"
+
+#: /users/bruno/Code/wp/wp-content/plugins/Dynamic-Featured-Image/dynamic-featured-image.php:409
+msgid "Link to Image"
+msgstr "Link para Imagem"
+
+#: /users/bruno/Code/wp/wp-content/plugins/Dynamic-Featured-Image/dynamic-featured-image.php:488
+msgid ""
+"ATTENTION! Please read the <a href=\"https://github.com/ankitpokhrel/Dynamic-"
+"Featured-Image/wiki\" target=\"_blank\">DOCUMENTATION</a> properly before "
+"update."
+msgstr ""
+"ATENÇÃO! Por favor leia a <a href=\"https://github.com/ankitpokhrel/Dynamic-"
+"Featured-Image/wiki\" target=\"_blank\">DOCUMENTAÇÃO</a> corretamente antes "
+"de atualizar."

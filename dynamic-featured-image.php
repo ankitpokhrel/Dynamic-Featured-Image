@@ -155,7 +155,7 @@ class Dynamic_Featured_Image
 		global $post;
 
 		//make metabox title dynamic
-		$this->_metabox_title =  apply_filters('dfi_set_metabox_title', "Featured Image");
+		$this->_metabox_title =  apply_filters('dfi_set_metabox_title', __("Featured Image"));
 
 		$featuredData = get_post_meta( $post->ID, 'dfiFeatured', true );
 		$totalFeatured = count( $featuredData );

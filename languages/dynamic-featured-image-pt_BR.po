@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Dynamic Featured Image\n"
-"POT-Creation-Date: 2015-02-28 08:56-0300\n"
-"PO-Revision-Date: 2015-02-28 08:59-0300\n"
+"POT-Creation-Date: 2015-02-28 09:09-0300\n"
+"PO-Revision-Date: 2015-02-28 09:10-0300\n"
 "Last-Translator: \n"
 "Language-Team: Indexis <bruno@idx.is>\n"
 "Language: pt\n"
@@ -25,6 +25,10 @@ msgstr "Dynamic Featured Image - Seletor de Mídia"
 #: /users/bruno/Code/wp/wp-content/plugins/Dynamic-Featured-Image/dynamic-featured-image.php:363
 msgid "Set Featured Image"
 msgstr "Definir Imagem Destacada"
+
+#: /users/bruno/Code/wp/wp-content/plugins/Dynamic-Featured-Image/dynamic-featured-image.php:158
+msgid "Featured Image"
+msgstr "Imagem Destacada"
 
 #: /users/bruno/Code/wp/wp-content/plugins/Dynamic-Featured-Image/dynamic-featured-image.php:335
 #: /users/bruno/Code/wp/wp-content/plugins/Dynamic-Featured-Image/dynamic-featured-image.php:366

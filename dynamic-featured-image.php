@@ -82,7 +82,7 @@ class Dynamic_Featured_Image
 
 		//get the site protocol
 		$protocol = ( (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') ||
-						$_SERVER['SERVER_PORT'] == 443 ) ? "https://" : "http://";
+						(!empty($_SERVER['SERVER_PORT']) && $_SERVER['SERVER_PORT'] == 443) ) ? "https://" : "http://";
 
 		$this->upload_dir = wp_upload_dir();
 		$this->upload_url = preg_replace('#^https?://#', '', $this->upload_dir['baseurl']);

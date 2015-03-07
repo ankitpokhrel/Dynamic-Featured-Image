@@ -3,6 +3,9 @@
 class DynamicFeaturedImageTest extends WP_UnitTestCase {
 
 	private $__mockBuilder = null;
+	private $__post_id = null;
+	private $__attachment_id = null;
+
 	protected $_dfi = null;
 	protected $_pluginData = null;
 
@@ -16,6 +19,26 @@ class DynamicFeaturedImageTest extends WP_UnitTestCase {
 		$this->_dfi = $dynamic_featured_image;
 
 		$this->_pluginData = get_plugin_data( dirname(dirname(__FILE__)) . '/dynamic-featured-image.php' );
+
+		$this->__post_id = $this->factory->post->create( array( 'post_title' => 'Dynamic Featured Image WordPress Plugin' ) );
+		$this->__attachment_id = self::createAttachmentImage();
+	}
+
+	private function createAttachmentImage()
+	{
+		$filename = 'wp-content/uploads/2013/03/dfi.jpg';
+		$filetype = wp_check_filetype( basename( $filename ), null );
+		$wp_upload_dir = wp_upload_dir();
+
+		$attachment = array(
+			'guid'           => $wp_upload_dir['url'] . '/' . basename( $filename ), 
+			'post_mime_type' => $filetype['type'],
+			'post_title'     => preg_replace( '/\.[^.]+$/', '', basename( $filename ) ),
+			'post_content'   => '',
+			'post_status'    => 'inherit'
+		);
+
+		return wp_insert_attachment( $attachment, $filename, $this->__post_id );
 	}
 
 	public function testConstructorAddsRequiredActionsAndFilters() 
@@ -46,8 +69,36 @@ class DynamicFeaturedImageTest extends WP_UnitTestCase {
 		$this->assertTrue( $this->_pluginData['DomainPath'] == '/languages' );
 	}
 
+	public function testGetImageUrl()
+	{		
+		$fullSizeImage = wp_get_attachment_image_src( $this->__attachment_id, 'full');
+		$this->assertEquals( $this->_dfi->get_image_url( $this->__attachment_id, 'full' ), $fullSizeImage[0] );
+	}
+
+	public function testGetImageThumb()
+	{		
+		$fullSizeImage = wp_get_attachment_image_src( $this->__attachment_id, 'full');
+		$thumbImage = wp_get_attachment_image_src( $this->__attachment_id, 'thumbnail');
+
+		$mock = $this->__mockBuilder
+					->setMethods( array('get_image_id') )
+					->getMock();
+
+		$mock->expects( $this->once() )
+			->method('get_image_id')
+			->with( $fullSizeImage[0] )
+			->will( $this->returnValue( $this->__attachment_id ) );
+
+		$this->assertEquals( $mock->get_image_thumb( $fullSizeImage[0], 'thumbnail' ), $thumbImage[0] );
+	}
+
 	public function tearDown() 
 	{
+		unset($this->__mockBuilder);
+		unset($this->__post_id);
+		unset($this->__attachment_id);
+		
 		unset($this->_dfi);
+		unset($this->_pluginData);
 	}
 }

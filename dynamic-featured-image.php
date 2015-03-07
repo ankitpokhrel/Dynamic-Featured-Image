@@ -568,7 +568,7 @@ class Dynamic_Featured_Image
 	 */
 	public function get_image_thumb($image_url, $size = 'thumbnail')
 	{
-		$attachment_id = self::get_image_id( $image_url );
+		$attachment_id = $this->get_image_id( $image_url );
 		$image_thumb = wp_get_attachment_image_src( $attachment_id, $size );
 
 		return empty( $image_thumb ) ? null : $image_thumb[0];

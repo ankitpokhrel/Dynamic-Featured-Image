@@ -4,6 +4,7 @@ class DynamicFeaturedImageTest extends WP_UnitTestCase {
 
 	private $__mockBuilder = null;
 	protected $_dfi = null;
+	protected $_pluginData = null;
 
 	public function setUp() 
 	{
@@ -13,6 +14,8 @@ class DynamicFeaturedImageTest extends WP_UnitTestCase {
 
 		global $dynamic_featured_image;
 		$this->_dfi = $dynamic_featured_image;
+
+		$this->_pluginData = get_plugin_data( dirname(dirname(__FILE__)) . '/dynamic-featured-image.php' );
 	}
 
 	public function testConstructorAddsRequiredActionsAndFilters() 
@@ -26,7 +29,23 @@ class DynamicFeaturedImageTest extends WP_UnitTestCase {
 		$this->assertEquals( 10, has_filter( 'attachment_fields_to_edit', array( $this->_dfi, 'media_attachment_custom_fields' ) ) );
 		$this->assertEquals( 10, has_filter( 'attachment_fields_to_save', array( $this->_dfi, 'media_attachment_custom_fields_save' ) ) );
 	}
-	
+
+	public function testEnqueueAdminScripts()
+	{
+		$this->_dfi->enqueue_admin_scripts();
+
+		$this->assertTrue( wp_script_is('scripts-dfi') );
+		$this->assertTrue( wp_style_is('style-dfi') );
+		$this->assertTrue( wp_style_is('dashicons') );
+	}
+
+	public function testPluginProperties()
+	{
+		$this->assertTrue( $this->_pluginData['Name'] == 'Dynamic Featured Image' );
+		$this->assertTrue( $this->_pluginData['TextDomain'] == 'dynamic-featured-image' );
+		$this->assertTrue( $this->_pluginData['DomainPath'] == '/languages' );
+	}
+
 	public function tearDown() 
 	{
 		unset($this->_dfi);

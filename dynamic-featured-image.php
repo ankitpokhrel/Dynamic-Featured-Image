@@ -518,14 +518,14 @@ class Dynamic_Featured_Image
 	 * Get attachment id of the image by image url
 	 *
 	 * @since 3.1.7
-	 * @access private
+	 * @access protected
 	 * @global object $wpdb
 	 *
 	 * @param  String $image_url url of the image
 	 *
 	 * @return string
 	 */
-	private function _get_attachment_id($image_url)
+	protected function _get_attachment_id($image_url)
 	{
 		return self::execute_query($this->__db->prepare( "SELECT ID FROM " . $this->__db->posts . " WHERE guid = %s", $image_url ));
 
@@ -585,7 +585,7 @@ class Dynamic_Featured_Image
 	 */
 	public function get_image_id($image_url)
 	{
-		$attachment_id = self::_get_attachment_id( $image_url );
+		$attachment_id = $this->_get_attachment_id( $image_url );
 		if ( is_null($attachment_id) ) {
 			//check if the image is edited image
 			//and try to get the attachment id

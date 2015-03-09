@@ -22,11 +22,13 @@ class DynamicFeaturedImageTest extends WP_UnitTestCase {
 
 		$this->__post_id = $this->factory->post->create( array( 'post_title' => 'Dynamic Featured Image WordPress Plugin' ) );
 		$this->__attachment_id = self::createAttachmentImage();
+
+
 	}
 
 	private function createAttachmentImage()
 	{
-		$filename = 'wp-content/uploads/2013/03/dfi.jpg';
+		$filename = 'wp-content/uploads/2015/03/dfi.jpg';
 		$filetype = wp_check_filetype( basename( $filename ), null );
 		$wp_upload_dir = wp_upload_dir();
 
@@ -38,7 +40,12 @@ class DynamicFeaturedImageTest extends WP_UnitTestCase {
 			'post_status'    => 'inherit'
 		);
 
-		return wp_insert_attachment( $attachment, $filename, $this->__post_id );
+		$attachment_id = wp_insert_attachment( $attachment, $filename, $this->__post_id );
+
+		//add attachment image alt
+		add_post_meta($attachment_id, '_wp_attachment_image_alt', 'Dynamic Featured Image');
+
+		return $attachment_id;
 	}
 
 	public function testConstructorAddsRequiredActionsAndFilters() 
@@ -90,6 +97,67 @@ class DynamicFeaturedImageTest extends WP_UnitTestCase {
 			->will( $this->returnValue( $this->__attachment_id ) );
 
 		$this->assertEquals( $mock->get_image_thumb( $fullSizeImage[0], 'thumbnail' ), $thumbImage[0] );
+	}
+
+	public function testGetImageId()
+	{
+		$fullSizeImage = wp_get_attachment_image_src( $this->__attachment_id, 'full');
+
+		$mock = $this->__mockBuilder
+					->setMethods( array('_get_attachment_id') )
+					->getMock();
+
+		$mock->expects( $this->once() )
+			->method('_get_attachment_id')
+			->with( $fullSizeImage[0] )
+			->will( $this->returnValue( $this->__attachment_id ) );
+
+		$this->assertEquals( $mock->get_image_id($fullSizeImage[0]), $this->__attachment_id );
+	}
+
+	public function testGetImageTitle()
+	{
+		$post = get_post($this->__attachment_id);
+		$fullSizeImage = wp_get_attachment_image_src( $this->__attachment_id, 'full');
+
+		$this->assertEquals( $this->_dfi->get_image_title($fullSizeImage[0]), $post->post_title);
+	}
+
+	public function testGetImageTitleById()
+	{
+		$post = get_post($this->__attachment_id);
+
+		$this->assertEquals( $this->_dfi->get_image_title_by_id($this->__attachment_id), $post->post_title);
+	}
+
+	public function testGetImageCaption()
+	{
+		$post = get_post($this->__attachment_id);
+		$fullSizeImage = wp_get_attachment_image_src( $this->__attachment_id, 'full');
+
+		$this->assertEquals( $this->_dfi->get_image_caption($fullSizeImage[0]), $post->post_excerpt);
+	}
+
+	public function testGetImageCaptionById()
+	{
+		$post = get_post($this->__attachment_id);
+
+		$this->assertEquals( $this->_dfi->get_image_caption_by_id($this->__attachment_id), $post->post_excerpt);
+	}
+
+	public function testGetImageDescription()
+	{
+		$post = get_post($this->__attachment_id);
+		$fullSizeImage = wp_get_attachment_image_src( $this->__attachment_id, 'full');
+
+		$this->assertEquals( $this->_dfi->get_image_description($fullSizeImage[0]), $post->post_content);
+	}
+
+	public function testGetImageDescriptionById()
+	{
+		$post = get_post($this->__attachment_id);
+
+		$this->assertEquals( $this->_dfi->get_image_description_by_id($this->__attachment_id), $post->post_content);
 	}
 
 	public function tearDown() 

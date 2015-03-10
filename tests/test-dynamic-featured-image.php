@@ -22,8 +22,6 @@ class DynamicFeaturedImageTest extends WP_UnitTestCase {
 
 		$this->__post_id = $this->factory->post->create( array( 'post_title' => 'Dynamic Featured Image WordPress Plugin' ) );
 		$this->__attachment_id = self::createAttachmentImage();
-
-
 	}
 
 	private function createAttachmentImage()
@@ -44,6 +42,7 @@ class DynamicFeaturedImageTest extends WP_UnitTestCase {
 
 		//add attachment image alt
 		add_post_meta($attachment_id, '_wp_attachment_image_alt', 'Dynamic Featured Image');
+		add_post_meta($attachment_id, '_dfi_link_to_image', 'http://ankitpokhrel.com.np');
 
 		return $attachment_id;
 	}
@@ -145,6 +144,21 @@ class DynamicFeaturedImageTest extends WP_UnitTestCase {
 		$this->assertEquals( $this->_dfi->get_image_caption_by_id($this->__attachment_id), $post->post_excerpt);
 	}
 
+	public function testGetImageAlt()
+	{
+		$fullSizeImage = wp_get_attachment_image_src( $this->__attachment_id, 'full');
+		$alt = get_post_meta($this->__attachment_id, '_wp_attachment_image_alt', true);
+
+		$this->assertEquals( $this->_dfi->get_image_alt($fullSizeImage[0]), $alt );
+	}
+
+	public function testGetImageAltById()
+	{
+		$alt = get_post_meta($this->__attachment_id, '_wp_attachment_image_alt', true);
+
+		$this->assertEquals( $this->_dfi->get_image_alt_by_id($this->__attachment_id), $alt );
+	}
+
 	public function testGetImageDescription()
 	{
 		$post = get_post($this->__attachment_id);
@@ -158,6 +172,11 @@ class DynamicFeaturedImageTest extends WP_UnitTestCase {
 		$post = get_post($this->__attachment_id);
 
 		$this->assertEquals( $this->_dfi->get_image_description_by_id($this->__attachment_id), $post->post_content);
+	}
+
+	public function testGetLinkToImage()
+	{
+		$this->assertEquals( $this->_dfi->get_link_to_image($this->__attachment_id), 'http://ankitpokhrel.com.np');
 	}
 
 	public function tearDown() 

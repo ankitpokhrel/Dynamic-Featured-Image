@@ -59,6 +59,10 @@ class DynamicFeaturedImageTest extends WP_UnitTestCase {
 		return $attachment_id;
 	}
 
+	/**
+	 * @covers Dynamic_Featured_Image::__construct
+	 * @covers Dynamic_Featured_Image::load_plugin_textdomain
+	 */
 	public function testConstructorAddsRequiredActionsAndFilters() 
 	{
 		$this->assertEquals( 10, has_action( 'admin_enqueue_scripts', array( $this->_dfi, 'enqueue_admin_scripts' ) ) );
@@ -71,6 +75,9 @@ class DynamicFeaturedImageTest extends WP_UnitTestCase {
 		$this->assertEquals( 10, has_filter( 'attachment_fields_to_save', array( $this->_dfi, 'media_attachment_custom_fields_save' ) ) );
 	}
 
+	/**
+	 * @covers Dynamic_Featured_Image::enqueue_admin_scripts
+	 */
 	public function testEnqueueAdminScripts()
 	{
 		$this->_dfi->enqueue_admin_scripts();
@@ -80,6 +87,9 @@ class DynamicFeaturedImageTest extends WP_UnitTestCase {
 		$this->assertTrue( wp_style_is('dashicons') );
 	}
 
+	/**
+	 * @coversNothing
+	 */
 	public function testPluginProperties()
 	{
 		$this->assertTrue( $this->_pluginData['Name'] == 'Dynamic Featured Image' );
@@ -87,12 +97,29 @@ class DynamicFeaturedImageTest extends WP_UnitTestCase {
 		$this->assertTrue( $this->_pluginData['DomainPath'] == '/languages' );
 	}
 
+	/**
+	 * @covers Dynamic_Featured_Image::update_notice
+	 */
+	public function testUpdateNotice()
+	{
+		$expectedOutput = '<div style="color:red; padding:7px 0;">ATTENTION! Please read the <a href="https://github.com/ankitpokhrel/Dynamic-Featured-Image/wiki" target="_blank">DOCUMENTATION</a> properly before update.</div>';
+		
+		$this->expectOutputString($expectedOutput);		
+		$this->_dfi->update_notice();
+	}
+
+	/**
+	 * @covers Dynamic_Featured_Image::get_image_url
+	 */
 	public function testGetImageUrl()
 	{		
 		$fullSizeImage = wp_get_attachment_image_src( $this->__attachment_id, 'full' );
 		$this->assertEquals( $this->_dfi->get_image_url( $this->__attachment_id, 'full' ), $fullSizeImage[0] );
 	}
 
+	/**
+	 * @covers Dynamic_Featured_Image::get_image_thumb
+	 */
 	public function testGetImageThumb()
 	{		
 		$fullSizeImage = wp_get_attachment_image_src( $this->__attachment_id, 'full' );
@@ -110,6 +137,10 @@ class DynamicFeaturedImageTest extends WP_UnitTestCase {
 		$this->assertEquals( $mock->get_image_thumb( $fullSizeImage[0], 'thumbnail' ), $thumbImage[0] );
 	}
 
+	/**
+	 * @covers Dynamic_Featured_Image::get_image_id
+	 * @covers Dynamic_Featured_Image::_get_attachment_id
+	 */
 	public function testGetImageId()
 	{
 		$fullSizeImage = wp_get_attachment_image_src( $this->__attachment_id, 'full');
@@ -126,6 +157,10 @@ class DynamicFeaturedImageTest extends WP_UnitTestCase {
 		$this->assertEquals( $mock->get_image_id($fullSizeImage[0]), $this->__attachment_id );
 	}
 
+	/**
+	 * @covers Dynamic_Featured_Image::get_image_title
+	 * @covers Dynamic_Featured_Image::execute_query
+	 */
 	public function testGetImageTitle()
 	{
 		$post = get_post($this->__attachment_id);
@@ -134,6 +169,10 @@ class DynamicFeaturedImageTest extends WP_UnitTestCase {
 		$this->assertEquals( $this->_dfi->get_image_title($fullSizeImage[0]), $post->post_title );
 	}
 
+	/**
+	 * @covers Dynamic_Featured_Image::get_image_title_by_id
+	 * @covers Dynamic_Featured_Image::execute_query
+	 */
 	public function testGetImageTitleById()
 	{
 		$post = get_post($this->__attachment_id);
@@ -141,6 +180,10 @@ class DynamicFeaturedImageTest extends WP_UnitTestCase {
 		$this->assertEquals( $this->_dfi->get_image_title_by_id($this->__attachment_id), $post->post_title );
 	}
 
+	/**
+	 * @covers Dynamic_Featured_Image::get_image_caption
+	 * @covers Dynamic_Featured_Image::execute_query
+	 */
 	public function testGetImageCaption()
 	{
 		$post = get_post($this->__attachment_id);
@@ -149,6 +192,10 @@ class DynamicFeaturedImageTest extends WP_UnitTestCase {
 		$this->assertEquals( $this->_dfi->get_image_caption($fullSizeImage[0]), $post->post_excerpt );
 	}
 
+	/**
+	 * @covers Dynamic_Featured_Image::get_image_caption_by_id
+	 * @covers Dynamic_Featured_Image::execute_query
+	 */
 	public function testGetImageCaptionById()
 	{
 		$post = get_post($this->__attachment_id);
@@ -156,6 +203,9 @@ class DynamicFeaturedImageTest extends WP_UnitTestCase {
 		$this->assertEquals( $this->_dfi->get_image_caption_by_id($this->__attachment_id), $post->post_excerpt );
 	}
 
+	/**
+	 * @covers Dynamic_Featured_Image::get_image_alt
+	 */
 	public function testGetImageAlt()
 	{
 		$fullSizeImage = wp_get_attachment_image_src( $this->__attachment_id, 'full');
@@ -164,6 +214,9 @@ class DynamicFeaturedImageTest extends WP_UnitTestCase {
 		$this->assertEquals( $this->_dfi->get_image_alt($fullSizeImage[0]), $alt );
 	}
 
+	/**
+	 * @covers Dynamic_Featured_Image::get_image_alt_by_id
+	 */
 	public function testGetImageAltById()
 	{
 		$alt = get_post_meta($this->__attachment_id, '_wp_attachment_image_alt', true);
@@ -171,6 +224,10 @@ class DynamicFeaturedImageTest extends WP_UnitTestCase {
 		$this->assertEquals( $this->_dfi->get_image_alt_by_id($this->__attachment_id), $alt );
 	}
 
+	/**
+	 * @covers Dynamic_Featured_Image::get_image_description
+	 * @covers Dynamic_Featured_Image::execute_query
+	 */
 	public function testGetImageDescription()
 	{
 		$post = get_post($this->__attachment_id);
@@ -179,6 +236,10 @@ class DynamicFeaturedImageTest extends WP_UnitTestCase {
 		$this->assertEquals( $this->_dfi->get_image_description($fullSizeImage[0]), $post->post_content );
 	}
 
+	/**
+	 * @covers Dynamic_Featured_Image::get_image_description_by_id
+	 * @covers Dynamic_Featured_Image::execute_query
+	 */
 	public function testGetImageDescriptionById()
 	{
 		$post = get_post($this->__attachment_id);
@@ -186,11 +247,19 @@ class DynamicFeaturedImageTest extends WP_UnitTestCase {
 		$this->assertEquals( $this->_dfi->get_image_description_by_id($this->__attachment_id), $post->post_content );
 	}
 
+	/**
+	 * @covers Dynamic_Featured_Image::get_link_to_image
+	 */
 	public function testGetLinkToImage()
 	{
 		$this->assertEquals( $this->_dfi->get_link_to_image($this->__attachment_id), 'http://ankitpokhrel.com.np' );
 	}
 
+	/**
+	 * @covers Dynamic_Featured_Image::get_post_attachment_ids
+	 * @covers Dynamic_Featured_Image::get_image_id
+	 * @covers Dynamic_Featured_Image::_separate
+	 */
 	public function testGetPostAttachmentIds()
 	{
 		$expected = array($this->__attachment_id, null);
@@ -198,6 +267,10 @@ class DynamicFeaturedImageTest extends WP_UnitTestCase {
 		$this->assertEquals( $expected, $this->_dfi->get_post_attachment_ids($this->__post_id) );
 	}
 
+	/**
+	 * @covers Dynamic_Featured_Image::get_nth_featured_image
+	 * @covers Dynamic_Featured_Image::get_featured_images
+	 */
 	public function testGetNthFeaturedImage()
 	{
 		$featuredImage2 = array(
@@ -219,12 +292,22 @@ class DynamicFeaturedImageTest extends WP_UnitTestCase {
 		$this->assertNull( $this->_dfi->get_nth_featured_image(4, $this->__post_id) );
 	}
 
+	/**
+	 * @covers Dynamic_Featured_Image::is_attached
+	 * @covers Dynamic_Featured_Image::get_post_attachment_ids
+	 */
 	public function testIsAttached()
 	{
 		$this->assertTrue( $this->_dfi->is_attached($this->__attachment_id, $this->__post_id) );
 		$this->assertFalse( $this->_dfi->is_attached(null, $this->__post_id) );
 	}
 
+	/**
+	 * @covers Dynamic_Featured_Image::get_featured_images
+	 * @covers Dynamic_Featured_Image::_get_real_upload_path
+	 * @covers Dynamic_Featured_Image::get_image_id
+	 * @covers Dynamic_Featured_Image::_separate
+	 */
 	public function testGetFeaturedImages()
 	{
 		$expected = array(
@@ -245,6 +328,10 @@ class DynamicFeaturedImageTest extends WP_UnitTestCase {
 		$this->assertEquals( $expected, $actual );
 	}
 
+	/**
+	 * @covers Dynamic_Featured_Image::get_all_featured_images
+	 * @covers Dynamic_Featured_Image::get_featured_images
+	 */
 	public function testGetAllFeaturedImages()
 	{
 		$expected = array(

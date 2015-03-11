@@ -41,10 +41,10 @@ class DynamicFeaturedImageTest extends WP_UnitTestCase {
 		$attachment_id = wp_insert_attachment( $attachment, $filename, $this->__post_id );
 
 		//add attachment image alt
-		add_post_meta($attachment_id, '_wp_attachment_image_alt', 'Dynamic Featured Image');
+		add_post_meta( $attachment_id, '_wp_attachment_image_alt', 'Dynamic Featured Image' );
 
 		//add link to image
-		add_post_meta($attachment_id, '_dfi_link_to_image', 'http://ankitpokhrel.com.np');
+		add_post_meta( $attachment_id, '_dfi_link_to_image', 'http://ankitpokhrel.com.np' );
 
 		//insert featured images
 		$dfiFeatured = array(
@@ -86,14 +86,14 @@ class DynamicFeaturedImageTest extends WP_UnitTestCase {
 
 	public function testGetImageUrl()
 	{		
-		$fullSizeImage = wp_get_attachment_image_src( $this->__attachment_id, 'full');
+		$fullSizeImage = wp_get_attachment_image_src( $this->__attachment_id, 'full' );
 		$this->assertEquals( $this->_dfi->get_image_url( $this->__attachment_id, 'full' ), $fullSizeImage[0] );
 	}
 
 	public function testGetImageThumb()
 	{		
-		$fullSizeImage = wp_get_attachment_image_src( $this->__attachment_id, 'full');
-		$thumbImage = wp_get_attachment_image_src( $this->__attachment_id, 'thumbnail');
+		$fullSizeImage = wp_get_attachment_image_src( $this->__attachment_id, 'full' );
+		$thumbImage = wp_get_attachment_image_src( $this->__attachment_id, 'thumbnail' );
 
 		$mock = $this->__mockBuilder
 					->setMethods( array('get_image_id') )
@@ -126,16 +126,16 @@ class DynamicFeaturedImageTest extends WP_UnitTestCase {
 	public function testGetImageTitle()
 	{
 		$post = get_post($this->__attachment_id);
-		$fullSizeImage = wp_get_attachment_image_src( $this->__attachment_id, 'full');
+		$fullSizeImage = wp_get_attachment_image_src( $this->__attachment_id, 'full' );
 
-		$this->assertEquals( $this->_dfi->get_image_title($fullSizeImage[0]), $post->post_title);
+		$this->assertEquals( $this->_dfi->get_image_title($fullSizeImage[0]), $post->post_title );
 	}
 
 	public function testGetImageTitleById()
 	{
 		$post = get_post($this->__attachment_id);
 
-		$this->assertEquals( $this->_dfi->get_image_title_by_id($this->__attachment_id), $post->post_title);
+		$this->assertEquals( $this->_dfi->get_image_title_by_id($this->__attachment_id), $post->post_title );
 	}
 
 	public function testGetImageCaption()
@@ -143,14 +143,14 @@ class DynamicFeaturedImageTest extends WP_UnitTestCase {
 		$post = get_post($this->__attachment_id);
 		$fullSizeImage = wp_get_attachment_image_src( $this->__attachment_id, 'full');
 
-		$this->assertEquals( $this->_dfi->get_image_caption($fullSizeImage[0]), $post->post_excerpt);
+		$this->assertEquals( $this->_dfi->get_image_caption($fullSizeImage[0]), $post->post_excerpt );
 	}
 
 	public function testGetImageCaptionById()
 	{
 		$post = get_post($this->__attachment_id);
 
-		$this->assertEquals( $this->_dfi->get_image_caption_by_id($this->__attachment_id), $post->post_excerpt);
+		$this->assertEquals( $this->_dfi->get_image_caption_by_id($this->__attachment_id), $post->post_excerpt );
 	}
 
 	public function testGetImageAlt()
@@ -173,19 +173,19 @@ class DynamicFeaturedImageTest extends WP_UnitTestCase {
 		$post = get_post($this->__attachment_id);
 		$fullSizeImage = wp_get_attachment_image_src( $this->__attachment_id, 'full');
 
-		$this->assertEquals( $this->_dfi->get_image_description($fullSizeImage[0]), $post->post_content);
+		$this->assertEquals( $this->_dfi->get_image_description($fullSizeImage[0]), $post->post_content );
 	}
 
 	public function testGetImageDescriptionById()
 	{
 		$post = get_post($this->__attachment_id);
 
-		$this->assertEquals( $this->_dfi->get_image_description_by_id($this->__attachment_id), $post->post_content);
+		$this->assertEquals( $this->_dfi->get_image_description_by_id($this->__attachment_id), $post->post_content );
 	}
 
 	public function testGetLinkToImage()
 	{
-		$this->assertEquals( $this->_dfi->get_link_to_image($this->__attachment_id), 'http://ankitpokhrel.com.np');
+		$this->assertEquals( $this->_dfi->get_link_to_image($this->__attachment_id), 'http://ankitpokhrel.com.np' );
 	}
 
 	public function testGetFeaturedImages()
@@ -201,10 +201,10 @@ class DynamicFeaturedImageTest extends WP_UnitTestCase {
 							'full' => "http://example.org/wp-content/uploads/2015/03/dfis.jpg",
 							'attachment_id' => null
 						)
-  				);
+				);
 
 		$actual = $this->_dfi->get_featured_images( $this->__post_id );
-		
+
 		$this->assertEquals( $expected, $actual );
 	}
 

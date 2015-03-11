@@ -42,7 +42,16 @@ class DynamicFeaturedImageTest extends WP_UnitTestCase {
 
 		//add attachment image alt
 		add_post_meta($attachment_id, '_wp_attachment_image_alt', 'Dynamic Featured Image');
+
+		//add link to image
 		add_post_meta($attachment_id, '_dfi_link_to_image', 'http://ankitpokhrel.com.np');
+
+		//insert featured images
+		$dfiFeatured = array(
+							'/2015/03/dfi-150x150.jpg,/2015/03/dfi.jpg',
+							'/2015/03/dfis-150x150.jpg,/2015/03/dfis.jpg'
+						);
+		add_post_meta( $this->__post_id, 'dfiFeatured', $dfiFeatured );
 
 		return $attachment_id;
 	}
@@ -177,6 +186,26 @@ class DynamicFeaturedImageTest extends WP_UnitTestCase {
 	public function testGetLinkToImage()
 	{
 		$this->assertEquals( $this->_dfi->get_link_to_image($this->__attachment_id), 'http://ankitpokhrel.com.np');
+	}
+
+	public function testGetFeaturedImages()
+	{
+		$expected = array(
+						array(
+							'thumb' => "http://example.org/wp-content/uploads/2015/03/dfi-150x150.jpg",
+							'full' => "http://example.org/wp-content/uploads/2015/03/dfi.jpg",
+							'attachment_id' => 34
+						),
+						array(
+							'thumb' => "http://example.org/wp-content/uploads/2015/03/dfis-150x150.jpg",
+							'full' => "http://example.org/wp-content/uploads/2015/03/dfis.jpg",
+							'attachment_id' => null
+						)
+  				);
+
+		$actual = $this->_dfi->get_featured_images( $this->__post_id );
+		
+		$this->assertEquals( $expected, $actual );
 	}
 
 	public function tearDown() 

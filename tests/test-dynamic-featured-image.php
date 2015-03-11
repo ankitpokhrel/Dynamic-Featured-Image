@@ -51,8 +51,8 @@ class DynamicFeaturedImageTest extends WP_UnitTestCase {
 
 		//insert featured images
 		$dfiFeatured = array(
-							'/2015/03/dfi-150x150.jpg,/2015/03/dfi.jpg',
-							'/2015/03/dfis-150x150.jpg,/2015/03/dfis.jpg'
+						  '/2015/03/dfi-150x150.jpg,/2015/03/dfi.jpg',
+						  '/2015/03/dfis-150x150.jpg,/2015/03/dfis.jpg'
 						);
 		add_post_meta( $this->__post_id, 'dfiFeatured', $dfiFeatured );
 
@@ -201,17 +201,17 @@ class DynamicFeaturedImageTest extends WP_UnitTestCase {
 	public function testGetNthFeaturedImage()
 	{
 		$featuredImage2 = array(
-							'thumb' => "http://example.org/wp-content/uploads/2015/03/dfi-150x150.jpg",
-							'full' => "http://example.org/wp-content/uploads/2015/03/dfi.jpg",
-							'attachment_id' => $this->__attachment_id
+						  'thumb' => "http://example.org/wp-content/uploads/2015/03/dfi-150x150.jpg",
+						  'full' => "http://example.org/wp-content/uploads/2015/03/dfi.jpg",
+						  'attachment_id' => $this->__attachment_id
 						);
 
 		$this->assertEquals( $featuredImage2, $this->_dfi->get_nth_featured_image(2, $this->__post_id) );
 
 		$featuredImage3 = array(
-							'thumb' => "http://example.org/wp-content/uploads/2015/03/dfis-150x150.jpg",
-							'full' => "http://example.org/wp-content/uploads/2015/03/dfis.jpg",
-							'attachment_id' => null
+						  'thumb' => "http://example.org/wp-content/uploads/2015/03/dfis-150x150.jpg",
+						  'full' => "http://example.org/wp-content/uploads/2015/03/dfis.jpg",
+						  'attachment_id' => null
 						);
 
 		$this->assertEquals( $featuredImage3, $this->_dfi->get_nth_featured_image(3, $this->__post_id) );
@@ -228,17 +228,17 @@ class DynamicFeaturedImageTest extends WP_UnitTestCase {
 	public function testGetFeaturedImages()
 	{
 		$expected = array(
-						array(
-							'thumb' => "http://example.org/wp-content/uploads/2015/03/dfi-150x150.jpg",
-							'full' => "http://example.org/wp-content/uploads/2015/03/dfi.jpg",
-							'attachment_id' => $this->__attachment_id
-						),
-						array(
-							'thumb' => "http://example.org/wp-content/uploads/2015/03/dfis-150x150.jpg",
-							'full' => "http://example.org/wp-content/uploads/2015/03/dfis.jpg",
-							'attachment_id' => null
-						)
-				);
+					  array(
+						'thumb' => "http://example.org/wp-content/uploads/2015/03/dfi-150x150.jpg",
+						'full' => "http://example.org/wp-content/uploads/2015/03/dfi.jpg",
+						'attachment_id' => $this->__attachment_id
+					  ),
+					  array(
+						'thumb' => "http://example.org/wp-content/uploads/2015/03/dfis-150x150.jpg",
+						'full' => "http://example.org/wp-content/uploads/2015/03/dfis.jpg",
+						'attachment_id' => null
+					  )
+					);
 
 		$actual = $this->_dfi->get_featured_images( $this->__post_id );
 
@@ -248,22 +248,22 @@ class DynamicFeaturedImageTest extends WP_UnitTestCase {
 	public function testGetAllFeaturedImages()
 	{
 		$expected = array(
-						array(
-							'thumb' => "http://example.org/wp-content/uploads/2015/03/dfi.jpg",
-							'full' => "http://example.org/wp-content/uploads/2015/03/dfi.jpg",
-							'attachment_id' => $this->__attachment_id
-						),
-						array(
-							'thumb' => "http://example.org/wp-content/uploads/2015/03/dfi-150x150.jpg",
-							'full' => "http://example.org/wp-content/uploads/2015/03/dfi.jpg",
-							'attachment_id' => $this->__attachment_id
-						),
-						array(
-							'thumb' => "http://example.org/wp-content/uploads/2015/03/dfis-150x150.jpg",
-							'full' => "http://example.org/wp-content/uploads/2015/03/dfis.jpg",
-							'attachment_id' => null
-						)
-				);
+					  array(
+						'thumb' => "http://example.org/wp-content/uploads/2015/03/dfi.jpg",
+						'full' => "http://example.org/wp-content/uploads/2015/03/dfi.jpg",
+						'attachment_id' => $this->__attachment_id
+					  ),
+					  array(
+						'thumb' => "http://example.org/wp-content/uploads/2015/03/dfi-150x150.jpg",
+						'full' => "http://example.org/wp-content/uploads/2015/03/dfi.jpg",
+						'attachment_id' => $this->__attachment_id
+					  ),
+					  array(
+						'thumb' => "http://example.org/wp-content/uploads/2015/03/dfis-150x150.jpg",
+						'full' => "http://example.org/wp-content/uploads/2015/03/dfis.jpg",
+						'attachment_id' => null
+					  )
+					);
 
 		$actual = $this->_dfi->get_all_featured_images( $this->__post_id );
 

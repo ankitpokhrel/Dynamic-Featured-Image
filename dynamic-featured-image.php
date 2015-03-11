@@ -825,6 +825,10 @@ class Dynamic_Featured_Image
 	 */
 	public function is_attached($attachment_id, $post_id)
 	{
+		if( empty($attachment_id) ) {
+			return false;
+		}
+		
 		$attachment_ids = $this->get_post_attachment_ids( $post_id );
 
 		return in_array( $attachment_id, $attachment_ids ) ? true : false;

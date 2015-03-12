@@ -178,16 +178,7 @@ class DynamicFeaturedImageTest extends WP_UnitTestCase {
 	{
 		$fullSizeImage = wp_get_attachment_image_src( $this->__attachment_id, 'full');
 
-		$mock = $this->__mockBuilder
-					->setMethods( array('_get_attachment_id') )
-					->getMock();
-
-		$mock->expects( $this->once() )
-			->method('_get_attachment_id')
-			->with( $fullSizeImage[0] )
-			->will( $this->returnValue( $this->__attachment_id ) );
-
-		$this->assertEquals( $mock->get_image_id($fullSizeImage[0]), $this->__attachment_id );
+		$this->assertEquals( $this->_dfi->get_image_id($fullSizeImage[0]), $this->__attachment_id );
 	}
 
 	/**

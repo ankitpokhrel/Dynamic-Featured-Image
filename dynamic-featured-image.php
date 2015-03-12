@@ -280,13 +280,26 @@ class Dynamic_Featured_Image
 	}
 
 	/**
+	 * Create a nonce field
+	 *
+	 * @since  3.5.0
+	 *
+	 * @see  wp_nonce_field()
+	 * @see  plugin_basename()
+	 * 
+	 * @param  string $key Nonce key
+	 * @return string
+	 */
+	protected function _nonce_field( $key )
+	{
+		return wp_nonce_field(plugin_basename(__FILE__), $key, true, false);
+	}
+
+	/**
 	 * Featured meta box as seen in the admin
 	 *
 	 * @since 1.0.0
 	 * @access public
-	 *
-	 * @see  wp_nonce_field()
-	 * @see  plugin_basename()
 	 *
 	 * @param  Object $post global post object
 	 * @param  Array $featured array containing featured image count
@@ -323,7 +336,7 @@ class Dynamic_Featured_Image
 		}
 
 		//Add a nonce field
-		wp_nonce_field(plugin_basename(__FILE__), 'dfi_fimageplug-' . $featuredId);
+		echo $this->_nonce_field('dfi_fimageplug-' . $featuredId);
 		echo self::_get_featured_box($featuredImgTrimmed, $featuredImg, $featuredId, $thumbnail);
 
 	} // END featured_meta_box()
@@ -362,9 +375,6 @@ class Dynamic_Featured_Image
 	 * @since 1.0.0
 	 * @access public
 	 *
-	 * @see  wp_nonce_field()
-	 * @see  plugin_basename()
-	 *
 	 * @return Void
 	 */
 	public function ajax_callback()
@@ -375,7 +385,7 @@ class Dynamic_Featured_Image
 			return;
 		}
 
-		wp_nonce_field( plugin_basename(__FILE__), 'dfi_fimageplug-' . $featuredId );
+		echo $this->_nonce_field( 'dfi_fimageplug-' . $featuredId );
 		?>
 				<a href="javascript:void(0)" class='dfiFeaturedImage' title="<?php echo __('Set Featured Image', $this->_textDomain) ?>"><span class="dashicons dashicons-camera"></span></a><br/>
 				 <img src="" class='dfiImg dfiImgEmpty'/>

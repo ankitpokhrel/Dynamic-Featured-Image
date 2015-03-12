@@ -182,6 +182,26 @@ class DynamicFeaturedImageTest extends WP_UnitTestCase {
 	}
 
 	/**
+	 * @covers Dynamic_Featured_Image::get_image_id
+	 */
+	public function testGetImageIdWithPostIdFromPostMetaTable()
+	{
+		$image = '2015/03/dfi.jpg';
+
+		$mock = $this->__mockBuilder
+					->setMethods( array('_get_attachment_id') )
+					->getMock();
+
+		$mock->expects( $this->once() )
+			->method('_get_attachment_id')
+			->will( $this->returnValue( null ) );
+
+		add_post_meta( $this->__post_id, '_wp_attached_file', $image );
+
+		$this->assertEquals( $mock->get_image_id($image), $this->__post_id );
+	}
+
+	/**
 	 * @covers Dynamic_Featured_Image::get_image_title
 	 * @covers Dynamic_Featured_Image::execute_query
 	 */

@@ -192,13 +192,14 @@ class DynamicFeaturedImageTest extends WP_UnitTestCase {
 					->setMethods( array('_get_attachment_id') )
 					->getMock();
 
-		$mock->expects( $this->once() )
+		$mock->expects( $this->exactly(2) )
 			->method('_get_attachment_id')
 			->will( $this->returnValue( null ) );
 
 		add_post_meta( $this->__post_id, '_wp_attached_file', $image );
 
 		$this->assertEquals( $mock->get_image_id($image), $this->__post_id );
+		$this->assertEquals( $mock->get_image_id('2015/03/dfis.jpg'), null );
 	}
 
 	/**

@@ -203,7 +203,7 @@ class Dynamic_Featured_Image
 	 * @param  Integer $number Integer to be translated
 	 * @return String         Translated number
 	 */
-	private function _get_number_translation($number)
+	protected function _get_number_translation($number)
 	{
 		if ($number <= 9) {
 			return __($number, $this->_textDomain);
@@ -362,7 +362,7 @@ class Dynamic_Featured_Image
 		return "<a href='javascript:void(0)' class='dfiFeaturedImage {$hasFeaturedImage}' title='". __('Set Featured Image', $this->_textDomain) . "' data-post-id='" . get_the_ID() . "'><span class='dashicons dashicons-camera'></span></a><br/>
 			<img src='" . $thumbnail . "' class='dfiImg {$dfiEmpty}'/>
 			<div class='dfiLinks'>
-				<a href='javascript:void(0)' data-id='{$featuredId}' data-id-local='" . self::_get_number_translation( ($featuredId + 1) ) . "' class='dfiAddNew dashicons dashicons-plus' title='" . __('Add New', $this->_textDomain) ."'></a>
+				<a href='javascript:void(0)' data-id='{$featuredId}' data-id-local='" . $this->_get_number_translation( ($featuredId + 1) ) . "' class='dfiAddNew dashicons dashicons-plus' title='" . __('Add New', $this->_textDomain) ."'></a>
 				<a href='javascript:void(0)' class='dfiRemove dashicons dashicons-minus' title='" . __('Remove', $this->_textDomain) . "'></a>
 			</div>
 			<div class='dfiClearFloat'></div>

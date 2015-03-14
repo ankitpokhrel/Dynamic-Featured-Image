@@ -111,6 +111,7 @@ class DynamicFeaturedImageTest extends WP_UnitTestCase {
 	/**
 	 * @covers Dynamic_Featured_Image::featured_meta_box
 	 * @covers Dynamic_Featured_Image::get_image_thumb
+	 * @covers Dynamic_Featured_Image::_get_number_translation
 	 * @covers Dynamic_Featured_Image::_get_featured_box
 	 */
 	public function testFeaturedMetaBox()
@@ -138,7 +139,6 @@ class DynamicFeaturedImageTest extends WP_UnitTestCase {
 
 		$this->expectOutputString($expectedOutput);
 		$mock->featured_meta_box($post, $featured);
-
 	}
 
 	/**
@@ -176,7 +176,7 @@ class DynamicFeaturedImageTest extends WP_UnitTestCase {
 	 */
 	public function testGetImageId()
 	{
-		$fullSizeImage = wp_get_attachment_image_src( $this->__attachment_id, 'full');
+		$fullSizeImage = wp_get_attachment_image_src( $this->__attachment_id, 'full' );
 
 		$this->assertEquals( $this->_dfi->get_image_id($fullSizeImage[0]), $this->__attachment_id );
 	}

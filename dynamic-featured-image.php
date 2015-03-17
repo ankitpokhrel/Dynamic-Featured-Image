@@ -81,9 +81,8 @@ class Dynamic_Featured_Image
 	{
 		$this->_textDomain = 'dynamic-featured-image';
 
-		if ( is_admin() ) {
-			add_action( 'in_plugin_update_message-' . plugin_basename(__FILE__), array( $this, 'update_notice' ) );
-		}
+		//plugin update warning
+		add_action( 'in_plugin_update_message-' . plugin_basename(__FILE__), array( $this, 'update_notice' ) );
 
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_admin_scripts' ) );
 		add_action( 'add_meta_boxes',    array( $this, 'initialize_featured_box' ) );

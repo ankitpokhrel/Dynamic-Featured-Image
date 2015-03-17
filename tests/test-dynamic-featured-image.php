@@ -604,6 +604,27 @@ class DynamicFeaturedImageTest extends WP_UnitTestCase {
 		$this->assertEquals( $attachment['dfi-link-to-image'], get_post_meta($this->__post_id, '_dfi_link_to_image', true) );
 	}
 
+	/**
+	 * @covers Dynamic_Featured_Image::save_meta
+	 */
+	public function testSaveMetaWhenDoingAutosave()
+	{
+		define('DOING_AUTOSAVE', true);
+
+		$this->assertNull( $this->_dfi->save_meta( $this->__post_id ) );
+	}
+
+	/**
+	 * @covers Dynamic_Featured_Image::save_meta
+	 */
+	public function testSaveMetaWhenInvalidNonce()
+	{
+		$_POST['dfi_fimageplug-2'] = 'c7ad4cc095';
+
+		$this->assertNull( $this->_dfi->save_meta( $this->__post_id ) );
+	}
+
+
 	public function tearDown() 
 	{
 		unset($this->__mockBuilder);

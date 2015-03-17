@@ -142,6 +142,39 @@ class DynamicFeaturedImageTest extends WP_UnitTestCase {
 	}
 
 	/**
+	 * @covers Dynamic_Featured_Image::featured_meta_box
+	 * @covers Dynamic_Featured_Image::get_image_thumb
+	 * @covers Dynamic_Featured_Image::_get_number_translation
+	 * @covers Dynamic_Featured_Image::_get_featured_box
+	 */
+	public function testFeaturedMetaBoxWhenFeaturedIdIsGreaterThanNine()
+	{
+		$featured['args'] = array('/2015/03/dfi-150x150.jpg', 13);
+		$post = get_post( $this->__post_id );
+
+		$mock = $this->__mockBuilder
+					->setMethods( array('_nonce_field') )
+					->getMock();
+
+		$mock->expects( $this->once() )
+			->method('_nonce_field')
+			->with( 'dfi_fimageplug-12' )
+			->will( $this->returnValue( "<input type='hidden' id='dfi_fimageplug-12' name='dfi_fimageplug-12' value='c7ad4cc095' /><input type='hidden' name='_wp_http_referer' value='' />" ) );
+
+		$expectedOutput = "<input type='hidden' id='dfi_fimageplug-12' name='dfi_fimageplug-12' value='c7ad4cc095' /><input type='hidden' name='_wp_http_referer' value='' /><a href='javascript:void(0)' class='dfiFeaturedImage hasFeaturedImage' title='Set Featured Image' data-post-id=''><span class='dashicons dashicons-camera'></span></a><br/>
+			<img src='' class='dfiImg '/>
+			<div class='dfiLinks'>
+				<a href='javascript:void(0)' data-id='12' data-id-local='13' class='dfiAddNew dashicons dashicons-plus' title='Add New'></a>
+				<a href='javascript:void(0)' class='dfiRemove dashicons dashicons-minus' title='Remove'></a>
+			</div>
+			<div class='dfiClearFloat'></div>
+			<input type='hidden' name='dfiFeatured[]' value='/2015/03/dfi-150x150.jpg'  class='dfiImageHolder' />";
+
+		$this->expectOutputString($expectedOutput);
+		$mock->featured_meta_box($post, $featured);
+	}
+
+	/**
 	 * @covers Dynamic_Featured_Image::get_image_url
 	 */
 	public function testGetImageUrl()

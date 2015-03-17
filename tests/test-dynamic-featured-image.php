@@ -346,6 +346,32 @@ class DynamicFeaturedImageTest extends WP_UnitTestCase {
 
 		//doesn't exist
 		$this->assertNull( $this->_dfi->get_nth_featured_image(5, $this->__post_id) );
+		
+	}
+
+	/**
+	 * @covers Dynamic_Featured_Image::get_nth_featured_image
+	 * @covers Dynamic_Featured_Image::get_featured_images
+	 */
+	public function testGetNthFeaturedImageWhenPostIdIsNull()
+	{
+		$expected = array(
+				    'thumb' => "http://example.org/wp-content/uploads/2015/03/dfi-150x150.jpg",
+				    'full' => "http://example.org/wp-content/uploads/2015/03/dfi.jpg",
+				    'attachment_id' => $this->__attachment_id
+				  );
+
+		$actual = null;
+
+		query_posts('post_type=post');
+		if( have_posts() ) {
+			while(have_posts()) {
+				the_post();
+				$actual = $this->_dfi->get_nth_featured_image(2);
+			}
+		}
+
+		$this->assertEquals( $expected, $actual );
 	}
 
 	/**
@@ -390,6 +416,45 @@ class DynamicFeaturedImageTest extends WP_UnitTestCase {
 	}
 
 	/**
+	 * @covers Dynamic_Featured_Image::get_featured_images
+	 * @covers Dynamic_Featured_Image::_get_real_upload_path
+	 * @covers Dynamic_Featured_Image::get_image_id
+	 * @covers Dynamic_Featured_Image::_separate
+	 */
+	public function testGetFeaturedImagesWhenPostIdIsNull()
+	{
+		$expected = array(
+				array(
+				  'thumb' => "http://example.org/wp-content/uploads/2015/03/dfi-150x150.jpg",
+				  'full' => "http://example.org/wp-content/uploads/2015/03/dfi.jpg",
+				  'attachment_id' => $this->__attachment_id
+				),
+				array(
+				  'thumb' => "http://example.org/wp-content/uploads/2015/03/dfis-150x150.jpg",
+				  'full' => "http://example.org/wp-content/uploads/2015/03/dfis.jpg",
+				  'attachment_id' => null
+				),
+				array(
+				  'thumb' => "http://example.org/wp-content/uploads/2015/03/dfi-pro-150x150.jpg",
+				  'full' => "http://example.org/wp-content/uploads/2015/03/dfi-pro.jpg",
+				  'attachment_id' => null
+				)
+			    );
+
+		$actual = null;
+
+		query_posts('post_type=post');
+		if( have_posts() ) {
+			while( have_posts() ) {
+				the_post();
+				$actual = $this->_dfi->get_featured_images();
+			}
+		}
+
+		$this->assertEquals( $expected, $actual );
+	}
+
+	/**
 	 * @covers Dynamic_Featured_Image::get_all_featured_images
 	 * @covers Dynamic_Featured_Image::get_featured_images
 	 */
@@ -421,6 +486,89 @@ class DynamicFeaturedImageTest extends WP_UnitTestCase {
 		$actual = $this->_dfi->get_all_featured_images( $this->__post_id );
 
 		$this->assertEquals( $expected, $actual );
+	}
+
+	/**
+	 * @covers Dynamic_Featured_Image::get_all_featured_images
+	 * @covers Dynamic_Featured_Image::get_featured_images
+	 */
+	public function testGetAllFeaturedImagesWhenPostIdIsNull()
+	{
+		$expected = array(
+				array(
+				  'thumb' => "http://example.org/wp-content/uploads/2015/03/dfi.jpg",
+				  'full' => "http://example.org/wp-content/uploads/2015/03/dfi.jpg",
+				  'attachment_id' => $this->__attachment_id
+				),
+				array(
+				  'thumb' => "http://example.org/wp-content/uploads/2015/03/dfi-150x150.jpg",
+				  'full' => "http://example.org/wp-content/uploads/2015/03/dfi.jpg",
+				  'attachment_id' => $this->__attachment_id
+				),
+				array(
+				  'thumb' => "http://example.org/wp-content/uploads/2015/03/dfis-150x150.jpg",
+				  'full' => "http://example.org/wp-content/uploads/2015/03/dfis.jpg",
+				  'attachment_id' => null
+				),
+				array(
+				  'thumb' => "http://example.org/wp-content/uploads/2015/03/dfi-pro-150x150.jpg",
+				  'full' => "http://example.org/wp-content/uploads/2015/03/dfi-pro.jpg",
+				  'attachment_id' => null
+				)
+			    );
+
+		$actual = null;
+
+		query_posts('post_type=post');
+		if( have_posts() ) {
+			while( have_posts() ) {
+				the_post();
+				$actual = $this->_dfi->get_all_featured_images();
+			}
+		}
+
+		$this->assertEquals( $expected, $actual );
+	}
+
+	/**
+	 * @covers Dynamic_Featured_Image::add_metabox_classes
+	 */
+	public function testAddMetaBoxClasses()
+	{
+		$classes[] = 'metabox';
+		$expected = array('metabox', 'featured-meta-box');
+		$actual = $this->_dfi->add_metabox_classes( $classes );
+
+		$this->assertEquals( $expected, $actual );
+	}
+
+	/**
+	 * @covers Dynamic_Featured_Image::media_attachment_custom_fields
+	 */
+	public function testMediaAttachmentCustomFields()
+	{
+		$post = get_post( $this->__post_id );
+		$formFields = $this->_dfi->media_attachment_custom_fields( array(), $post );
+
+		$this->assertArrayHasKey( 'dfi-link-to-image', $formFields );
+		$this->assertArrayHasKey( 'label', $formFields['dfi-link-to-image'] );
+		$this->assertArrayHasKey( 'input', $formFields['dfi-link-to-image'] );
+		$this->assertArrayHasKey( 'value', $formFields['dfi-link-to-image'] );
+
+		$this->assertEquals( $formFields['dfi-link-to-image']['input'], 'text' );
+	}
+
+	/**
+	 * @covers Dynamic_Featured_Image::media_attachment_custom_fields_save
+	 */
+	public function testMediaAttachmentCustomFieldsSave()
+	{
+		$post['ID'] = $this->__post_id;
+		$attachment['dfi-link-to-image'] = 'http://ankitpokhrel.com.np';
+
+		$this->_dfi->media_attachment_custom_fields_save( $post, $attachment );
+
+		$this->assertEquals( $attachment['dfi-link-to-image'], get_post_meta($this->__post_id, '_dfi_link_to_image', true) );
 	}
 
 	public function tearDown() 

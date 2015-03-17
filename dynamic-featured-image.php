@@ -877,8 +877,8 @@ class Dynamic_Featured_Image
 
 				try {
 
-					$retImages[$count]['thumb'] = self::_get_real_upload_path( $dfiImageTrimmed );
-					$retImages[$count]['full'] = self::_get_real_upload_path( $dfiImageFull );					
+					$retImages[$count]['thumb'] = $this->_get_real_upload_path( $dfiImageTrimmed );
+					$retImages[$count]['full'] = $this->_get_real_upload_path( $dfiImageFull );					
 					$retImages[$count]['attachment_id'] = $this->get_image_id( $retImages[$count]['full'] );
 
 				} catch (Exception $e) { /* Ignore the exception and continue with other featured images */ }

@@ -602,6 +602,39 @@ class DynamicFeaturedImageTest extends WP_UnitTestCase {
 		$this->_dfi->media_attachment_custom_fields_save( $post, $attachment );
 
 		$this->assertEquals( $attachment['dfi-link-to-image'], get_post_meta($this->__post_id, '_dfi_link_to_image', true) );
+	}	
+
+	/**
+	 * @covers Dynamic_Featured_Image::save_meta
+	 * @covers Dynamic_Featured_Image::get_featured_images
+	 */
+	public function testSaveMeta()
+	{
+		$mock = $this->__mockBuilder
+					->setMethods( array('_verify_nonces') )
+					->getMock();
+
+		$mock->expects( $this->once() )
+			->method('_verify_nonces')
+			->will( $this->returnValue( true ) );
+
+		$user_id = $this->factory->user->create( array( 'role' => 'administrator' ) );
+		wp_set_current_user( $user_id );
+
+		$_POST['dfiFeatured'] = array('/2015/03/featured-150x150.jpg,/2015/03/featured.jpg');
+		$mock->save_meta( $this->__post_id );
+
+		$expected = array(				
+				array(
+				  'thumb' => "http://example.org/wp-content/uploads/2015/03/featured-150x150.jpg",
+				  'full' => "http://example.org/wp-content/uploads/2015/03/featured.jpg",
+				  'attachment_id' => null
+				)
+			    );
+
+		$actual = $this->_dfi->get_featured_images( $this->__post_id );
+
+		$this->assertEquals( $expected, $actual );
 	}
 
 	/**
@@ -611,19 +644,8 @@ class DynamicFeaturedImageTest extends WP_UnitTestCase {
 	{
 		define('DOING_AUTOSAVE', true);
 
-		$this->assertNull( $this->_dfi->save_meta( $this->__post_id ) );
+		$this->assertFalse( $this->_dfi->save_meta( $this->__post_id ) );
 	}
-
-	/**
-	 * @covers Dynamic_Featured_Image::save_meta
-	 */
-	public function testSaveMetaWhenInvalidNonce()
-	{
-		$_POST['dfi_fimageplug-2'] = 'c7ad4cc095';
-
-		$this->assertNull( $this->_dfi->save_meta( $this->__post_id ) );
-	}
-
 
 	public function tearDown() 
 	{

@@ -467,7 +467,6 @@ class Dynamic_Featured_Image
 	 * @since 1.0.0
 	 * @access public
 	 *
-	 * @see  wp_verify_nonce()
 	 * @see  plugin_basename()
 	 * @see  update_post_meta()
 	 * @see  current_user_can()
@@ -480,25 +479,43 @@ class Dynamic_Featured_Image
 	{
 		//Check autosave
 		if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {
-			return;
+			return false;
 		}
 
+		if( $this->_verify_nonces() ) {
+			//Check permission before saving data
+			if ( current_user_can( 'edit_posts', $post_id ) && isset( $_POST['dfiFeatured'] ) ) {
+				update_post_meta( $post_id, 'dfiFeatured', $_POST['dfiFeatured'] );
+			}
+		}
+
+		return false;
+
+	} // END save_meta()
+
+	/**
+	 * Verify metabox nonces
+	 *
+	 * @access protected
+	 * @see  wp_verify_nonce()
+	 *
+	 * @return boolean
+	 */
+	protected function _verify_nonces()
+	{
 		$keys = array_keys( $_POST );
 		foreach ($keys as $key) {
 			if ( preg_match( '/dfi_fimageplug-\d+$/', $key ) ) {
 				//Verify nonce
 				if ( !wp_verify_nonce( $_POST[$key], plugin_basename(__FILE__) ) ) {
-					return;
+					return false;
 				}
 			}
 		}
 
-		//Check permission before saving data
-		if ( current_user_can( 'edit_posts', $post_id ) && isset( $_POST['dfiFeatured'] ) ) {
-			update_post_meta( $post_id, 'dfiFeatured', $_POST['dfiFeatured'] );
-		}
-
-	} // END save_meta()
+		return true;
+		
+	} // END _verify_nonces()
 
 	/**
 	 * Add update notice. Displayed in plugin update page.

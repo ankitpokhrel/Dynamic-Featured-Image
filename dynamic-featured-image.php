@@ -285,6 +285,8 @@ class Dynamic_Featured_Image
 	 *
 	 * @see  wp_nonce_field()
 	 * @see  plugin_basename()
+	 *
+	 * @codeCoverageIgnore
 	 * 
 	 * @param  string $key Nonce key
 	 * @return string
@@ -397,7 +399,7 @@ class Dynamic_Featured_Image
 		<?php
 		die();
 
-	} // END MetaBox_callback())
+	} // END ajax_callback())
 
 	/**
 	 * Add custom class 'featured-meta-box' to meta box
@@ -973,6 +975,8 @@ class Dynamic_Featured_Image
 	 * @see	load_plugin_textdomain()
 	 * @see	plugin_basename()
 	 * @action	plugins_loaded
+	 *
+	 * @codeCoverageIgnore
 	 *
 	 * @return	void
 	 */

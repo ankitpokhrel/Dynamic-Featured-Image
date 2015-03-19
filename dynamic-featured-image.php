@@ -336,7 +336,7 @@ class Dynamic_Featured_Image
 
 		//Add a nonce field
 		echo $this->_nonce_field('dfi_fimageplug-' . $featuredId);
-		echo self::_get_featured_box($featuredImgTrimmed, $featuredImg, $featuredId, $thumbnail);
+		echo self::_get_featured_box($featuredImgTrimmed, $featuredImg, $featuredId, $thumbnail, $post->ID);
 
 	} // END featured_meta_box()
 
@@ -352,13 +352,13 @@ class Dynamic_Featured_Image
 	 *
 	 * @return String                     Html content
 	 */
-	private function _get_featured_box($featuredImgTrimmed, $featuredImg, $featuredId, $thumbnail)
+	private function _get_featured_box($featuredImgTrimmed, $featuredImg, $featuredId, $thumbnail, $postId)
 	{
 		$hasFeaturedImage = !empty($featuredImgTrimmed) ? 'hasFeaturedImage' : '';
 		$thumbnail = !is_null($thumbnail) ? $thumbnail : '';
 		$dfiEmpty = is_null($featuredImgTrimmed) ? 'dfiImgEmpty' : '';
 
-		return "<a href='javascript:void(0)' class='dfiFeaturedImage {$hasFeaturedImage}' title='". __('Set Featured Image', $this->_textDomain) . "' data-post-id='" . get_the_ID() . "'><span class='dashicons dashicons-camera'></span></a><br/>
+		return "<a href='javascript:void(0)' class='dfiFeaturedImage {$hasFeaturedImage}' title='". __('Set Featured Image', $this->_textDomain) . "' data-post-id='" . $postId . "'><span class='dashicons dashicons-camera'></span></a><br/>
 			<img src='" . $thumbnail . "' class='dfiImg {$dfiEmpty}'/>
 			<div class='dfiLinks'>
 				<a href='javascript:void(0)' data-id='{$featuredId}' data-id-local='" . $this->_get_number_translation( ($featuredId + 1) ) . "' class='dfiAddNew dashicons dashicons-plus' title='" . __('Add New', $this->_textDomain) ."'></a>

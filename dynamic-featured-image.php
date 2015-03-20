@@ -388,16 +388,16 @@ class Dynamic_Featured_Image
 
 		echo $this->_nonce_field( 'dfi_fimageplug-' . $featuredId );
 		?>
-				<a href="javascript:void(0)" class='dfiFeaturedImage' title="<?php echo __('Set Featured Image', $this->_textDomain) ?>"><span class="dashicons dashicons-camera"></span></a><br/>
-				 <img src="" class='dfiImg dfiImgEmpty'/>
-				 <div class='dfiLinks'>
-				<a href="javascript:void(0)" data-id='<?php echo $featuredId ?>' data-id-local='<?php echo self::_get_number_translation( ($featuredId + 1) ) ?>' class='dfiAddNew dashicons dashicons-plus' title="<?php echo __('Add New', $this->_textDomain) ?>"></a>
-				<a href="javascript:void(0)" class='dfiRemove dashicons dashicons-minus' title="<?php echo __('Remove', $this->_textDomain) ?>"></a>
+				<a href="javascript:void(0)" class="dfiFeaturedImage" title="<?php echo __('Set Featured Image', $this->_textDomain) ?>"><span class="dashicons dashicons-camera"></span></a><br/>
+				 <img src="" class="dfiImg dfiImgEmpty"/>
+				 <div class="dfiLinks">
+				<a href="javascript:void(0)" data-id="<?php echo $featuredId ?>" data-id-local="<?php echo self::_get_number_translation( ($featuredId + 1) ) ?>" class="dfiAddNew dashicons dashicons-plus" title="<?php echo __('Add New', $this->_textDomain) ?>"></a>
+				<a href="javascript:void(0)" class="dfiRemove dashicons dashicons-minus" title="<?php echo __('Remove', $this->_textDomain) ?>"></a>
 				 </div>
-				 <div class='dfiClearFloat'></div>
-				 <input type='hidden' name="dfiFeatured[]" value="" class="dfiImageHolder" />
+				 <div class="dfiClearFloat"></div>
+				 <input type="hidden" name="dfiFeatured[]" value="" class="dfiImageHolder" />
 		<?php
-		die();
+		wp_die('1');
 
 	} // END ajax_callback())
 

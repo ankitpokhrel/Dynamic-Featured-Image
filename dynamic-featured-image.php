@@ -3,7 +3,7 @@
  Plugin Name: Dynamic Featured Image
  Plugin URI: http://wordpress.org/plugins/dynamic-featured-image/
  Description: Dynamically adds multiple featured image or post thumbnail functionality to your posts, pages and custom post types.
- Version: 3.3.1
+ Version: 3.5.0
  Author: Ankit Pokhrel
  Author URI: http://ankitpokhrel.com.np
  License: GPL2 or later
@@ -48,7 +48,7 @@ class Dynamic_Featured_Image
 	 *
 	 * @since 3.0.0
 	 */
-	const VERSION = '3.3.1';
+	const VERSION = '3.5.0';
 
 	/* Image upload directory */
 	private $__upload_dir;
@@ -267,7 +267,7 @@ class Dynamic_Featured_Image
 	 * 
 	 * @return string|null
 	 */
-	private function _separate($urlString, $state = 'thumb') 
+	private function _separate($urlString, $state = 'thumb')
 	{
 		$imagePiece = explode( ',', $urlString );
 
@@ -397,7 +397,7 @@ class Dynamic_Featured_Image
 				 <div class="dfiClearFloat"></div>
 				 <input type="hidden" name="dfiFeatured[]" value="" class="dfiImageHolder" />
 		<?php
-		wp_die('1');
+		wp_die('');
 
 	} // END ajax_callback())
 
@@ -453,7 +453,7 @@ class Dynamic_Featured_Image
 	 * 
 	 * @return Array
 	 */
-	public function media_attachment_custom_fields_save( $post, $attachment ) 
+	public function media_attachment_custom_fields_save( $post, $attachment )
 	{
 		if( isset( $attachment['dfi-link-to-image'] ) ) {
 			update_post_meta( $post['ID'], '_dfi_link_to_image', $attachment['dfi-link-to-image'] );

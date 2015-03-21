@@ -9,7 +9,7 @@ class DynamicFeaturedImageAjaxTest extends WP_Ajax_UnitTestCase
 
 	private $__post_id = null;
 
-	public function setUp() 
+	public function setUp()
 	{
 		parent::setUp();
 
@@ -37,8 +37,13 @@ class DynamicFeaturedImageAjaxTest extends WP_Ajax_UnitTestCase
 			$this->_handleAjax( 'dfiMetaBox_callback' );
 		} catch ( WPAjaxDieContinueException $e ) {}
 
+		//it should throw exception
 		$this->assertTrue( isset($e) );
-		$this->assertEquals( '1', $e->getMessage() );
+
+		//exception message must be empty
+		$this->assertEquals( '', $e->getMessage() );
+
+		//should contain expected ouptput
 		$this->assertContains($expectedOutput, $this->_last_response);
 	}
 

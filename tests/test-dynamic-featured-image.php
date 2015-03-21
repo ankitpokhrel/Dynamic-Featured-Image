@@ -1,7 +1,9 @@
 <?php
-
-class DynamicFeaturedImageTest extends WP_UnitTestCase {
-
+/**
+ * Tests for Dynamic Featured Image Plugin
+ */
+class DynamicFeaturedImageTest extends WP_UnitTestCase 
+{
 	private $__mockBuilder = null;
 	private $__post_id = null;
 	private $__attachment_id = null;
@@ -9,7 +11,7 @@ class DynamicFeaturedImageTest extends WP_UnitTestCase {
 	protected $_dfi = null;
 	protected $_pluginData = null;
 
-	public function setUp() 
+	public function setUp()
 	{
 		parent::setUp();
 
@@ -63,7 +65,7 @@ class DynamicFeaturedImageTest extends WP_UnitTestCase {
 	 * @covers Dynamic_Featured_Image::__construct
 	 * @covers Dynamic_Featured_Image::load_plugin_textdomain
 	 */
-	public function testConstructorAddsRequiredActionsAndFilters() 
+	public function testConstructorAddsRequiredActionsAndFilters()
 	{
 		$this->assertEquals( 10, has_action( 'admin_enqueue_scripts', array( $this->_dfi, 'enqueue_admin_scripts' ) ) );
 		$this->assertEquals( 10, has_action( 'add_meta_boxes', array( $this->_dfi, 'initialize_featured_box' ) ) );
@@ -256,7 +258,6 @@ class DynamicFeaturedImageTest extends WP_UnitTestCase {
 	public function testGetImageTitleById()
 	{
 		$post = get_post($this->__attachment_id);
-
 		$this->assertEquals( $this->_dfi->get_image_title_by_id($this->__attachment_id), $post->post_title );
 	}
 
@@ -279,7 +280,6 @@ class DynamicFeaturedImageTest extends WP_UnitTestCase {
 	public function testGetImageCaptionById()
 	{
 		$post = get_post($this->__attachment_id);
-
 		$this->assertEquals( $this->_dfi->get_image_caption_by_id($this->__attachment_id), $post->post_excerpt );
 	}
 
@@ -300,7 +300,6 @@ class DynamicFeaturedImageTest extends WP_UnitTestCase {
 	public function testGetImageAltById()
 	{
 		$alt = get_post_meta($this->__attachment_id, '_wp_attachment_image_alt', true);
-
 		$this->assertEquals( $this->_dfi->get_image_alt_by_id($this->__attachment_id), $alt );
 	}
 
@@ -323,7 +322,6 @@ class DynamicFeaturedImageTest extends WP_UnitTestCase {
 	public function testGetImageDescriptionById()
 	{
 		$post = get_post($this->__attachment_id);
-
 		$this->assertEquals( $this->_dfi->get_image_description_by_id($this->__attachment_id), $post->post_content );
 	}
 
@@ -343,7 +341,6 @@ class DynamicFeaturedImageTest extends WP_UnitTestCase {
 	public function testGetPostAttachmentIds()
 	{
 		$expected = array($this->__attachment_id, null, null);
-
 		$this->assertEquals( $expected, $this->_dfi->get_post_attachment_ids($this->__post_id) );
 	}
 
@@ -626,7 +623,7 @@ class DynamicFeaturedImageTest extends WP_UnitTestCase {
 		$_POST['dfiFeatured'] = array('/2015/03/featured-150x150.jpg,/2015/03/featured.jpg');
 		$mock->save_meta( $this->__post_id );
 
-		$expected = array(				
+		$expected = array(
 				array(
 				  'thumb' => "http://example.org/wp-content/uploads/2015/03/featured-150x150.jpg",
 				  'full' => "http://example.org/wp-content/uploads/2015/03/featured.jpg",
@@ -645,11 +642,10 @@ class DynamicFeaturedImageTest extends WP_UnitTestCase {
 	public function testSaveMetaWhenDoingAutosave()
 	{
 		define('DOING_AUTOSAVE', true);
-
 		$this->assertFalse( $this->_dfi->save_meta( $this->__post_id ) );
 	}
 
-	public function tearDown() 
+	public function tearDown()
 	{
 		unset($this->__mockBuilder);
 		unset($this->__post_id);

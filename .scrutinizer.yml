@@ -1,6 +1,6 @@
 # .scrutinizer.yml
 filter:
-    excluded_files: [tests/*, bin/*, languages/*, js/*, css/*, img/*]
+    excluded_paths: [tests/*, bin/*, languages/*, js/*, css/*, img/*]
 
 checks:
     php:

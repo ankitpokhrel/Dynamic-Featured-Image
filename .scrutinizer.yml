@@ -1,3 +1,10 @@
 # .scrutinizer.yml
+filter:
+    excluded_files: [tests/*, bin/*, languages/*, js/*, css/*, img/*]
+
+checks:
+    php:
+        code_rating: true
+
 tools:
     external_code_coverage: true

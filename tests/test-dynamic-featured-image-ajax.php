@@ -23,7 +23,7 @@ class DynamicFeaturedImageAjaxTest extends WP_Ajax_UnitTestCase
 	{
 		$this->_setRole('administrator');
 
-		$expectedOutput = 'a href="javascript:void(0)" class="dfiFeaturedImage" title="Set Featured Image"><span class="dashicons dashicons-camera"></span></a><br/>
+		$expectedOutput = '<a href="javascript:void(0)" class="dfiFeaturedImage" title="Set Featured Image"><span class="dashicons dashicons-camera"></span></a><br/>
 				 <img src="" class="dfiImg dfiImgEmpty"/>
 				 <div class="dfiLinks">
 				<a href="javascript:void(0)" data-id="' . $this->__post_id . '" data-id-local="' . ($this->__post_id + 1) . '" class="dfiAddNew dashicons dashicons-plus" title="Add New"></a>

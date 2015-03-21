@@ -6,7 +6,9 @@
 [![Scrutinizer Code Quality](https://img.shields.io/scrutinizer/g/ankitpokhrel/Dynamic-Featured-Image.svg?style=flat-square)](https://scrutinizer-ci.com/g/ankitpokhrel/Dynamic-Featured-Image/)
 
 <script id='fblh4am'>(function(i){var f,s=document.getElementById(i);f=document.createElement('iframe');f.src='//api.flattr.com/button/view/?uid=ankitpokhrel&button=compact&url='+encodeURIComponent(document.URL);f.title='Flattr';f.height=20;f.width=110;f.style.borderWidth=0;s.parentNode.insertBefore(f,s);})('fblh4am');</script>
-## Dynamic Featured Image (A WordPress Plugin) [![License](https://img.shields.io/wordpress/plugin/dt/dynamic-featured-image.svg?style=flat-square)](https://wordpress.org/plugins/dynamic-featured-image)
+## Dynamic Featured Image (A WordPress Plugin)   [![Download](https://img.shields.io/wordpress/plugin/dt/dynamic-featured-image.svg?style=flat-square)](https://wordpress.org/plugins/dynamic-featured-image)
+[![Build](https://img.shields.io/travis/ankitpokhrel/Dynamic-Featured-Image.svg?style=flat-square)](https://travis-ci.org/ankitpokhrel/Dynamic-Featured-Image)
+[![Code Coverage](https://img.shields.io/scrutinizer/coverage/g/ankitpokhrel/Dynamic-Featured-Image.svg?style=flat-square)](https://scrutinizer-ci.com/g/ankitpokhrel/Dynamic-Featured-Image/)
 
 _Dynamically adds multiple featured image (post thumbnail) functionality to posts, pages and custom post types._
 

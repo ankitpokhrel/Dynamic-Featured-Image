@@ -2,6 +2,7 @@
 filter:
     excluded_paths: 
         - tests/*
+        - uninstall.php
 
 checks:
     php:

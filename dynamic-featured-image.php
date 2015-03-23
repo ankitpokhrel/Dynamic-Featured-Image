@@ -10,6 +10,7 @@
  License URI: http://www.gnu.org/licenses/gpl-2.0.html
  Text Domain: dynamic-featured-image
  Domain Path: /languages
+ GitHub Plugin URI: https://github.com/ankitpokhrel/Dynamic-Featured-Image
 
 	Copyright (C) 2013 Ankit Pokhrel <ankitpokhrel@gmail.com, http://ankitpokhrel.com.np>,
 

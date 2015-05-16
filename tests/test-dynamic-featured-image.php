@@ -30,9 +30,14 @@ class DynamicFeaturedImageTest extends WP_UnitTestCase
 		$filename = 'wp-content/uploads/2015/03/dfi.jpg';
 		$filetype = wp_check_filetype( basename( $filename ), null );
 		$wp_upload_dir = wp_upload_dir();
+		$guid = $wp_upload_dir['url'] . '/' . basename( $filename );
+
+		//WordPress upload dir changes with year and month.
+		//Make it same year and month for simplicity.
+		$guid = str_replace( '/' . date('Y') . '/' . date('m') . '/', '/2015/03/', $guid);
 
 		$attachment = array(
-			'guid'           => $wp_upload_dir['url'] . '/' . basename( $filename ), 
+			'guid'           => $guid,
 			'post_mime_type' => $filetype['type'],
 			'post_title'     => preg_replace( '/\.[^.]+$/', '', basename( $filename ) ),
 			'post_content'   => '',

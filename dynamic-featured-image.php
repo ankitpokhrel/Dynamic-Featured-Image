@@ -93,6 +93,9 @@ class Dynamic_Featured_Image
 		//handle ajax request
 		add_action( 'wp_ajax_dfiMetaBox_callback', array( $this, 'ajax_callback' ) );
 
+		//add action links
+		add_filter( 'plugin_action_links_' . plugin_basename(__FILE__), array($this, 'dfi_action_links') );
+
 		//media uploader custom fields
 		add_filter( 'attachment_fields_to_edit', array($this, 'media_attachment_custom_fields'), 10, 2 );
 		add_filter( 'attachment_fields_to_save', array($this, 'media_attachment_custom_fields_save'), 10, 2 );
@@ -152,6 +155,26 @@ class Dynamic_Featured_Image
 		wp_enqueue_script( 'scripts-dfi' );
 
 	} // END initialize_components()
+
+	/**
+	 * Add upgrade link
+	 *
+	 * @access public
+	 * @since  3.5.1
+	 * @action plugin_action_links
+	 * 
+	 * @param  array $links Action links
+	 * @return array
+	 */
+	public function dfi_action_links($links)
+	{
+		$upgrade_link = array(
+				'<a href="http://ankitpokhrel.com.np/blog/downloads/dynamic-featured-image-pro/" target="_blank">Upgrade to Premium</a>'
+			);
+
+		return array_merge( $links, $upgrade_link );
+
+	} // END dfi_action_links()
 
 	/**
 	 * Add featured meta boxes dynamically

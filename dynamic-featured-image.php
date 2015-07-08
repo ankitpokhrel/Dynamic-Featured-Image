@@ -162,7 +162,9 @@ class Dynamic_Featured_Image
 	 * @access public
 	 * @since  3.5.1
 	 * @action plugin_action_links
-	 * 
+	 *
+	 * @codeCoverageIgnore
+	 *
 	 * @param  array $links Action links
 	 * @return array
 	 */

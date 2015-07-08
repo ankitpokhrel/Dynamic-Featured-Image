@@ -101,8 +101,7 @@ class Dynamic_Featured_Image
 		add_filter( 'attachment_fields_to_save', array($this, 'media_attachment_custom_fields_save'), 10, 2 );
 
 		//get the site protocol
-		$protocol = ( (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') ||
-						(!empty($_SERVER['SERVER_PORT']) && $_SERVER['SERVER_PORT'] == 443) ) ? "https://" : "http://";
+		$protocol = $this->__get_protocol();
 
 		$this->__upload_dir = wp_upload_dir();
 		$this->__upload_url = preg_replace('#^https?://#', '', $this->__upload_dir['baseurl']);
@@ -117,6 +116,20 @@ class Dynamic_Featured_Image
 		$this->__db = $wpdb;
 
 	} // END __construct()
+
+	/**
+	 * Return site protocol
+	 *
+	 * @since 3.5.1
+	 * @access public
+	 * 
+	 * @return string
+	 */
+	private function __get_protocol()
+	{
+		return ( (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') ||
+				(!empty($_SERVER['SERVER_PORT']) && $_SERVER['SERVER_PORT'] == 443) ) ? "https://" : "http://";
+	}
 
 	/**
 	 * Add required admin scripts
@@ -550,7 +563,6 @@ class Dynamic_Featured_Image
 	 *
 	 * @since 2.0.0
 	 * @access public
-	 * @ignore
 	 *
 	 * @return Void
 	 */

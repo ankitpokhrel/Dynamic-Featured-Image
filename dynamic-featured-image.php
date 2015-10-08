@@ -104,7 +104,7 @@ class Dynamic_Featured_Image
 		$protocol = $this->__get_protocol();
 
 		$this->__upload_dir = wp_upload_dir();
-		$this->__upload_url =$this->__upload_dir['baseurl'];
+		$this->__upload_url = $this->__upload_dir['baseurl'];
 
 		//post type filter added by user
 		$this->_userFilter = array();

@@ -104,10 +104,7 @@ class Dynamic_Featured_Image
 		$protocol = $this->__get_protocol();
 
 		$this->__upload_dir = wp_upload_dir();
-		$this->__upload_url = preg_replace('#^https?://#', '', $this->__upload_dir['baseurl']);
-
-		//add protocol to the upload url
-		$this->__upload_url = $protocol . $this->__upload_url;
+		$this->__upload_url =$this->__upload_dir['baseurl'];
 
 		//post type filter added by user
 		$this->_userFilter = array();

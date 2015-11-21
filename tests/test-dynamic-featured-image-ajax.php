@@ -31,6 +31,7 @@ class DynamicFeaturedImageAjaxTest extends WP_Ajax_UnitTestCase
 				 </div>
 				 <div class="dfiClearFloat"></div>
 				 <input type="hidden" name="dfiFeatured[]" value="" class="dfiImageHolder" />';
+		$expectedOutput = preg_replace( '/\s+/', '', $expectedOutput );
 
 		$_POST['id'] = $this->__post_id;
 		try {
@@ -43,8 +44,10 @@ class DynamicFeaturedImageAjaxTest extends WP_Ajax_UnitTestCase
 		//exception message must be empty
 		$this->assertEquals( '', $e->getMessage() );
 
-		//should contain expected ouptput
-		$this->assertContains($expectedOutput, $this->_last_response);
+		$response = preg_replace( '/\s+/', '', $this->_last_response );
+
+		//should contain expected output
+		$this->assertContains($expectedOutput, $response);
 	}
 
 	public function tearDown()

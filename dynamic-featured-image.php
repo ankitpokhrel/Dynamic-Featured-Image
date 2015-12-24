@@ -936,7 +936,7 @@ class Dynamic_Featured_Image {
 	 */
 	protected function _get_real_upload_path( $img ) {
 		//check if upload path is already attached
-		if ( strpos( $img, $this->__upload_url ) !== false ) {
+		if ( strpos( $img, $this->__upload_url ) !== false || preg_match('/https?:\/\//', $img) ) {
 			return $img;
 		}
 

@@ -32,16 +32,16 @@ DFI allows you to add different number of featured images to each post and page 
 ### How it works?
 1. After successfull plugin activation go to `add` or `edit` page of posts or pages and you will notice a box for second featured image.
 
-  ![New featured image box](http://ankitpokhrel.com.np/DFI/screenshot-1.png)
+  ![New featured image box](http://ankitpokhrel.com/DFI/screenshot-1.png)
 
 2. Click `Set featured image` icon, select required image from the "Dynamic Featured Image Media Selector" popup and click `Set Featured Image`.
 
-  ![Dynamic Featured Image Media Selector](http://ankitpokhrel.com.np/DFI/screenshot-2.png)
+  ![Dynamic Featured Image Media Selector](http://ankitpokhrel.com/DFI/screenshot-2.png)
 
 3. Click on `Add New` to add new featured image or use `Remove` link to remove the featured image box.
  
-  ![Featured Images](http://ankitpokhrel.com.np/DFI/screenshot-3.png)  
-  ![Featured Images](http://ankitpokhrel.com.np/DFI/screenshot-4.png)
+  ![Featured Images](http://ankitpokhrel.com/DFI/screenshot-3.png)  
+  ![Featured Images](http://ankitpokhrel.com/DFI/screenshot-4.png)
 
 4. After adding featured images click `publish` or `update` to save featured images.
 
@@ -53,7 +53,7 @@ DFI allows you to add different number of featured images to each post and page 
 * [API](https://github.com/ankitpokhrel/Dynamic-Featured-Image/wiki/API)
 
 ### Other Resources
-* [Blog](http://ankitpokhrel.com.np/blog/category/dynamic-featured-image/)
+* [Blog](http://ankitpokhrel.com/blog/category/dynamic-featured-image/)
 * [FAQs](http://wordpress.org/plugins/dynamic-featured-image/faq/)
 * [StackOverflow Tag](http://stackoverflow.com/questions/tagged/dynamic-featured-image)
 
@@ -107,7 +107,7 @@ The translations live in the `languages` folder.
 If you are interested in translating the plugin in your language, first make sure if the translation is not already available. The name of the file is important because there’s a particular format you should follow for consistency. For example, if you’re translating Nepali for Nepal, the file should be `dynamic-featured-image-ne_NP.po` – `dynamic-featured-image` for the plugin itself, `ne` for the language and `NP` for the country.
 
 ### Dynamic Featured Image PRO
-A premium version of this plugin is also available. Users looking for more timely/in-depth support and extended features are encouraged to check out [Dynamic Featured Image PRO](http://ankitpokhrel.com.np/blog/downloads/dynamic-featured-image-pro/).
+A premium version of this plugin is also available. Users looking for more timely/in-depth support and extended features are encouraged to check out [Dynamic Featured Image PRO](http://ankitpokhrel.com/blog/downloads/dynamic-featured-image-pro/).
 
 ===================================================================================================
 

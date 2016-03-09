@@ -15,7 +15,7 @@ env:
 before_script:
     - bash bin/install-wp-tests.sh wordpress_test root '' localhost $WP_VERSION 
 
-script: phpunit --coverage-clover=coverage.clover
+script: phpunit --coverage-clover=coverage.clover --group ajax
 
 after_script:
     - wget https://scrutinizer-ci.com/ocular.phar

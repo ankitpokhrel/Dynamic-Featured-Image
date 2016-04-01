@@ -204,33 +204,34 @@ class Dynamic_Featured_Image {
 	public function initialize_featured_box() {
 		global $post;
 
-    if ( is_object( $post ) ) {
-      //make metabox title dynamic
-      $this->_metabox_title = apply_filters( 'dfi_set_metabox_title', __( "Featured Image" ) );
+	    if ( ! is_object( $post ) ) {
+		    return;
+	    }
 
-      $featuredData  = get_post_meta( $post->ID, 'dfiFeatured', true );
-      $totalFeatured = count( $featuredData );
+		//make metabox title dynamic
+		$this->_metabox_title = apply_filters( 'dfi_set_metabox_title', __( "Featured Image" ) );
 
-      $defaultFilter     = array( 'attachment', 'revision', 'nav_menu_item' );
-      $this->_userFilter = apply_filters( 'dfi_post_type_user_filter', $this->_userFilter );
-      $filter            = array_merge( $defaultFilter, $this->_userFilter );
+		$featuredData  = get_post_meta( $post->ID, 'dfiFeatured', true );
+		$totalFeatured = count( $featuredData );
 
-      $postTypes = get_post_types();
-      $postTypes = array_diff( $postTypes, $filter );
+		$defaultFilter     = array( 'attachment', 'revision', 'nav_menu_item' );
+		$this->_userFilter = apply_filters( 'dfi_post_type_user_filter', $this->_userFilter );
+		$filter            = array_merge( $defaultFilter, $this->_userFilter );
 
-      $postTypes = apply_filters( 'dfi_post_types', $postTypes );
+		$postTypes = get_post_types();
+		$postTypes = array_diff( $postTypes, $filter );
 
-      if ( ! empty( $featuredData ) && $totalFeatured >= 1 ) {
-        $i = 2;
-        foreach ( $featuredData as $featured ) {
-          self::_dfi_add_meta_box( $postTypes, $featured, $i );
-          $i ++;
-        }
-      } else {
-        self::_dfi_add_meta_box( $postTypes );
-      }
-    }
+		$postTypes = apply_filters( 'dfi_post_types', $postTypes );
 
+		if ( ! empty( $featuredData ) && $totalFeatured >= 1 ) {
+			$i = 2;
+			foreach ( $featuredData as $featured ) {
+				self::_dfi_add_meta_box( $postTypes, $featured, $i );
+				$i ++;
+			}
+		} else {
+			self::_dfi_add_meta_box( $postTypes );
+		}
 	} // END initialize_featured_box()
 
 	/**

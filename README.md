@@ -27,7 +27,9 @@ DFI allows you to add different number of featured images to each post and page 
   3. If you don't see new featured image box, click `Screen Options` in the upper right corner of your wordpress admin and make sure that the `Featured Image 2` box is slected.
   
 ### Bower
-`bower install dynamic-featured-image`
+```
+bower install dynamic-featured-image
+```
 
 ### How it works?
 1. After successfull plugin activation go to `add` or `edit` page of posts or pages and you will notice a box for second featured image.

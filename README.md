@@ -15,10 +15,7 @@
 _Dynamically adds multiple featured image (post thumbnail) functionality to posts, pages and custom post types._
 
 ### Overview
-Dynamic Featured Image enables the option to have MULTIPLE featured images within a post or page. 
-This is especially helpful when you use other plugins, post thumbnails or sliders that use featured images.
-Why limit yourself to only one featured image if you can do some awesome stuffs with multiple featured image? 
-DFI allows you to add different number of featured images to each post and page that can be collected by the various theme functions.
+Why limit yourself to only one featured image if you can do some awesome stuffs with multiple featured image? Dynamic Featured Image enables the option to have MULTIPLE featured images within a post or page. It allows you to add different number of featured images to each post and page that can be collected by the various theme functions. This is especially helpful when you use other plugins, post thumbnails or sliders that use featured images.
 
 ### Installation
 

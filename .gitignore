@@ -1,2 +1,5 @@
 coverage
+vendor
+
 --no-check-certificate
+.DS_Store

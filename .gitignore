@@ -1,5 +1,6 @@
 coverage
 vendor
+.idea
 
 --no-check-certificate
 .DS_Store

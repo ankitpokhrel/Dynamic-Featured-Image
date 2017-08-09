@@ -63,23 +63,23 @@ class Dynamic_Featured_Image {
     /**
      * Image upload directory.
      *
-     * @var $__upload_dir string
+     * @var $upload_dir string
      */
-    private $__upload_dir;
+    private $upload_dir;
 
     /**
      * Image upload URL.
      *
-     * @var $__upload_url string
+     * @var $upload_url string
      */
-    private $__upload_url;
+    private $upload_url;
 
     /**
      * Database object.
      *
-     * @var $__db wpdb
+     * @var $db wpdb
      */
-    private $__db;
+    private $db;
 
     /**
      * Title for dfi metabox.
@@ -126,17 +126,17 @@ class Dynamic_Featured_Image {
         // get the site protocol.
         $protocol = $this->get_protocol();
 
-        $this->__upload_dir = wp_upload_dir();
-        $this->__upload_url = preg_replace( '#^https?://#', '', $this->__upload_dir['baseurl'] );
+        $this->upload_dir = wp_upload_dir();
+        $this->upload_url = preg_replace( '#^https?://#', '', $this->upload_dir['baseurl'] );
 
         // add protocol to the upload url.
-        $this->__upload_url = $protocol . $this->__upload_url;
+        $this->upload_url = $protocol . $this->upload_url;
 
         // post type filter added by user.
         $this->user_filter = array();
 
         global $wpdb;
-        $this->__db = $wpdb;
+        $this->db = $wpdb;
     }
 
     /**
@@ -177,7 +177,7 @@ class Dynamic_Featured_Image {
             'scripts-dfi',
             'WP_SPECIFIC',
             array(
-                'upload_url'               => $this->__upload_url,
+                'upload_url'               => $this->upload_url,
                 'metabox_title'            => __( $this->metabox_title, self::TEXT_DOMAIN ),
                 'mediaSelector_title'      => __( 'Dynamic Featured Image - Media Selector', self::TEXT_DOMAIN ),
                 'mediaSelector_buttonText' => __( 'Set Featured Image', self::TEXT_DOMAIN ),
@@ -374,7 +374,7 @@ class Dynamic_Featured_Image {
         }
 
         try {
-            $thumbnail = $this->get_image_thumb( $this->__upload_url . $featured_img_full, 'medium' );
+            $thumbnail = $this->get_image_thumb( $this->upload_url . $featured_img_full, 'medium' );
             if ( is_null( $thumbnail ) ) {
                 // medium sized thumbnail image is missing.
                 throw new Exception( 'Medium size image not found', 1 );
@@ -582,7 +582,7 @@ class Dynamic_Featured_Image {
      * @return null|string
      */
     private function execute_query( $query ) {
-        return $this->__db->get_var( $query );
+        return $this->db->get_var( $query );
     }
 
     /**
@@ -597,7 +597,7 @@ class Dynamic_Featured_Image {
      * @return string
      */
     protected function _get_attachment_id( $image_url ) {
-        return self::execute_query( $this->__db->prepare( 'SELECT ID FROM ' . $this->__db->posts . ' WHERE guid = %s', $image_url ) );
+        return self::execute_query( $this->db->prepare( 'SELECT ID FROM ' . $this->db->posts . ' WHERE guid = %s', $image_url ) );
     }
 
     /**
@@ -656,8 +656,8 @@ class Dynamic_Featured_Image {
         if ( is_null( $attachment_id ) ) {
             // check if the image is edited image.
             // and try to get the attachment id.
-            $image_url = str_replace( $this->__upload_url . '/', '', $image_url );
-            $row       = self::execute_query( $this->__db->prepare( 'SELECT post_id FROM ' . $this->__db->postmeta . ' WHERE meta_value = %s', $image_url ) );
+            $image_url = str_replace( $this->upload_url . '/', '', $image_url );
+            $row       = self::execute_query( $this->db->prepare( 'SELECT post_id FROM ' . $this->db->postmeta . ' WHERE meta_value = %s', $image_url ) );
             if ( ! is_null( $row ) ) {
                 $attachment_id = $row;
             }
@@ -677,7 +677,7 @@ class Dynamic_Featured_Image {
      * @return string
      */
     public function get_image_title( $image_url ) {
-        return self::execute_query( $this->__db->prepare( 'SELECT post_title FROM ' . $this->__db->posts . ' WHERE guid = %s', $image_url ) );
+        return self::execute_query( $this->db->prepare( 'SELECT post_title FROM ' . $this->db->posts . ' WHERE guid = %s', $image_url ) );
     }
 
     /**
@@ -691,7 +691,7 @@ class Dynamic_Featured_Image {
      * @return string
      */
     public function get_image_title_by_id( $attachment_id ) {
-        return self::execute_query( $this->__db->prepare( 'SELECT post_title FROM ' . $this->__db->posts . ' WHERE ID = %d', $attachment_id ) );
+        return self::execute_query( $this->db->prepare( 'SELECT post_title FROM ' . $this->db->posts . ' WHERE ID = %d', $attachment_id ) );
     }
 
     /**
@@ -705,7 +705,7 @@ class Dynamic_Featured_Image {
      * @return string
      */
     public function get_image_caption( $image_url ) {
-        return self::execute_query( $this->__db->prepare( 'SELECT post_excerpt FROM ' . $this->__db->posts . ' WHERE guid = %s', $image_url ) );
+        return self::execute_query( $this->db->prepare( 'SELECT post_excerpt FROM ' . $this->db->posts . ' WHERE guid = %s', $image_url ) );
     }
 
     /**
@@ -719,7 +719,7 @@ class Dynamic_Featured_Image {
      * @return string
      */
     public function get_image_caption_by_id( $attachment_id ) {
-        return self::execute_query( $this->__db->prepare( 'SELECT post_excerpt FROM ' . $this->__db->posts . ' WHERE ID = %d', $attachment_id ) );
+        return self::execute_query( $this->db->prepare( 'SELECT post_excerpt FROM ' . $this->db->posts . ' WHERE ID = %d', $attachment_id ) );
     }
 
     /**
@@ -735,7 +735,7 @@ class Dynamic_Featured_Image {
      * @return string
      */
     public function get_image_alt( $image_url ) {
-        $attachment = $this->__db->get_col( $this->__db->prepare( 'SELECT ID FROM ' . $this->__db->posts . ' WHERE guid = %s', $image_url ) );
+        $attachment = $this->db->get_col( $this->db->prepare( 'SELECT ID FROM ' . $this->db->posts . ' WHERE guid = %s', $image_url ) );
 
         $alt = null;
         if ( ! empty( $attachment ) ) {
@@ -774,7 +774,7 @@ class Dynamic_Featured_Image {
      * @return string
      */
     public function get_image_description( $image_url ) {
-        return self::execute_query( $this->__db->prepare( 'SELECT post_content FROM ' . $this->__db->posts . ' WHERE guid = %s', $image_url ) );
+        return self::execute_query( $this->db->prepare( 'SELECT post_content FROM ' . $this->db->posts . ' WHERE guid = %s', $image_url ) );
     }
 
     /**
@@ -788,7 +788,7 @@ class Dynamic_Featured_Image {
      * @return string
      */
     public function get_image_description_by_id( $attachment_id ) {
-        return self::execute_query( $this->__db->prepare( 'SELECT post_content FROM ' . $this->__db->posts . ' WHERE ID = %d', $attachment_id ) );
+        return self::execute_query( $this->db->prepare( 'SELECT post_content FROM ' . $this->db->posts . ' WHERE ID = %d', $attachment_id ) );
     }
 
     /**
@@ -824,7 +824,7 @@ class Dynamic_Featured_Image {
         if ( ! empty( $dfi_images ) && is_array( $dfi_images ) ) {
             foreach ( $dfi_images as $dfi_image ) {
                 $dfi_image_full = self::_separate( $dfi_image, 'full' );
-                $ret_val[]     = $this->get_image_id( $this->__upload_url . $dfi_image_full );
+                $ret_val[]     = $this->get_image_id( $this->upload_url . $dfi_image_full );
             }
         }
 
@@ -936,11 +936,11 @@ class Dynamic_Featured_Image {
      */
     protected function _get_real_upload_path( $img ) {
         // check if upload path is already attached.
-        if ( false !== strpos( $img, $this->__upload_url ) || preg_match( '/https?:\/\//', $img ) ) {
+        if ( false !== strpos( $img, $this->upload_url ) || preg_match( '/https?:\/\//', $img ) ) {
             return $img;
         }
 
-        return $this->__upload_url . $img;
+        return $this->upload_url . $img;
     }
 
     /**

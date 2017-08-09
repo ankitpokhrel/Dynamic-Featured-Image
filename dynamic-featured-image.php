@@ -124,7 +124,7 @@ class Dynamic_Featured_Image {
         add_filter( 'attachment_fields_to_save', array( $this, 'media_attachment_custom_fields_save' ), 10, 2 );
 
         // get the site protocol.
-        $protocol = $this->__get_protocol();
+        $protocol = $this->get_protocol();
 
         $this->__upload_dir = wp_upload_dir();
         $this->__upload_url = preg_replace( '#^https?://#', '', $this->__upload_dir['baseurl'] );
@@ -147,7 +147,7 @@ class Dynamic_Featured_Image {
      *
      * @return string
      */
-    private function __get_protocol() {
+    private function get_protocol() {
         return ( ( ! empty( $_SERVER['HTTPS'] ) && 'off' !== $_SERVER['HTTPS'] ) ||
                  ( ! empty( $_SERVER['SERVER_PORT'] ) && 443 === $_SERVER['SERVER_PORT'] ) ) ? 'https://' : 'http://';
     }

@@ -54,6 +54,13 @@ class Dynamic_Featured_Image {
     const VERSION = '3.5.2';
 
     /**
+     * Text domain.
+     *
+     * @since 3.6.0
+     */
+    const TEXT_DOMAIN = 'dynamic-featured-image';
+
+    /**
      * Image upload directory.
      *
      * @var $__upload_dir string
@@ -73,13 +80,6 @@ class Dynamic_Featured_Image {
      * @var $__db wpdb
      */
     private $__db;
-
-    /**
-     * Plugin text domain.
-     *
-     * @var $_textDomain string
-     */
-    protected $_textDomain;
 
     /**
      * Title for dfi metabox.
@@ -105,8 +105,6 @@ class Dynamic_Featured_Image {
      * @see     add_action()
      */
     public function __construct() {
-        $this->_textDomain = 'dynamic-featured-image';
-
         // plugin update warning.
         add_action( 'in_plugin_update_message-' . plugin_basename( __FILE__ ), array( $this, 'update_notice' ) );
 
@@ -180,9 +178,9 @@ class Dynamic_Featured_Image {
             'WP_SPECIFIC',
             array(
                 'upload_url'               => $this->__upload_url,
-                'metabox_title'            => __( $this->_metabox_title, $this->_textDomain ),
-                'mediaSelector_title'      => __( 'Dynamic Featured Image - Media Selector', $this->_textDomain ),
-                'mediaSelector_buttonText' => __( 'Set Featured Image', $this->_textDomain ),
+                'metabox_title'            => __( $this->_metabox_title, self::TEXT_DOMAIN ),
+                'mediaSelector_title'      => __( 'Dynamic Featured Image - Media Selector', self::TEXT_DOMAIN ),
+                'mediaSelector_buttonText' => __( 'Set Featured Image', self::TEXT_DOMAIN ),
             )
         );
 
@@ -229,7 +227,7 @@ class Dynamic_Featured_Image {
         global $post;
 
         // make metabox title dynamic.
-        $this->_metabox_title = apply_filters( 'dfi_set_metabox_title', __( 'Featured Image', $this->_textDomain ) );
+        $this->_metabox_title = apply_filters( 'dfi_set_metabox_title', __( 'Featured Image', self::TEXT_DOMAIN ) );
 
         $featured_data  = get_post_meta( $post->ID, 'dfiFeatured', true );
         $total_featured = count( $featured_data );
@@ -263,12 +261,12 @@ class Dynamic_Featured_Image {
      */
     protected function _get_number_translation( $number ) {
         if ( $number <= 9 ) {
-            return __( $number, $this->_textDomain );
+            return __( $number, self::TEXT_DOMAIN );
         } else {
             $pieces = str_split( $number, 1 );
             $buffer = '';
             foreach ( $pieces as $piece ) {
-                $buffer .= __( $piece, $this->_textDomain );
+                $buffer .= __( $piece, self::TEXT_DOMAIN );
             }
 
             return $buffer;
@@ -289,7 +287,7 @@ class Dynamic_Featured_Image {
             foreach ( $post_types as $type ) {
                 add_meta_box(
                     'dfiFeaturedMetaBox-' . $i,
-                    __( $this->_metabox_title, $this->_textDomain ) . ' ' . self::_get_number_translation( $i ),
+                    __( $this->_metabox_title, self::TEXT_DOMAIN ) . ' ' . self::_get_number_translation( $i ),
                     array( $this, 'featured_meta_box' ),
                     $type,
                     'side',
@@ -302,7 +300,7 @@ class Dynamic_Featured_Image {
             foreach ( $post_types as $type ) {
                 add_meta_box(
                     'dfiFeaturedMetaBox',
-                    __( $this->_metabox_title, $this->_textDomain ) . ' ' . __( 2, $this->_textDomain ),
+                    __( $this->_metabox_title, self::TEXT_DOMAIN ) . ' ' . __( 2, self::TEXT_DOMAIN ),
                     array( $this, 'featured_meta_box' ),
                     $type,
                     'side',
@@ -411,11 +409,11 @@ class Dynamic_Featured_Image {
         $thumbnail          = ! is_null( $thumbnail ) ? $thumbnail : '';
         $dfi_empty          = is_null( $featured_img_trimmed ) ? 'dfiImgEmpty' : '';
 
-        return "<a href='javascript:void(0)' class='dfiFeaturedImage {$has_featured_image}' title='" . __( 'Set Featured Image', $this->_textDomain ) . "' data-post-id='" . $post_id . "'><span class='dashicons dashicons-camera'></span></a><br/>
+        return "<a href='javascript:void(0)' class='dfiFeaturedImage {$has_featured_image}' title='" . __( 'Set Featured Image', self::TEXT_DOMAIN ) . "' data-post-id='" . $post_id . "'><span class='dashicons dashicons-camera'></span></a><br/>
             <img src='" . $thumbnail . "' class='dfiImg {$dfi_empty}'/>
             <div class='dfiLinks'>
-                <a href='javascript:void(0)' data-id='{$featured_id}' data-id-local='" . $this->_get_number_translation( ( $featured_id + 1 ) ) . "' class='dfiAddNew dashicons dashicons-plus' title='" . __( 'Add New', $this->_textDomain ) . "'></a>
-                <a href='javascript:void(0)' class='dfiRemove dashicons dashicons-minus' title='" . __( 'Remove', $this->_textDomain ) . "'></a>
+                <a href='javascript:void(0)' data-id='{$featured_id}' data-id-local='" . $this->_get_number_translation( ( $featured_id + 1 ) ) . "' class='dfiAddNew dashicons dashicons-plus' title='" . __( 'Add New', self::TEXT_DOMAIN ) . "'></a>
+                <a href='javascript:void(0)' class='dfiRemove dashicons dashicons-minus' title='" . __( 'Remove', self::TEXT_DOMAIN ) . "'></a>
             </div>
             <div class='dfiClearFloat'></div>
             <input type='hidden' name='dfiFeatured[]' value='{$featured_img}'  class='dfiImageHolder' />";
@@ -439,15 +437,15 @@ class Dynamic_Featured_Image {
         echo $this->_nonce_field( 'dfi_fimageplug-' . $featured_id );
         ?>
         <a href="javascript:void(0)" class="dfiFeaturedImage"
-           title="<?php echo __( 'Set Featured Image', $this->_textDomain ) ?>"><span
+           title="<?php echo __( 'Set Featured Image', self::TEXT_DOMAIN ) ?>"><span
                     class="dashicons dashicons-camera"></span></a><br/>
         <img src="" class="dfiImg dfiImgEmpty"/>
         <div class="dfiLinks">
             <a href="javascript:void(0)" data-id="<?php echo $featured_id ?>"
                data-id-local="<?php echo self::_get_number_translation( ( $featured_id + 1 ) ) ?>"
-               class="dfiAddNew dashicons dashicons-plus" title="<?php echo __( 'Add New', $this->_textDomain ) ?>"></a>
+               class="dfiAddNew dashicons dashicons-plus" title="<?php echo __( 'Add New', self::TEXT_DOMAIN ) ?>"></a>
             <a href="javascript:void(0)" class="dfiRemove dashicons dashicons-minus"
-               title="<?php echo __( 'Remove', $this->_textDomain ) ?>"></a>
+               title="<?php echo __( 'Remove', self::TEXT_DOMAIN ) ?>"></a>
         </div>
         <div class="dfiClearFloat"></div>
         <input type="hidden" name="dfiFeatured[]" value="" class="dfiImageHolder"/>
@@ -485,7 +483,7 @@ class Dynamic_Featured_Image {
      */
     public function media_attachment_custom_fields( $form_fields, $post ) {
         $form_fields['dfi-link-to-image'] = array(
-            'label' => __( 'Link to Image', $this->_textDomain ),
+            'label' => __( 'Link to Image', self::TEXT_DOMAIN ),
             'input' => 'text',
             'value' => get_post_meta( $post->ID, '_dfi_link_to_image', true ),
         );
@@ -572,7 +570,7 @@ class Dynamic_Featured_Image {
      * @return void
      */
     public function update_notice() {
-        $info = __( 'ATTENTION! Please read the <a href="https://github.com/ankitpokhrel/Dynamic-Featured-Image/wiki" target="_blank">DOCUMENTATION</a> properly before update.', $this->_textDomain );
+        $info = __( 'ATTENTION! Please read the <a href="https://github.com/ankitpokhrel/Dynamic-Featured-Image/wiki" target="_blank">DOCUMENTATION</a> properly before update.', self::TEXT_DOMAIN );
         echo '<div style="color:red; padding:7px 0;">' . strip_tags( $info, '<a><b><i><span>' ) . '</div>';
     }
 
@@ -996,7 +994,7 @@ class Dynamic_Featured_Image {
      */
     public function load_plugin_textdomain() {
         load_plugin_textdomain(
-            $this->_textDomain,
+            self::TEXT_DOMAIN,
             false,
             dirname( plugin_basename( __FILE__ ) ) . '/languages/'
         );

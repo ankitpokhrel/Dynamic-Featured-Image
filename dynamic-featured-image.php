@@ -84,16 +84,16 @@ class Dynamic_Featured_Image {
     /**
      * Title for dfi metabox.
      *
-     * @var $_metabox string
+     * @var $metabox_title string
      */
-    protected $_metabox_title;
+    protected $metabox_title;
 
     /**
      * Users post type filter for dfi metabox.
      *
-     * @var $_userFilter array
+     * @var $user_filter array
      */
-    protected $_userFilter;
+    protected $user_filter;
 
     /**
      * Constructor. Hooks all interactions to initialize the class.
@@ -133,7 +133,7 @@ class Dynamic_Featured_Image {
         $this->__upload_url = $protocol . $this->__upload_url;
 
         // post type filter added by user.
-        $this->_userFilter = array();
+        $this->user_filter = array();
 
         global $wpdb;
         $this->__db = $wpdb;
@@ -178,7 +178,7 @@ class Dynamic_Featured_Image {
             'WP_SPECIFIC',
             array(
                 'upload_url'               => $this->__upload_url,
-                'metabox_title'            => __( $this->_metabox_title, self::TEXT_DOMAIN ),
+                'metabox_title'            => __( $this->metabox_title, self::TEXT_DOMAIN ),
                 'mediaSelector_title'      => __( 'Dynamic Featured Image - Media Selector', self::TEXT_DOMAIN ),
                 'mediaSelector_buttonText' => __( 'Set Featured Image', self::TEXT_DOMAIN ),
             )
@@ -227,14 +227,14 @@ class Dynamic_Featured_Image {
         global $post;
 
         // make metabox title dynamic.
-        $this->_metabox_title = apply_filters( 'dfi_set_metabox_title', __( 'Featured Image', self::TEXT_DOMAIN ) );
+        $this->metabox_title = apply_filters( 'dfi_set_metabox_title', __( 'Featured Image', self::TEXT_DOMAIN ) );
 
         $featured_data  = get_post_meta( $post->ID, 'dfiFeatured', true );
         $total_featured = count( $featured_data );
 
         $default_filter    = array( 'attachment', 'revision', 'nav_menu_item' );
-        $this->_userFilter = apply_filters( 'dfi_post_type_user_filter', $this->_userFilter );
-        $filter            = array_merge( $default_filter, $this->_userFilter );
+        $this->user_filter = apply_filters( 'dfi_post_type_user_filter', $this->user_filter );
+        $filter            = array_merge( $default_filter, $this->user_filter );
 
         $post_types = get_post_types();
         $post_types = array_diff( $post_types, $filter );
@@ -287,7 +287,7 @@ class Dynamic_Featured_Image {
             foreach ( $post_types as $type ) {
                 add_meta_box(
                     'dfiFeaturedMetaBox-' . $i,
-                    __( $this->_metabox_title, self::TEXT_DOMAIN ) . ' ' . self::_get_number_translation( $i ),
+                    __( $this->metabox_title, self::TEXT_DOMAIN ) . ' ' . self::_get_number_translation( $i ),
                     array( $this, 'featured_meta_box' ),
                     $type,
                     'side',
@@ -300,7 +300,7 @@ class Dynamic_Featured_Image {
             foreach ( $post_types as $type ) {
                 add_meta_box(
                     'dfiFeaturedMetaBox',
-                    __( $this->_metabox_title, self::TEXT_DOMAIN ) . ' ' . __( 2, self::TEXT_DOMAIN ),
+                    __( $this->metabox_title, self::TEXT_DOMAIN ) . ' ' . __( 2, self::TEXT_DOMAIN ),
                     array( $this, 'featured_meta_box' ),
                     $type,
                     'side',

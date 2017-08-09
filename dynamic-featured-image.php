@@ -231,26 +231,26 @@ class Dynamic_Featured_Image {
         // make metabox title dynamic.
         $this->_metabox_title = apply_filters( 'dfi_set_metabox_title', __( 'Featured Image', $this->_textDomain ) );
 
-        $featuredData  = get_post_meta( $post->ID, 'dfiFeatured', true );
-        $totalFeatured = count( $featuredData );
+        $featured_data  = get_post_meta( $post->ID, 'dfiFeatured', true );
+        $total_featured = count( $featured_data );
 
-        $defaultFilter     = array( 'attachment', 'revision', 'nav_menu_item' );
+        $default_filter    = array( 'attachment', 'revision', 'nav_menu_item' );
         $this->_userFilter = apply_filters( 'dfi_post_type_user_filter', $this->_userFilter );
-        $filter            = array_merge( $defaultFilter, $this->_userFilter );
+        $filter            = array_merge( $default_filter, $this->_userFilter );
 
-        $postTypes = get_post_types();
-        $postTypes = array_diff( $postTypes, $filter );
+        $post_types = get_post_types();
+        $post_types = array_diff( $post_types, $filter );
 
-        $postTypes = apply_filters( 'dfi_post_types', $postTypes );
+        $post_types = apply_filters( 'dfi_post_types', $post_types );
 
-        if ( ! empty( $featuredData ) && $totalFeatured >= 1 ) {
+        if ( ! empty( $featured_data ) && $total_featured >= 1 ) {
             $i = 2;
-            foreach ( $featuredData as $featured ) {
-                self::_dfi_add_meta_box( $postTypes, $featured, $i );
+            foreach ( $featured_data as $featured ) {
+                self::_dfi_add_meta_box( $post_types, $featured, $i );
                 $i ++;
             }
         } else {
-            self::_dfi_add_meta_box( $postTypes );
+            self::_dfi_add_meta_box( $post_types );
         }
     }
 
@@ -278,15 +278,15 @@ class Dynamic_Featured_Image {
     /**
      * Adds meta boxes.
      *
-     * @param  array  $postTypes Post types to show featured image box.
+     * @param  array  $post_types Post types to show featured image box.
      * @param  object $featured Callback arguments.
      * @param  int    $i Index of the featured image.
      *
      * @return void
      */
-    private function _dfi_add_meta_box( $postTypes, $featured = null, $i = null ) {
+    private function _dfi_add_meta_box( $post_types, $featured = null, $i = null ) {
         if ( ! is_null( $i ) ) {
-            foreach ( $postTypes as $type ) {
+            foreach ( $post_types as $type ) {
                 add_meta_box(
                     'dfiFeaturedMetaBox-' . $i,
                     __( $this->_metabox_title, $this->_textDomain ) . ' ' . self::_get_number_translation( $i ),
@@ -299,7 +299,7 @@ class Dynamic_Featured_Image {
                 add_filter( "postbox_classes_{$type}_dfiFeaturedMetaBox-" . $i, array( $this, 'add_metabox_classes' ) );
             }
         } else {
-            foreach ( $postTypes as $type ) {
+            foreach ( $post_types as $type ) {
                 add_meta_box(
                     'dfiFeaturedMetaBox',
                     __( $this->_metabox_title, $this->_textDomain ) . ' ' . __( 2, $this->_textDomain ),
@@ -319,19 +319,19 @@ class Dynamic_Featured_Image {
      *
      * @since  3.3.1
      *
-     * @param  string $urlString Url string.
+     * @param  string $url_string Url string.
      * @param  string $state Thumb or full.
      *
      * @return string|null
      */
-    private function _separate( $urlString, $state = 'thumb' ) {
-        $imagePiece = explode( ',', $urlString );
+    private function _separate( $url_string, $state = 'thumb' ) {
+        $image_piece = explode( ',', $url_string );
 
         if ( 'thumb' === $state ) {
-            return isset( $imagePiece[0] ) ? $imagePiece[0] : null;
+            return isset( $image_piece[0] ) ? $image_piece[0] : null;
         }
 
-        return isset( $imagePiece[1] ) ? $imagePiece[1] : null;
+        return isset( $image_piece[1] ) ? $image_piece[1] : null;
     }
 
     /**
@@ -365,18 +365,18 @@ class Dynamic_Featured_Image {
      * @return void
      */
     public function featured_meta_box( $post, $featured ) {
-        $featuredImg        = $featured['args'][0];
-        $featuredId         = is_null( $featured['args'][1] ) ? 2 : --$featured['args'][1];
-        $featuredImgFull    = $featuredImg;
-        $featuredImgTrimmed = $featuredImg;
+        $featured_img         = $featured['args'][0];
+        $featured_id          = is_null( $featured['args'][1] ) ? 2 : --$featured['args'][1];
+        $featured_img_full    = $featured_img;
+        $featured_img_trimmed = $featured_img;
 
-        if ( ! is_null( $featuredImg ) ) {
-            $featuredImgTrimmed = self::_separate( $featuredImg );
-            $featuredImgFull    = self::_separate( $featuredImg, 'full' );
+        if ( ! is_null( $featured_img ) ) {
+            $featured_img_trimmed = self::_separate( $featured_img );
+            $featured_img_full    = self::_separate( $featured_img, 'full' );
         }
 
         try {
-            $thumbnail = $this->get_image_thumb( $this->__upload_url . $featuredImgFull, 'medium' );
+            $thumbnail = $this->get_image_thumb( $this->__upload_url . $featured_img_full, 'medium' );
             if ( is_null( $thumbnail ) ) {
                 // medium sized thumbnail image is missing.
                 throw new Exception( 'Medium size image not found', 1 );
@@ -384,12 +384,12 @@ class Dynamic_Featured_Image {
         } catch ( Exception $e ) {
             // since medium sized thumbnail image was not found,
             // let's set full image url as thumbnail.
-            $thumbnail = $featuredImgFull;
+            $thumbnail = $featured_img_full;
         }
 
         // Add a nonce field.
-        echo $this->_nonce_field( 'dfi_fimageplug-' . $featuredId );
-        echo self::_get_featured_box( $featuredImgTrimmed, $featuredImg, $featuredId, $thumbnail, $post->ID );
+        echo $this->_nonce_field( 'dfi_fimageplug-' . $featured_id );
+        echo self::_get_featured_box( $featured_img_trimmed, $featured_img, $featured_id, $thumbnail, $post->ID );
     }
 
     /**
@@ -398,26 +398,27 @@ class Dynamic_Featured_Image {
      * @since  3.1.0
      * @access private
      *
-     * @param  string $featuredImgTrimmed Medium sized image.
-     * @param  string $featuredImg Full sized image.
-     * @param  string $featuredId Attachment Id.
-     * @param  string $thumbnail Thumb sized image.
+     * @param string $featured_img_trimmed Medium sized image.
+     * @param string $featured_img Full sized image.
+     * @param string $featured_id Attachment Id.
+     * @param string $thumbnail Thumb sized image.
+     * @param int    $post_id Post id.
      *
      * @return string Html content
      */
-    private function _get_featured_box( $featuredImgTrimmed, $featuredImg, $featuredId, $thumbnail, $postId ) {
-        $hasFeaturedImage = ! empty( $featuredImgTrimmed ) ? 'hasFeaturedImage' : '';
-        $thumbnail        = ! is_null( $thumbnail ) ? $thumbnail : '';
-        $dfiEmpty         = is_null( $featuredImgTrimmed ) ? 'dfiImgEmpty' : '';
+    private function _get_featured_box( $featured_img_trimmed, $featured_img, $featured_id, $thumbnail, $post_id ) {
+        $has_featured_image = ! empty( $featured_img_trimmed ) ? 'hasFeaturedImage' : '';
+        $thumbnail          = ! is_null( $thumbnail ) ? $thumbnail : '';
+        $dfi_empty          = is_null( $featured_img_trimmed ) ? 'dfiImgEmpty' : '';
 
-        return "<a href='javascript:void(0)' class='dfiFeaturedImage {$hasFeaturedImage}' title='" . __( 'Set Featured Image', $this->_textDomain ) . "' data-post-id='" . $postId . "'><span class='dashicons dashicons-camera'></span></a><br/>
-            <img src='" . $thumbnail . "' class='dfiImg {$dfiEmpty}'/>
+        return "<a href='javascript:void(0)' class='dfiFeaturedImage {$has_featured_image}' title='" . __( 'Set Featured Image', $this->_textDomain ) . "' data-post-id='" . $post_id . "'><span class='dashicons dashicons-camera'></span></a><br/>
+            <img src='" . $thumbnail . "' class='dfiImg {$dfi_empty}'/>
             <div class='dfiLinks'>
-                <a href='javascript:void(0)' data-id='{$featuredId}' data-id-local='" . $this->_get_number_translation( ( $featuredId + 1 ) ) . "' class='dfiAddNew dashicons dashicons-plus' title='" . __( 'Add New', $this->_textDomain ) . "'></a>
+                <a href='javascript:void(0)' data-id='{$featured_id}' data-id-local='" . $this->_get_number_translation( ( $featured_id + 1 ) ) . "' class='dfiAddNew dashicons dashicons-plus' title='" . __( 'Add New', $this->_textDomain ) . "'></a>
                 <a href='javascript:void(0)' class='dfiRemove dashicons dashicons-minus' title='" . __( 'Remove', $this->_textDomain ) . "'></a>
             </div>
             <div class='dfiClearFloat'></div>
-            <input type='hidden' name='dfiFeatured[]' value='{$featuredImg}'  class='dfiImageHolder' />";
+            <input type='hidden' name='dfiFeatured[]' value='{$featured_img}'  class='dfiImageHolder' />";
     }
 
     /**
@@ -429,21 +430,21 @@ class Dynamic_Featured_Image {
      * @return void
      */
     public function ajax_callback() {
-        $featuredId = isset( $_POST['id'] ) ? (int) strip_tags( trim( $_POST['id'] ) ) : null;
+        $featured_id = isset( $_POST['id'] ) ? (int) strip_tags( trim( $_POST['id'] ) ) : null;
 
-        if ( is_null( $featuredId ) ) {
+        if ( is_null( $featured_id ) ) {
             return;
         }
 
-        echo $this->_nonce_field( 'dfi_fimageplug-' . $featuredId );
+        echo $this->_nonce_field( 'dfi_fimageplug-' . $featured_id );
         ?>
         <a href="javascript:void(0)" class="dfiFeaturedImage"
            title="<?php echo __( 'Set Featured Image', $this->_textDomain ) ?>"><span
                     class="dashicons dashicons-camera"></span></a><br/>
         <img src="" class="dfiImg dfiImgEmpty"/>
         <div class="dfiLinks">
-            <a href="javascript:void(0)" data-id="<?php echo $featuredId ?>"
-               data-id-local="<?php echo self::_get_number_translation( ( $featuredId + 1 ) ) ?>"
+            <a href="javascript:void(0)" data-id="<?php echo $featured_id ?>"
+               data-id-local="<?php echo self::_get_number_translation( ( $featured_id + 1 ) ) ?>"
                class="dfiAddNew dashicons dashicons-plus" title="<?php echo __( 'Add New', $this->_textDomain ) ?>"></a>
             <a href="javascript:void(0)" class="dfiRemove dashicons dashicons-minus"
                title="<?php echo __( 'Remove', $this->_textDomain ) ?>"></a>
@@ -653,6 +654,7 @@ class Dynamic_Featured_Image {
      */
     public function get_image_id( $image_url ) {
         $attachment_id = $this->_get_attachment_id( $image_url );
+
         if ( is_null( $attachment_id ) ) {
             // check if the image is edited image.
             // and try to get the attachment id.
@@ -672,7 +674,7 @@ class Dynamic_Featured_Image {
      * @since 2.0.0
      * @access public
      *
-     * @param  string $image_url URL of an image.
+     * @param string $image_url URL of an image.
      *
      * @return string
      */
@@ -818,17 +820,17 @@ class Dynamic_Featured_Image {
      * @return array
      */
     public function get_post_attachment_ids( $post_id ) {
-        $dfiImages = get_post_meta( $post_id, 'dfiFeatured', true );
+        $dfi_images = get_post_meta( $post_id, 'dfiFeatured', true );
+        $ret_val    = array();
 
-        $retVal = array();
-        if ( ! empty( $dfiImages ) && is_array( $dfiImages ) ) {
-            foreach ( $dfiImages as $dfiImage ) {
-                $dfiImageFull = self::_separate( $dfiImage, 'full' );
-                $retVal[]     = $this->get_image_id( $this->__upload_url . $dfiImageFull );
+        if ( ! empty( $dfi_images ) && is_array( $dfi_images ) ) {
+            foreach ( $dfi_images as $dfi_image ) {
+                $dfi_image_full = self::_separate( $dfi_image, 'full' );
+                $ret_val[]     = $this->get_image_id( $this->__upload_url . $dfi_image_full );
             }
         }
 
-        return $retVal;
+        return $ret_val;
     }
 
     /**
@@ -884,7 +886,7 @@ class Dynamic_Featured_Image {
      * @since 2.0.0
      * @access public
      *
-     * @see  get_post_meta()
+     * @see get_post_meta()
      *
      * @param  integer $post_id id of the current post.
      *
@@ -893,24 +895,25 @@ class Dynamic_Featured_Image {
     public function get_featured_images( $post_id = null ) {
         if ( is_null( $post_id ) ) {
             global $post;
+
             $post_id = $post->ID;
         }
 
-        $dfiImages = get_post_meta( $post_id, 'dfiFeatured', true );
+        $dfi_images = get_post_meta( $post_id, 'dfiFeatured', true );
+        $ret_images = array();
 
-        $retImages = array();
-        if ( ! empty( $dfiImages ) && is_array( $dfiImages ) ) {
-            $dfiImages = array_filter( $dfiImages );
+        if ( ! empty( $dfi_images ) && is_array( $dfi_images ) ) {
+            $dfi_images = array_filter( $dfi_images );
 
             $count = 0;
-            foreach ( $dfiImages as $dfiImage ) {
-                $dfiImageTrimmed = self::_separate( $dfiImage );
-                $dfiImageFull    = self::_separate( $dfiImage, 'full' );
+            foreach ( $dfi_images as $dfi_image ) {
+                $dfi_image_trimmed = self::_separate( $dfi_image );
+                $dfi_image_full    = self::_separate( $dfi_image, 'full' );
 
                 try {
-                    $retImages[ $count ]['thumb']         = $this->_get_real_upload_path( $dfiImageTrimmed );
-                    $retImages[ $count ]['full']          = $this->_get_real_upload_path( $dfiImageFull );
-                    $retImages[ $count ]['attachment_id'] = $this->get_image_id( $retImages[ $count ]['full'] );
+                    $ret_images[ $count ]['thumb']         = $this->_get_real_upload_path( $dfi_image_trimmed );
+                    $ret_images[ $count ]['full']          = $this->_get_real_upload_path( $dfi_image_full );
+                    $ret_images[ $count ]['attachment_id'] = $this->get_image_id( $ret_images[ $count ]['full'] );
 
                 } catch ( Exception $e ) {
                     /* Ignore the exception and continue with other featured images */
@@ -920,7 +923,7 @@ class Dynamic_Featured_Image {
             }
         }
 
-        return $retImages;
+        return $ret_images;
     }
 
     /**
@@ -957,26 +960,24 @@ class Dynamic_Featured_Image {
     public function get_all_featured_images( $post_id = null ) {
         if ( is_null( $post_id ) ) {
             global $post;
+
             $post_id = $post->ID;
         }
 
-        $thumbnail_id = get_post_thumbnail_id( $post_id );
-
+        $thumbnail_id         = get_post_thumbnail_id( $post_id );
         $featured_image_array = array();
+
         if ( ! empty( $thumbnail_id ) ) {
             $featured_image         = array(
                 'thumb'         => wp_get_attachment_thumb_url( $thumbnail_id ),
                 'full'          => wp_get_attachment_url( $thumbnail_id ),
                 'attachment_id' => $thumbnail_id,
             );
+
             $featured_image_array[] = $featured_image;
         }
 
-        $dfiImages = $this->get_featured_images( $post_id );
-
-        $all_featured_images = array_merge( $featured_image_array, $dfiImages );
-
-        return $all_featured_images;
+        return array_merge( $featured_image_array, $this->get_featured_images( $post_id ) );
     }
 
     /**
@@ -991,7 +992,7 @@ class Dynamic_Featured_Image {
      *
      * @codeCoverageIgnore
      *
-     * @return    void
+     * @return void
      */
     public function load_plugin_textdomain() {
         load_plugin_textdomain(

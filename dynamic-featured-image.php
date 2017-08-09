@@ -6,7 +6,7 @@
  * Description: Dynamically adds multiple featured image or post thumbnail functionality to your posts, pages and custom post types.
  * Version: 3.5.2
  * Author: Ankit Pokhrel
- * Author URI: http://ankitpokhrel.com.np
+ * Author URI: https://ankitpokhrel.com
  * License: GPL2 or later
  * License URI: http://www.gnu.org/licenses/gpl-2.0.html
  * Text Domain: dynamic-featured-image
@@ -15,7 +15,7 @@
  *
  * @package dynamic-featured-image
  *
- * Copyright (C) 2013 Ankit Pokhrel <ankitpokhrel@gmail.com, http://ankitpokhrel.com.np>,
+ * Copyright (C) 2013 Ankit Pokhrel <info@ankitpokhrel.com, https://ankitpokhrel.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -205,7 +205,7 @@ class Dynamic_Featured_Image {
      */
     public function dfi_action_links( $links ) {
         $upgrade_link = array(
-            '<a href="http://ankitpokhrel.com.np/blog/downloads/dynamic-featured-image-pro/" target="_blank">Upgrade to Premium</a>'
+            '<a href="https://ankitpokhrel.com/explore/downloads/dynamic-featured-image-pro/" target="_blank">Upgrade to Premium</a>'
         );
 
         return array_merge( $links, $upgrade_link );

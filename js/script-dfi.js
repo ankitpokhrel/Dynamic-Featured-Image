@@ -14,9 +14,10 @@ jQuery( document ).ready( function ( $ ) {
     $( document ).on( 'click', '.dfiAddNew', function () {
 
         var obj = $( this ),
-        id = parseInt( $( '.featured-meta-box:last' ).find( '.dfiAddNew' ).data( 'id' ), 10 ),
-        idLocal = $( '.featured-meta-box:last' ).find( '.dfiAddNew' ).attr( 'data-id-local' ),
-        newMetaBox = obj.closest( '.featured-meta-box' ).clone();
+          lastFeaturedMetaBox = $( '.featured-meta-box:last' ),
+          id = parseInt( lastFeaturedMetaBox.find( '.dfiAddNew' ).data( 'id' ), 10 ),
+          idLocal = lastFeaturedMetaBox.find( '.dfiAddNew' ).attr( 'data-id-local' ),
+          newMetaBox = obj.closest( '.featured-meta-box' ).clone();
 
         newMetaBox.find( '.hndle span' ).html( WP_SPECIFIC.metabox_title + " " + idLocal );
         newMetaBox.attr( 'id', 'dfiFeaturedMetaBox' + "-" + (++ id) );
@@ -67,15 +68,11 @@ jQuery( document ).ready( function ( $ ) {
                 .animate( { opacity: 1, display: 'inline-block' }, 600 );
 
             } else {
-
                 dfiMetaBox.fadeOut( 500, function () {
                     $( this ).remove();
                 } );
-
             }
-
         }
-
     } );
 
     // Display custom media uploader and allow to select featured image from the media library.
@@ -84,21 +81,18 @@ jQuery( document ).ready( function ( $ ) {
         current = $( this );
 
         if ( null !== current ) {
-
             var dfi_uploader = wp.media( {
-
                 title: WP_SPECIFIC.mediaSelector_title,
                 button: {
                     text: WP_SPECIFIC.mediaSelector_buttonText
                 },
                 multiple: false,
-
             } ).on( 'select', function () {
-
                 var attachment = dfi_uploader.state().get( 'selection' ).first().toJSON(),
-                fullSize = attachment.url,
-                imgUrl = (typeof attachment.sizes.thumbnail === "undefined") ? fullSize : attachment.sizes.thumbnail.url,
-                imgUrlTrimmed, fullUrlTrimmed;
+                  fullSize = attachment.url,
+                  imgUrl = (typeof attachment.sizes.thumbnail === "undefined") ? fullSize : attachment.sizes.thumbnail.url,
+                  imgUrlTrimmed,
+                  fullUrlTrimmed;
 
                 imgUrlTrimmed = imgUrl.replace( WP_SPECIFIC.upload_url, "" );
                 fullUrlTrimmed = fullSize.replace( WP_SPECIFIC.upload_url, "" );
@@ -120,18 +114,17 @@ jQuery( document ).ready( function ( $ ) {
                  * @type object
                  */
                 var medium = attachment.url;
+
                 if ( typeof attachment.sizes.medium !== "undefined" ) {
                     medium = attachment.sizes.medium.url;
                 }
 
                 featuredBox.find( 'img' ).attr( 'src', medium ).fadeIn( 200 );
                 featuredBox.find( 'input.dfiImageHolder' ).val( dfiFeaturedImages );
-
             } ).open();
         } // End if().
 
         return false;
-
     } );
 
     // Enable toggle of dynamically generated featured box.
@@ -143,11 +136,13 @@ jQuery( document ).ready( function ( $ ) {
     $( document ).on( {
         mouseenter: function () {
             var obj = $( this ).closest( '.featured-meta-box' );
+
             obj.find( '.dfiImg' ).stop( true, true ).animate( { opacity: 0.3 }, 300 );
             obj.find( '.hasFeaturedImage' ).fadeIn( 200 );
         },
         mouseleave: function () {
             var obj = $( this );
+
             obj.find( '.dfiImg' ).stop( true, true ).animate( { opacity: 1 }, 300 );
             obj.find( '.hasFeaturedImage' ).fadeOut( 100 );
         }

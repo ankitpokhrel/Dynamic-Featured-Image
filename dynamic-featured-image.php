@@ -41,8 +41,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Dynamic Featured Image plugin main class.
  *
- * @package dynamic-featured-image
- * @author Ankit Pokhrel <ankitpokhrel@gmail.com>
+ * @author Ankit Pokhrel <info@ankitpokhrel.com>
  * @version 3.0.1
  */
 class Dynamic_Featured_Image {

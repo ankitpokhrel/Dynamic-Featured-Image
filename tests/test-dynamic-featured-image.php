@@ -121,8 +121,8 @@ class DynamicFeaturedImageTest extends WP_UnitTestCase
     /**
      * @covers Dynamic_Featured_Image::featured_meta_box
      * @covers Dynamic_Featured_Image::get_image_thumb
-     * @covers Dynamic_Featured_Image::_get_number_translation
-     * @covers Dynamic_Featured_Image::_get_featured_box
+     * @covers Dynamic_Featured_Image::get_number_translation
+     * @covers Dynamic_Featured_Image::get_featured_box
      */
     public function testFeaturedMetaBox()
     {
@@ -154,8 +154,8 @@ class DynamicFeaturedImageTest extends WP_UnitTestCase
     /**
      * @covers Dynamic_Featured_Image::featured_meta_box
      * @covers Dynamic_Featured_Image::get_image_thumb
-     * @covers Dynamic_Featured_Image::_get_number_translation
-     * @covers Dynamic_Featured_Image::_get_featured_box
+     * @covers Dynamic_Featured_Image::get_number_translation
+     * @covers Dynamic_Featured_Image::get_featured_box
      */
     public function testFeaturedMetaBoxWhenFeaturedIdIsGreaterThanNine()
     {
@@ -216,7 +216,7 @@ class DynamicFeaturedImageTest extends WP_UnitTestCase
 
     /**
      * @covers Dynamic_Featured_Image::get_image_id
-     * @covers Dynamic_Featured_Image::_get_attachment_id
+     * @covers Dynamic_Featured_Image::get_attachment_id
      */
     public function testGetImageId()
     {
@@ -343,7 +343,7 @@ class DynamicFeaturedImageTest extends WP_UnitTestCase
     /**
      * @covers Dynamic_Featured_Image::get_post_attachment_ids
      * @covers Dynamic_Featured_Image::get_image_id
-     * @covers Dynamic_Featured_Image::_separate
+     * @covers Dynamic_Featured_Image::separate
      */
     public function testGetPostAttachmentIds()
     {
@@ -425,9 +425,9 @@ class DynamicFeaturedImageTest extends WP_UnitTestCase
 
     /**
      * @covers Dynamic_Featured_Image::get_featured_images
-     * @covers Dynamic_Featured_Image::_get_real_upload_path
+     * @covers Dynamic_Featured_Image::get_real_upload_path
      * @covers Dynamic_Featured_Image::get_image_id
-     * @covers Dynamic_Featured_Image::_separate
+     * @covers Dynamic_Featured_Image::separate
      */
     public function testGetFeaturedImages()
     {
@@ -456,9 +456,9 @@ class DynamicFeaturedImageTest extends WP_UnitTestCase
 
     /**
      * @covers Dynamic_Featured_Image::get_featured_images
-     * @covers Dynamic_Featured_Image::_get_real_upload_path
+     * @covers Dynamic_Featured_Image::get_real_upload_path
      * @covers Dynamic_Featured_Image::get_image_id
-     * @covers Dynamic_Featured_Image::_separate
+     * @covers Dynamic_Featured_Image::separate
      */
     public function testGetFeaturedImagesWhenPostIdIsNull()
     {

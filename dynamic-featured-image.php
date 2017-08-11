@@ -60,6 +60,13 @@ class Dynamic_Featured_Image {
     const TEXT_DOMAIN = 'dynamic-featured-image';
 
     /**
+     * Documentation Link.
+     *
+     * @since 3.6.0
+     */
+    const WIKI_LINK = 'https://github.com/ankitpokhrel/Dynamic-Featured-Image/wiki';
+
+    /**
      * Image upload directory.
      *
      * @var $upload_dir string
@@ -387,8 +394,8 @@ class Dynamic_Featured_Image {
         }
 
         // Add a nonce field.
-        echo $this->nonce_field( 'dfi_fimageplug-' . $featured_id );
-        echo $this->get_featured_box( $featured_img_trimmed, $featured_img, $featured_id, $thumbnail, $post->ID );
+        echo $this->nonce_field( 'dfi_fimageplug-' . $featured_id ); // WPCS: XSS ok.
+        echo $this->get_featured_box( $featured_img_trimmed, $featured_img, $featured_id, $thumbnail, $post->ID ); // WPCS: XSS ok.
     }
 
     /**
@@ -429,12 +436,13 @@ class Dynamic_Featured_Image {
      * @return void
      */
     public function ajax_callback() {
-        $featured_id = isset( $_POST['id'] ) ? (int) strip_tags( trim( $_POST['id'] ) ) : null;
+        $featured_id = isset( $_POST['id'] ) ? intval( wp_unslash( $_POST['id'] ) ) : null;
 
-        if ( is_null( $featured_id ) ) {
+        if ( ! is_numeric( $featured_id ) ) {
             return;
         }
 
+        // @codingStandardsIgnoreStart
         echo $this->nonce_field( 'dfi_fimageplug-' . $featured_id );
         ?>
         <a href="javascript:void(0)" class="dfiFeaturedImage"
@@ -451,6 +459,7 @@ class Dynamic_Featured_Image {
         <div class="dfiClearFloat"></div>
         <input type="hidden" name="dfiFeatured[]" value="" class="dfiImageHolder"/>
         <?php
+        // @codingStandardsIgnoreEnd
         wp_die( '' );
     }
 
@@ -522,7 +531,7 @@ class Dynamic_Featured_Image {
      *
      * @param  int $post_id Current post id.
      *
-     * @return bool
+     * @return bool|null
      */
     public function save_meta( $post_id ) {
         // Check auto save.
@@ -530,14 +539,21 @@ class Dynamic_Featured_Image {
             return false;
         }
 
-        if ( $this->verify_nonces() ) {
-            // Check permission before saving data.
-            if ( current_user_can( 'edit_posts', $post_id ) && isset( $_POST['dfiFeatured'] ) ) {
-                update_post_meta( $post_id, 'dfiFeatured', $_POST['dfiFeatured'] );
-            }
+        if ( ! $this->verify_nonces() ) {
+            return false;
         }
 
-        return false;
+        // Check permission before saving data.
+        if ( current_user_can( 'edit_posts', $post_id ) && isset( $_POST['dfiFeatured'] ) ) {
+            $featured_images = is_array( $_POST['dfiFeatured'] ) ? $_POST['dfiFeatured'] : []; // WPCS: sanitization ok.
+
+            $sanitized = [];
+            foreach ( $featured_images as $image ) {
+                $sanitized[] = sanitize_text_field( wp_unslash( $image ) );
+            }
+
+            update_post_meta( $post_id, 'dfiFeatured', $sanitized );
+        }
     }
 
     /**
@@ -550,10 +566,16 @@ class Dynamic_Featured_Image {
      */
     protected function verify_nonces() {
         $keys = array_keys( $_POST );
+
         foreach ( $keys as $key ) {
             if ( preg_match( '/dfi_fimageplug-\d+$/', $key ) ) {
+                $nonce = isset( $_POST[ $key ] ) ? sanitize_text_field( wp_unslash( $_POST[ $key ] ) ) : '';
+
                 // Verify nonce.
-                if ( ! wp_verify_nonce( $_POST[ $key ], plugin_basename( __FILE__ ) ) ) {
+                if ( ! wp_verify_nonce(
+                    $nonce,
+                    plugin_basename( __FILE__ )
+                ) ) {
                     return false;
                 }
             }
@@ -571,8 +593,10 @@ class Dynamic_Featured_Image {
      * @return void
      */
     public function update_notice() {
-        $info = __( 'ATTENTION! Please read the <a href="https://github.com/ankitpokhrel/Dynamic-Featured-Image/wiki" target="_blank">DOCUMENTATION</a> properly before update.', self::TEXT_DOMAIN );
-        echo '<div style="color:red; padding:7px 0;">' . strip_tags( $info, '<a><b><i><span>' ) . '</div>';
+        $info = __( 'ATTENTION! Please read the <a href="' . self::WIKI_LINK . '" target="_blank">DOCUMENTATION</a> properly before update.',
+        self::TEXT_DOMAIN );
+
+        echo '<span style="color:red; padding:7px 0; display: block">' . strip_tags( $info, '<a><b><i><span>' ) . '</span>'; // WPCS: XSS ok.
     }
 
     /**

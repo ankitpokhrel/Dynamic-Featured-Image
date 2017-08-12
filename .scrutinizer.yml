@@ -1,13 +1,4 @@
 ---
-build:
-  tests:
-    override:
-      -
-        command: "vendor/bin/phpunit --coverage-clover=coverage.clover"
-        coverage:
-          file: coverage.clover
-          format: clover
-
 checks:
   php:
     code_rating: true
@@ -19,4 +10,5 @@ filter:
 
 tools:
   external_code_coverage:
-    runs: 2
+    runs: 1
+    timeout: 600

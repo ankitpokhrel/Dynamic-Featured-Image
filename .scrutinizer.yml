@@ -9,6 +9,4 @@ filter:
     - uninstall.php
 
 tools:
-  external_code_coverage:
-    runs: 1
-    timeout: 600
+  external_code_coverage: true

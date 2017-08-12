@@ -78,7 +78,7 @@ You can use `dfi_post_types` filter to allow DFI only in a specific post types.
 ```
 add_filter('dfi_post_types', 'allowed_post_types');
 function allowed_post_types() {
-	return array('post'); //show DFI only in post
+  return array('post'); //show DFI only in post
 }
 ```
 
@@ -87,7 +87,7 @@ Use `dfi_post_type_user_filter` filter to block DFI from post types.
 ```
 add_filter('dfi_post_type_user_filter', 'blocked_post_types');
 function blocked_post_types() {
-	return array('page'); //block DFI in page
+  return array('page'); //block DFI in page
 }
 ```
 
@@ -96,7 +96,7 @@ Use `dfi_set_metabox_title` filter to change the metabox default title (Featured
 ```
 add_filter('dfi_set_metabox_title', 'set_metabox_title');
 function set_metabox_title( $title ) {
-	return "My custom metabox title";
+  return "My custom metabox title";
 }
 ```
 

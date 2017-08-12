@@ -64,7 +64,14 @@ class Dynamic_Featured_Image {
      *
      * @since 3.6.0
      */
-    const WIKI_LINK = 'https://github.com/ankitpokhrel/Dynamic-Featured-Image/wiki';
+    const WIKI_LINK = 'https://github.com/ankitpokhrel/Dynamic-Featured-Image/wiki/';
+
+    /**
+     * Upgrade Link.
+     *
+     * @since 3.6.0
+     */
+    const UPGRADE_LINK = 'https://ankitpokhrel.com/explore/dynamic-featured-image-pro/';
 
     /**
      * Image upload directory.
@@ -209,7 +216,7 @@ class Dynamic_Featured_Image {
      */
     public function dfi_action_links( $links ) {
         $upgrade_link = array(
-            '<a href="https://ankitpokhrel.com/explore/downloads/dynamic-featured-image-pro/" target="_blank">Upgrade to Premium</a>'
+            '<a href="' . self::UPGRADE_LINK . '" target="_blank">Upgrade to Premium</a>'
         );
 
         return array_merge( $links, $upgrade_link );

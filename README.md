@@ -101,9 +101,28 @@ add_filter('dfi_set_metabox_title', 'set_metabox_title');
 ```
 
 ### Translation Guidelines
-The translations live in the `languages` folder.
+All translations live in the `languages` folder.
 
 If you are interested in translating the plugin in your language, first make sure if the translation is not already available. The name of the file is important because there’s a particular format you should follow for consistency. For example, if you’re translating Nepali for Nepal, the file should be `dynamic-featured-image-ne_NP.po` – `dynamic-featured-image` for the plugin itself, `ne` for the language and `NP` for the country.
+
+### Development
+1. Install [PHPUnit](https://phpunit.de/) and [composer](https://getcomposer.org/) if you haven't already.
+2. Install required dependencies
+     ```shell
+     $ composer install
+     ```
+3. Build test using installation script
+    ```shell
+    $ ./bin/install-wp-tests.sh <test-db-name> <db-user> <db-pass> [db-host] [wp-version] [skip-database-creation]
+    ```
+4. Run tests with phpunit
+    ```shell
+    $ ./vendor/bin/phpunit
+    ```
+5. Validate changes against [WordPress Coding Standards](https://github.com/WordPress-Coding-Standards/WordPress-Coding-Standards)
+    ```shell
+    $ phpcs <dfi-plugin-dir or filename>
+    ```
 
 ### Dynamic Featured Image PRO
 A premium version of this plugin is also available. Users looking for more timely/in-depth support and extended features are encouraged to check out [Dynamic Featured Image PRO](http://ankitpokhrel.com/blog/downloads/dynamic-featured-image-pro/).

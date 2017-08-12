@@ -603,7 +603,7 @@ class Dynamic_Featured_Image {
         $info = __( 'ATTENTION! Please read the <a href="' . self::WIKI_LINK . '" target="_blank">DOCUMENTATION</a> properly before update.',
         self::TEXT_DOMAIN );
 
-        echo '<span style="color:red; padding:7px 0; display: block">' . strip_tags( $info, '<a><b><i><span>' ) . '</span>'; // WPCS: XSS ok.
+        echo '<span style="color: red; padding: 7px 0; display: block">' . strip_tags( $info, '<a><b><i><span>' ) . '</span>'; // WPCS: XSS ok.
     }
 
     /**
@@ -856,7 +856,7 @@ class Dynamic_Featured_Image {
         if ( ! empty( $dfi_images ) && is_array( $dfi_images ) ) {
             foreach ( $dfi_images as $dfi_image ) {
                 $dfi_image_full = $this->separate( $dfi_image, 'full' );
-                $ret_val[]     = $this->get_image_id( $this->upload_url . $dfi_image_full );
+                $ret_val[]     = (int) $this->get_image_id( $this->upload_url . $dfi_image_full );
             }
         }
 

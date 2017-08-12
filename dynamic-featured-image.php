@@ -348,7 +348,7 @@ class Dynamic_Featured_Image {
     }
 
     /**
-     * Create a nonce field
+     * Create a nonce field.
      *
      * @since  3.5.0
      *
@@ -366,7 +366,7 @@ class Dynamic_Featured_Image {
     }
 
     /**
-     * Featured meta box as seen in the admin
+     * Featured meta box as seen in the admin.
      *
      * @since 1.0.0
      * @access public
@@ -435,7 +435,7 @@ class Dynamic_Featured_Image {
     }
 
     /**
-     * Load new featured meta box via ajax
+     * Load new featured meta box via ajax.
      *
      * @since 1.0.0
      * @access public

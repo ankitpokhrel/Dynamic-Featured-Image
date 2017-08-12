@@ -1,13 +1,22 @@
-# .scrutinizer.yml
-filter:
-    excluded_paths: 
-        - tests/*
-        - uninstall.php
+---
+build:
+  tests:
+    override:
+      -
+        command: "vendor/bin/phpunit --coverage-clover=coverage.clover"
+        coverage:
+          file: coverage.clover
+          format: clover
 
 checks:
-    php:
-        code_rating: true
+  php:
+    code_rating: true
+
+filter:
+  excluded_paths:
+    - tests/*
+    - uninstall.php
 
 tools:
-    external_code_coverage:
-        runs: 2
+  external_code_coverage:
+    runs: 2

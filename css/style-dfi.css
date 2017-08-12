@@ -2,17 +2,17 @@
  * @file style-dfi.css
  *
  * Style for dynamic featured image plugin
- * 
+ *
  * Copyright (c) 2013, Ankit Pokhrel <ankitpokhrel@gmail.com, http://ankitpokhrel.com.np>
  */
 
 .dfiAddNew {
-  float: left; 
+  float: left;
   margin-top: 3px;
 }
 
-.dfiRemove {  
-    float: right;  
+.dfiRemove {
+    float: right;
 }
 
 .dfiLinks{
@@ -29,7 +29,7 @@
 }
 
 img.dfiImg {
-	max-width: 258px;	
+    max-width: 258px;
 }
 
 img.dfiImg[src=""]{
@@ -37,7 +37,7 @@ img.dfiImg[src=""]{
 }
 
 img.dfiImgEmpty {
-	display: none;
+    display: none;
 }
 
 .dfiLoading {
@@ -74,7 +74,7 @@ img.dfiImgEmpty {
   border: none;
   width: auto;
   height: auto;
-  margin: 0 !important; 
+  margin: 0 !important;
   position: absolute;
   top: 30%;
   left: 37%;

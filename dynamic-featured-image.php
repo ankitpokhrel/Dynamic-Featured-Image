@@ -160,8 +160,7 @@ class Dynamic_Featured_Image {
      * @return string
      */
     private function get_protocol() {
-        return ( ( ! empty( $_SERVER['HTTPS'] ) && 'off' !== $_SERVER['HTTPS'] ) ||
-                 ( ! empty( $_SERVER['SERVER_PORT'] ) && 443 === $_SERVER['SERVER_PORT'] ) ) ? 'https://' : 'http://';
+        return is_ssl() ? 'https://' : 'http://';
     }
 
     /**
@@ -246,18 +245,14 @@ class Dynamic_Featured_Image {
 
         $default_filter    = array( 'attachment', 'revision', 'nav_menu_item' );
         $this->user_filter = apply_filters( 'dfi_post_type_user_filter', $this->user_filter );
-        $filter            = array_merge( $default_filter, $this->user_filter );
 
-        $post_types = get_post_types();
-        $post_types = array_diff( $post_types, $filter );
-
+        $post_types = array_diff( get_post_types(), array_merge( $default_filter, $this->user_filter ) );
         $post_types = apply_filters( 'dfi_post_types', $post_types );
 
         if ( ! empty( $featured_data ) && $total_featured >= 1 ) {
             $i = 2;
             foreach ( $featured_data as $featured ) {
-                $this->dfi_add_meta_box( $post_types, $featured, $i );
-                $i ++;
+                $this->dfi_add_meta_box( $post_types, $featured, $i++ );
             }
         } else {
             $this->dfi_add_meta_box( $post_types );
@@ -387,14 +382,9 @@ class Dynamic_Featured_Image {
             $featured_img_full    = $this->separate( $featured_img, 'full' );
         }
 
-        try {
-            $thumbnail = $this->get_image_thumb( $this->upload_url . $featured_img_full, 'medium' );
-            if ( is_null( $thumbnail ) ) {
-                // medium sized thumbnail image is missing.
-                throw new Exception( 'Medium size image not found', 1 );
-            }
-        } catch ( Exception $e ) {
-            // since medium sized thumbnail image was not found,
+        $thumbnail = $this->get_image_thumb( $this->upload_url . $featured_img_full, 'medium' );
+        if ( empty( $thumbnail ) ) {
+            // since medium sized thumbnail image is missing,
             // let's set full image url as thumbnail.
             $thumbnail = $featured_img_full;
         }
@@ -925,7 +915,6 @@ class Dynamic_Featured_Image {
     public function get_featured_images( $post_id = null ) {
         if ( is_null( $post_id ) ) {
             global $post;
-
             $post_id = $post->ID;
         }
 

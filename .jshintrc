@@ -1,0 +1,7 @@
+{
+  "browser": true,
+  "globals": {
+    "wp": true,
+    "DFI_SPECIFIC": true
+  }
+}

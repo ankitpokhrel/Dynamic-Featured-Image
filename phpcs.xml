@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+<!--
+WordPress Coding Standard for PHP_CodeSniffer with some tweaks.
+
+1. Use space for indent instead of tabs.
+2. Super global warning is suppressed.
+3. Class file name errors are ignored.
+4. String literal errors are ignored.
+5. Empty catch is allowed.
+-->
+<ruleset name="DFI">
+    <description>Coding Standard for Dynamic Featured Image Plugin</description>
+
+    <!-- Exclude select folders and files from being checked. -->
+    <exclude-pattern>vendor/*</exclude-pattern>
+    <exclude-pattern>node_modules/*</exclude-pattern>
+    <exclude-pattern>tests/*</exclude-pattern>
+
+    <!-- Use WordPress standard and remove settings not needed.  -->
+    <rule ref="WordPress">
+        <exclude name="Generic.WhiteSpace.DisallowSpaceIndent"/>
+        <exclude name="WordPress.Files.FileName.InvalidClassFileName"/>
+        <exclude name="Generic.CodeAnalysis.EmptyStatement.DetectedCATCH"/>
+        <exclude name="WordPress.WP.I18n.NonSingularStringLiteralText"/>
+        <exclude name="WordPress.WP.I18n.NonSingularStringLiteralDomain"/>
+        <exclude name="WordPress.VIP.SuperGlobalInputUsage"/>
+    </rule>
+
+    <rule ref="WordPress.WP.I18n">
+        <properties>
+            <property name="text_domain" type="array" value="dynamic-featured-image"/>
+        </properties>
+    </rule>
+
+    <rule ref="Generic.WhiteSpace.ScopeIndent">
+        <properties>
+            <property name="exact" value="false"/>
+            <property name="indent" value="4"/>
+            <property name="tabIndent" value="false"/>
+            <property name="ignoreIndentationTokens" type="array"
+                      value="T_COMMENT,T_DOC_COMMENT_OPEN_TAG,T_HEREDOC,T_NOWDOC,T_INLINE_HTML"/>
+        </properties>
+    </rule>
+    <arg name="tab-width" value="4"/>
+    <rule ref="Generic.WhiteSpace.DisallowTabIndent"/>
+
+</ruleset>

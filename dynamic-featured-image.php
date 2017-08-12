@@ -173,7 +173,6 @@ class Dynamic_Featured_Image {
     public function enqueue_admin_scripts() {
         // enqueue styles.
         wp_enqueue_style( 'style-dfi', plugins_url( '/css/style-dfi.css', __FILE__ ), array(), self::VERSION );
-        wp_enqueue_style( 'dashicons', plugins_url( '/css/dashicons.css', __FILE__ ), array(), self::VERSION );
 
         // register script.
         wp_register_script( 'scripts-dfi', plugins_url( '/js/script-dfi.js', __FILE__ ), array( 'jquery' ), self::VERSION );

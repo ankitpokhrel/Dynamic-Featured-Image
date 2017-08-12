@@ -181,12 +181,13 @@ class Dynamic_Featured_Image {
         // localize the script with required data.
         wp_localize_script(
             'scripts-dfi',
-            'WP_SPECIFIC',
+            'DFI_SPECIFIC',
             array(
                 'upload_url'               => $this->upload_url,
                 'metabox_title'            => __( $this->metabox_title, self::TEXT_DOMAIN ),
                 'mediaSelector_title'      => __( 'Dynamic Featured Image - Media Selector', self::TEXT_DOMAIN ),
                 'mediaSelector_buttonText' => __( 'Set Featured Image', self::TEXT_DOMAIN ),
+                'ajax_nonce'               => wp_create_nonce( plugin_basename( __FILE__ ) ),
             )
         );
 
@@ -436,6 +437,8 @@ class Dynamic_Featured_Image {
      * @return void
      */
     public function ajax_callback() {
+        check_ajax_referer( plugin_basename( __FILE__ ), 'security' );
+
         $featured_id = isset( $_POST['id'] ) ? intval( wp_unslash( $_POST['id'] ) ) : null;
 
         if ( ! is_numeric( $featured_id ) ) {
@@ -544,8 +547,8 @@ class Dynamic_Featured_Image {
         }
 
         // Check permission before saving data.
-        if ( current_user_can( 'edit_posts', $post_id ) && isset( $_POST['dfiFeatured'] ) ) {
-            $featured_images = is_array( $_POST['dfiFeatured'] ) ? $_POST['dfiFeatured'] : []; // WPCS: sanitization ok.
+        if ( current_user_can( 'edit_posts', $post_id ) && isset( $_POST['dfiFeatured'] ) ) { // WPCS: CSRF ok.
+            $featured_images = is_array( $_POST['dfiFeatured'] ) ? $_POST['dfiFeatured'] : []; // WPCS: sanitization ok, CSRF ok.
 
             $sanitized = [];
             foreach ( $featured_images as $image ) {
@@ -565,19 +568,18 @@ class Dynamic_Featured_Image {
      * @return bool
      */
     protected function verify_nonces() {
-        $keys = array_keys( $_POST );
+        $keys = preg_grep( '/dfi_fimageplug-\d+$/', array_keys( $_POST ) ); // WPCS: CSRF ok.
+
+        if ( empty( $keys ) ) {
+            return false;
+        }
 
         foreach ( $keys as $key ) {
-            if ( preg_match( '/dfi_fimageplug-\d+$/', $key ) ) {
-                $nonce = isset( $_POST[ $key ] ) ? sanitize_text_field( wp_unslash( $_POST[ $key ] ) ) : '';
-
-                // Verify nonce.
-                if ( ! wp_verify_nonce(
-                    $nonce,
-                    plugin_basename( __FILE__ )
-                ) ) {
-                    return false;
-                }
+            // Verify nonce.
+            if ( ! isset( $_POST[ $key ] ) ||
+                 ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST[ $key ] ) ), plugin_basename( __FILE__ ) )
+            ) {
+                return false;
             }
         }
 

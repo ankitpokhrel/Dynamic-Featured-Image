@@ -19,7 +19,7 @@ jQuery( document ).ready( function ( $ ) {
           idLocal = lastFeaturedMetaBox.find( '.dfiAddNew' ).attr( 'data-id-local' ),
           newMetaBox = obj.closest( '.featured-meta-box' ).clone();
 
-        newMetaBox.find( '.hndle span' ).html( WP_SPECIFIC.metabox_title + " " + idLocal );
+        newMetaBox.find( '.hndle span' ).html( DFI_SPECIFIC.metabox_title + " " + idLocal );
         newMetaBox.attr( 'id', 'dfiFeaturedMetaBox' + "-" + (++ id) );
         newMetaBox.find( '.handlediv' ).addClass( 'dfiDynamicBox' );
 
@@ -31,7 +31,11 @@ jQuery( document ).ready( function ( $ ) {
         $.ajax( {
             type: 'POST',
             url: 'admin-ajax.php',
-            data: { action: 'dfiMetaBox_callback', id: id },
+            data: {
+                action: 'dfiMetaBox_callback',
+                security: DFI_SPECIFIC.ajax_nonce,
+                id: id
+            },
             success: function ( response ) {
                 metaBoxContentObj.append( response );
                 newMetaBox.appendTo( obj.closest( '.featured-meta-box' ).parent() );
@@ -58,7 +62,7 @@ jQuery( document ).ready( function ( $ ) {
             var dfiMetaBox = $( this ).closest( '.featured-meta-box' ),
             totalMetaBox = $( '.featured-meta-box' ).length;
 
-            if ( totalMetaBox === 1 ) {
+            if ( 1 === totalMetaBox ) {
 
                 dfiMetaBox.find( '.dfiImg' ).attr( 'src', '' );
                 dfiMetaBox.find( '.dfiImageHolder' ).val( '' );
@@ -82,9 +86,9 @@ jQuery( document ).ready( function ( $ ) {
 
         if ( null !== current ) {
             var dfi_uploader = wp.media( {
-                title: WP_SPECIFIC.mediaSelector_title,
+                title: DFI_SPECIFIC.mediaSelector_title,
                 button: {
-                    text: WP_SPECIFIC.mediaSelector_buttonText
+                    text: DFI_SPECIFIC.mediaSelector_buttonText
                 },
                 multiple: false,
             } ).on( 'select', function () {
@@ -94,8 +98,8 @@ jQuery( document ).ready( function ( $ ) {
                   imgUrlTrimmed,
                   fullUrlTrimmed;
 
-                imgUrlTrimmed = imgUrl.replace( WP_SPECIFIC.upload_url, "" );
-                fullUrlTrimmed = fullSize.replace( WP_SPECIFIC.upload_url, "" );
+                imgUrlTrimmed = imgUrl.replace( DFI_SPECIFIC.upload_url, "" );
+                fullUrlTrimmed = fullSize.replace( DFI_SPECIFIC.upload_url, "" );
 
                 var featuredBox = current.parent();
 

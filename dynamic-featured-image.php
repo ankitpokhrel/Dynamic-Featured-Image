@@ -545,13 +545,28 @@ class Dynamic_Featured_Image {
         if ( current_user_can( 'edit_posts', $post_id ) && isset( $_POST['dfiFeatured'] ) ) { // WPCS: CSRF ok.
             $featured_images = is_array( $_POST['dfiFeatured'] ) ? $_POST['dfiFeatured'] : []; // WPCS: sanitization ok, CSRF ok.
 
-            $sanitized = [];
-            foreach ( $featured_images as $image ) {
-                $sanitized[] = sanitize_text_field( wp_unslash( $image ) );
-            }
-
-            update_post_meta( $post_id, 'dfiFeatured', $sanitized );
+            update_post_meta( $post_id, 'dfiFeatured', $this->sanitize_array( $featured_images ) );
         }
+    }
+
+    /**
+     * Sanitize array.
+     *
+     * @since 3.6.0
+     * @access protected
+     *
+     * @param array $input_array Input array.
+     *
+     * @return array
+     */
+    protected function sanitize_array( $input_array ) {
+        $sanitized = [];
+
+        foreach ( $input_array as $value ) {
+            $sanitized[] = sanitize_text_field( wp_unslash( $value ) );
+        }
+
+        return $sanitized;
     }
 
     /**

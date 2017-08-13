@@ -869,6 +869,26 @@ class Dynamic_Featured_Image {
     }
 
     /**
+     * Get real post id.
+     *
+     * @since 3.6.0
+     * @access protected
+     *
+     * @param int|null $post_id Post id.
+     *
+     * @return int|null
+     */
+    protected function get_real_post_id( $post_id = null ) {
+        if ( ! is_null( $post_id ) && is_numeric( $post_id ) ) {
+            return $post_id;
+        }
+
+        global $post;
+
+        return $post->ID;
+    }
+
+    /**
      * Fetches featured image data of nth position.
      *
      * @since  3.0.0
@@ -882,10 +902,7 @@ class Dynamic_Featured_Image {
      * @return array if found, null otherwise.
      */
     public function get_nth_featured_image( $position, $post_id = null ) {
-        if ( is_null( $post_id ) ) {
-            global $post;
-            $post_id = $post->ID;
-        }
+        $post_id = $this->get_real_post_id( ( $post_id ) );
 
         $featured_images = $this->get_featured_images( $post_id );
 
@@ -923,16 +940,12 @@ class Dynamic_Featured_Image {
      *
      * @see get_post_meta()
      *
-     * @param  integer $post_id id of the current post.
+     * @param  int $post_id id of the current post.
      *
      * @return array
      */
     public function get_featured_images( $post_id = null ) {
-        if ( is_null( $post_id ) ) {
-            global $post;
-            $post_id = $post->ID;
-        }
-
+        $post_id    = $this->get_real_post_id( $post_id );
         $dfi_images = get_post_meta( $post_id, 'dfiFeatured', true );
         $ret_images = array();
 
@@ -948,7 +961,6 @@ class Dynamic_Featured_Image {
                     $ret_images[ $count ]['thumb']         = $this->get_real_upload_path( $dfi_image_trimmed );
                     $ret_images[ $count ]['full']          = $this->get_real_upload_path( $dfi_image_full );
                     $ret_images[ $count ]['attachment_id'] = $this->get_image_id( $ret_images[ $count ]['full'] );
-
                 } catch ( Exception $e ) {
                     /* Ignore the exception and continue with other featured images */
                 }
@@ -992,14 +1004,9 @@ class Dynamic_Featured_Image {
      * @return array An array of images or an empty array on failure
      */
     public function get_all_featured_images( $post_id = null ) {
-        if ( is_null( $post_id ) ) {
-            global $post;
-
-            $post_id = $post->ID;
-        }
-
-        $thumbnail_id         = get_post_thumbnail_id( $post_id );
-        $featured_image_array = array();
+        $post_id      = $this->get_real_post_id( $post_id );
+        $thumbnail_id = get_post_thumbnail_id( $post_id );
+        $all_images   = array();
 
         if ( ! empty( $thumbnail_id ) ) {
             $featured_image         = array(
@@ -1008,10 +1015,10 @@ class Dynamic_Featured_Image {
                 'attachment_id' => $thumbnail_id,
             );
 
-            $featured_image_array[] = $featured_image;
+            $all_images[] = $featured_image;
         }
 
-        return array_merge( $featured_image_array, $this->get_featured_images( $post_id ) );
+        return array_merge( $all_images, $this->get_featured_images( $post_id ) );
     }
 
     /**

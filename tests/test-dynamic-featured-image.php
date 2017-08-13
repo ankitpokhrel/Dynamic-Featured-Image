@@ -378,6 +378,7 @@ class Dynamic_Featured_Image_Test extends WP_UnitTestCase {
      *
      * @covers ::get_nth_featured_image
      * @covers ::get_featured_images
+     * @covers ::get_real_post_id
      */
     public function it_gets_nth_featured_image() {
         $featuredImage2 = [
@@ -416,6 +417,7 @@ class Dynamic_Featured_Image_Test extends WP_UnitTestCase {
      *
      * @covers ::get_nth_featured_image
      * @covers ::get_featured_images
+     * @covers ::get_real_post_id
      */
     public function it_gets_nth_featured_image_when_post_id_is_null() {
         $expected = [
@@ -455,6 +457,7 @@ class Dynamic_Featured_Image_Test extends WP_UnitTestCase {
      * @covers ::get_real_upload_path
      * @covers ::get_image_id
      * @covers ::separate
+     * @covers ::get_real_post_id
      */
     public function it_gets_featured_images() {
         $expected = [
@@ -487,6 +490,7 @@ class Dynamic_Featured_Image_Test extends WP_UnitTestCase {
      * @covers ::get_real_upload_path
      * @covers ::get_image_id
      * @covers ::separate
+     * @covers ::get_real_post_id
      */
     public function it_gets_featured_images_when_post_id_is_null() {
         $expected = [
@@ -525,6 +529,7 @@ class Dynamic_Featured_Image_Test extends WP_UnitTestCase {
      *
      * @covers ::get_all_featured_images
      * @covers ::get_featured_images
+     * @covers ::get_real_post_id
      */
     public function it_gets_all_featured_images() {
         $expected = [
@@ -560,6 +565,7 @@ class Dynamic_Featured_Image_Test extends WP_UnitTestCase {
      *
      * @covers ::get_all_featured_images
      * @covers ::get_featured_images
+     * @covers ::get_real_post_id
      */
     public function it_gets_all_featured_images_when_post_id_is_null() {
         $expected = [

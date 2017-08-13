@@ -11,6 +11,7 @@
     ".scrutinizer.yml",
     ".travis.yml",
     "phpunit.xml",
+    "phpcs.xml",
     "README.md"
   ]
 }

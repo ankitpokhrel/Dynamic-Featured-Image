@@ -7,7 +7,6 @@
 ## Dynamic Featured Image (A WordPress Plugin)  
 [![Download](https://img.shields.io/wordpress/plugin/dt/dynamic-featured-image.svg?style=flat-square)](https://wordpress.org/plugins/dynamic-featured-image)
 [![Build](https://img.shields.io/travis/ankitpokhrel/Dynamic-Featured-Image.svg?style=flat-square)](https://travis-ci.org/ankitpokhrel/Dynamic-Featured-Image)
-[![Code Coverage](https://img.shields.io/scrutinizer/coverage/g/ankitpokhrel/Dynamic-Featured-Image.svg?style=flat-square)](https://scrutinizer-ci.com/g/ankitpokhrel/Dynamic-Featured-Image/)
 [![Code Climate](https://img.shields.io/codeclimate/github/ankitpokhrel/Dynamic-Featured-Image.svg?style=flat-square)](https://codeclimate.com/github/ankitpokhrel/Dynamic-Featured-Image)
 [![Scrutinizer Code Quality](https://img.shields.io/scrutinizer/g/ankitpokhrel/Dynamic-Featured-Image.svg?style=flat-square)](https://scrutinizer-ci.com/g/ankitpokhrel/Dynamic-Featured-Image/)
 
@@ -30,16 +29,16 @@ bower install dynamic-featured-image
 ### How it works?
 1. After successfull plugin activation go to `add` or `edit` page of posts or pages and you will notice a box for second featured image.
 
-  ![New featured image box](http://ankitpokhrel.com/DFI/screenshot-1.png)
+  ![New featured image box](https://ankitpokhrel.com/DFI/screenshot-1.png)
 
 2. Click `Set featured image` icon, select required image from the "Dynamic Featured Image Media Selector" popup and click `Set Featured Image`.
 
-  ![Dynamic Featured Image Media Selector](http://ankitpokhrel.com/DFI/screenshot-2.png)
+  ![Dynamic Featured Image Media Selector](https://ankitpokhrel.com/DFI/screenshot-2.png)
 
 3. Click on `Add New` to add new featured image or use `Remove` link to remove the featured image box.
  
-  ![Featured Images](http://ankitpokhrel.com/DFI/screenshot-3.png)  
-  ![Featured Images](http://ankitpokhrel.com/DFI/screenshot-4.png)
+  ![Featured Images](https://ankitpokhrel.com/DFI/screenshot-3.png)  
+  ![Featured Images](https://ankitpokhrel.com/DFI/screenshot-4.png)
 
 4. After adding featured images click `publish` or `update` to save featured images.
 
@@ -51,9 +50,9 @@ bower install dynamic-featured-image
 * [API](https://github.com/ankitpokhrel/Dynamic-Featured-Image/wiki/API)
 
 ### Other Resources
-* [Blog](http://ankitpokhrel.com/blog/category/dynamic-featured-image/)
-* [FAQs](http://wordpress.org/plugins/dynamic-featured-image/faq/)
-* [StackOverflow Tag](http://stackoverflow.com/questions/tagged/dynamic-featured-image)
+* [Blog](https://ankitpokhrel.com/explore/category/dynamic-featured-image/)
+* [FAQs](https://wordpress.org/plugins/dynamic-featured-image/faq/)
+* [StackOverflow Tag](https://stackoverflow.com/questions/tagged/dynamic-featured-image)
 
 #### List of Available Functions
 1. [get_image_id( $image_url )](https://github.com/ankitpokhrel/Dynamic-Featured-Image/wiki/API#wiki-1-get_image_id-image_url-)
@@ -125,7 +124,7 @@ If you are interested in translating the plugin in your language, first make sur
     ```
 
 ### Dynamic Featured Image PRO
-A premium version of this plugin is also available. Users looking for more timely/in-depth support and extended features are encouraged to check out [Dynamic Featured Image PRO](http://ankitpokhrel.com/blog/downloads/dynamic-featured-image-pro/).
+A premium version of this plugin is also available. Users looking for more timely/in-depth support and extended features are encouraged to check out [Dynamic Featured Image PRO](https://ankitpokhrel.com/explore/dynamic-featured-image-pro/).
 
 ### Author available for hire
 

@@ -648,6 +648,7 @@ class Dynamic_Featured_Image_Test extends WP_UnitTestCase {
      *
      * @covers ::save_meta
      * @covers ::get_featured_images
+     * @covers ::sanitize_array
      */
     public function it_saves_meta() {
         $mock = $this->mock_builder

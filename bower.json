@@ -1,15 +1,16 @@
 {
-	"name": "dynamic-featured-image",
-	"version": "3.5.0",
-	"main": "dynamic-featured-image.php",
-	"ignore": [
-		".bowerrc",
-		".gitignore",
-		"bower.json",
-		"composer.json",
-		".scrutinizer.yml",
-		".travis.yml",
-		"phpunit.xml",
-		"README.md"
-	]
+  "name": "dynamic-featured-image",
+  "version": "3.6.0",
+  "main": "dynamic-featured-image.php",
+  "ignore": [
+    ".bowerrc",
+    ".gitignore",
+    ".jshintrc",
+    "bower.json",
+    "composer.json",
+    ".scrutinizer.yml",
+    ".travis.yml",
+    "phpunit.xml",
+    "README.md"
+  ]
 }

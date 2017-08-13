@@ -59,7 +59,7 @@ class Dynamic_Featured_Image_Ajax_Test extends WP_Ajax_UnitTestCase {
 
         $_POST = [
             'id' => $this->post_id,
-            'security' => wp_create_nonce( $plugin_folder . 'dynamic-featured-image.php' )
+            'security' => wp_create_nonce( $plugin_folder . 'dynamic-featured-image.php' ),
         ];
 
         try {

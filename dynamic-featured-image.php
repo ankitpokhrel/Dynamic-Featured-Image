@@ -543,7 +543,7 @@ class Dynamic_Featured_Image {
 
         // Check permission before saving data.
         if ( current_user_can( 'edit_posts', $post_id ) && isset( $_POST['dfiFeatured'] ) ) { // WPCS: CSRF ok.
-            $featured_images = is_array( $_POST['dfiFeatured'] ) ? $_POST['dfiFeatured'] : []; // WPCS: sanitization ok, CSRF ok.
+            $featured_images = is_array( $_POST['dfiFeatured'] ) ? $_POST['dfiFeatured'] : array(); // WPCS: sanitization ok, CSRF ok.
 
             update_post_meta( $post_id, 'dfiFeatured', $this->sanitize_array( $featured_images ) );
         }
@@ -560,7 +560,7 @@ class Dynamic_Featured_Image {
      * @return array
      */
     protected function sanitize_array( $input_array ) {
-        $sanitized = [];
+        $sanitized = array();
 
         foreach ( $input_array as $value ) {
             $sanitized[] = sanitize_text_field( wp_unslash( $value ) );
@@ -861,7 +861,7 @@ class Dynamic_Featured_Image {
         if ( ! empty( $dfi_images ) && is_array( $dfi_images ) ) {
             foreach ( $dfi_images as $dfi_image ) {
                 $dfi_image_full = $this->separate( $dfi_image, 'full' );
-                $ret_val[]     = (int) $this->get_image_id( $this->upload_url . $dfi_image_full );
+                $ret_val[]      = (int) $this->get_image_id( $this->upload_url . $dfi_image_full );
             }
         }
 

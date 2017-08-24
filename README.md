@@ -127,7 +127,6 @@ If you are interested in translating the plugin in your language, first make sur
 A premium version of this plugin is also available. Users looking for more timely/in-depth support and extended features are encouraged to check out [Dynamic Featured Image PRO](https://ankitpokhrel.com/explore/dynamic-featured-image-pro/).
 
 ### Author available for hire
-
 I'm available for freelance work. Remote worldwide or locally around Nepal. Drop me a line @ankitpokhrel if you like.
 
 ### Questions about this project?

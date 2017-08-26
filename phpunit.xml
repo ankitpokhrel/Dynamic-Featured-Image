@@ -12,11 +12,9 @@
         </testsuite>
     </testsuites>
     <filter>
-        <whitelist processUncoveredFilesFromWhitelist="true">
-            <directory suffix=".php">.</directory>
-            <exclude>
-                <directory suffix=".php">./tests</directory>
-            </exclude>
+        <whitelist addUncoveredFilesFromWhitelist="true">
+            <file>./dynamic-featured-image.php</file>
+            <file>./uninstall.php</file>
         </whitelist>
     </filter>
 </phpunit>

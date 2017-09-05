@@ -169,7 +169,7 @@ class Dynamic_Featured_Image {
      * @since 1.0.0
      * @access public
      *
-     * @see  wp_enque_style()
+     * @see  wp_enqueue_style()
      * @see  wp_register_script()
      * @see  wp_enqueue_script()
      *
@@ -695,6 +695,7 @@ class Dynamic_Featured_Image {
             // and try to get the attachment id.
             $image_url = str_replace( $this->upload_url . '/', '', $image_url );
             $row       = $this->execute_query( $this->db->prepare( 'SELECT post_id FROM ' . $this->db->postmeta . ' WHERE meta_value = %s', $image_url ) );
+            
             if ( ! is_null( $row ) ) {
                 $attachment_id = $row;
             }

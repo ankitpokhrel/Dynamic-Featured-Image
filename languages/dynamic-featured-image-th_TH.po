@@ -1,0 +1,68 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: dynamic-featured-image\n"
+"POT-Creation-Date: 2014-07-19 16:43+0545\n"
+"PO-Revision-Date: 2017-10-21 14:35+0700\n"
+"Language-Team: Ankit Pokhrel <ankitpokhrel@gmail.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 2.0.4\n"
+"X-Poedit-KeywordsList: _;gettext;gettext_noop;__;_e\n"
+"X-Poedit-Basepath: .\n"
+"Last-Translator: \n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"Language: th\n"
+
+msgid "Featured Image "
+msgstr "รูปภาพเด่น "
+
+msgid "Dynamic Featured Image - Media Selector"
+msgstr "รูปภาพเด่นแบบไดนามิก - ตัวเลือกรุปภาพ"
+
+msgid "Set Featured Image"
+msgstr "ตั้งค่ารูปภาพเด่น"
+
+msgid "Add New"
+msgstr "เพิ่มใหม่"
+
+msgid "Remove"
+msgstr "ลบ"
+
+msgid ""
+"ATTENTION! Please read the <a href=\"https://github.com/ankitpokhrel/Dynamic-"
+"Featured-Image/wiki\" target=\"_blank\">DOCUMENTATION</a> properly before "
+"update."
+msgstr ""
+"โปรดทราบ!! กรุณาอ่าน  <a href=\"https://github.com/ankitpokhrel/Dynamic-"
+"Featured-Image/wiki\" target=\"_blank\">เอกสาร</a> ให้ถี่ถ้วนก่อนทำการอัพเดท."
+
+msgid "0"
+msgstr "0"
+
+msgid "1"
+msgstr "1"
+
+msgid "2"
+msgstr "2"
+
+msgid "3"
+msgstr "3"
+
+msgid "4"
+msgstr "4"
+
+msgid "5"
+msgstr "5"
+
+msgid "6"
+msgstr "6"
+
+msgid "7"
+msgstr "7"
+
+msgid "8"
+msgstr "8"
+
+msgid "9"
+msgstr "9"

@@ -91,6 +91,9 @@ jQuery( document ).ready( function ( $ ) {
                     text: DFI_SPECIFIC.mediaSelector_buttonText
                 },
                 multiple: false,
+                library: {
+                    type: [ 'image' ]
+                }
             } ).on( 'select', function () {
                 var attachment = dfi_uploader.state().get( 'selection' ).first().toJSON(),
                   fullSize = attachment.url,

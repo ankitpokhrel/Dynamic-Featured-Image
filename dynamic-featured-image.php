@@ -297,8 +297,8 @@ class Dynamic_Featured_Image {
                     __( $this->metabox_title, self::TEXT_DOMAIN ) . ' ' . $this->get_number_translation( $i ),
                     array( $this, 'featured_meta_box' ),
                     $type,
-                    'side',
-                    'low',
+                    apply_filters( 'dfi_metabox_context', 'side' ),
+                    apply_filters( 'dfi_metabox_priority', 'low' ),
                     array( $featured, $i + 1 )
                 );
 
@@ -311,8 +311,8 @@ class Dynamic_Featured_Image {
                     __( $this->metabox_title, self::TEXT_DOMAIN ) . ' ' . __( 2, self::TEXT_DOMAIN ),
                     array( $this, 'featured_meta_box' ),
                     $type,
-                    'side',
-                    'low',
+                    apply_filters( 'dfi_metabox_context', 'side' ),
+                    apply_filters( 'dfi_metabox_priority', 'low' ),
                     array( null, null )
                 );
 

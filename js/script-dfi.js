@@ -92,7 +92,7 @@ jQuery( document ).ready( function ( $ ) {
                 },
                 multiple: false,
                 library: {
-                    type: [ 'image', 'video' ]
+                    type: [ 'image' ]
                 }
             } ).on( 'select', function () {
                 var attachment = dfi_uploader.state().get( 'selection' ).first().toJSON(),

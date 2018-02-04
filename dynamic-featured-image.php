@@ -3,7 +3,7 @@
  * Plugin Name: Dynamic Featured Image
  * Plugin URI: http://wordpress.org/plugins/dynamic-featured-image/
  * Description: Dynamically adds multiple featured image or post thumbnail functionality to your posts, pages and custom post types.
- * Version: 3.6.1
+ * Version: 3.6.5
  * Author: Ankit Pokhrel
  * Author URI: https://ankitpokhrel.com
  * License: GPL2 or later
@@ -49,7 +49,7 @@ class Dynamic_Featured_Image {
      *
      * @since 3.0.0
      */
-    const VERSION = '3.6.1';
+    const VERSION = '3.6.5';
 
     /**
      * Text domain.
@@ -695,7 +695,7 @@ class Dynamic_Featured_Image {
             // and try to get the attachment id.
             $image_url = str_replace( $this->upload_url . '/', '', $image_url );
             $row       = $this->execute_query( $this->db->prepare( 'SELECT post_id FROM ' . $this->db->postmeta . ' WHERE meta_value = %s', $image_url ) );
-            
+
             if ( ! is_null( $row ) ) {
                 $attachment_id = $row;
             }

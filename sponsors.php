@@ -10,7 +10,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Plugin sponsors.
  *
- * @version 3.6.5
+ * @version 3.6.8
  */
 class PluginSponsor {
     /* Recommend plugins.
@@ -70,7 +70,7 @@ class PluginSponsor {
             return;
         }
 
-        if ($this->is_plugin_installed('mailoptin') && $this->is_plugin_active(self::$sponsors['mailoptin'])) {
+        if ($this->is_plugin_installed(self::$sponsors['mailoptin']) && $this->is_plugin_active(self::$sponsors['mailoptin'])) {
             return;
         }
 
@@ -134,7 +134,7 @@ class PluginSponsor {
      *
      * @return bool
      */
-    public function is_plugin_installed($key)
+    protected function is_plugin_installed($key)
     {
         $installed_plugins = get_plugins();
 
@@ -148,7 +148,7 @@ class PluginSponsor {
      *
      * @return bool
      */
-    public function is_plugin_active($key)
+    protected function is_plugin_active($key)
     {
         return is_plugin_active(self::$sponsors[$key]);
     }
@@ -158,7 +158,7 @@ class PluginSponsor {
      *
      * @return void
      */
-    public function notice_css()
+    protected function notice_css()
     {
         ?>
         <style type="text/css">

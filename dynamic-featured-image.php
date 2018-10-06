@@ -37,8 +37,6 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit();
 }
 
-include 'sponsors.php';
-
 /**
  * Dynamic Featured Image plugin main class.
  *
@@ -1049,6 +1047,9 @@ class Dynamic_Featured_Image {
         );
     }
 }
+
+// Sponsors who support this plugin.
+include 'sponsors.php';
 
 /**
  * Instantiate the main class.

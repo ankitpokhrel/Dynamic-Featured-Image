@@ -17,10 +17,15 @@ class PluginSponsor {
      *
      * @since 3.6.8
      */
-    const RECOMMENDED_PLUGINS = [
+    protected static $sponsors = [
         'mailoptin' => 'mailoptin/mailoptin.php',
     ];
 
+    /**
+     * PluginSponsor constructor.
+     *
+     * @since 3.6.5
+     */
     public function __construct(  )
     {
         // admin notices.
@@ -65,7 +70,7 @@ class PluginSponsor {
             return;
         }
 
-        if ($this->is_plugin_installed('mailoptin') && $this->is_plugin_active(self::RECOMMENDED_PLUGINS['mailoptin'])) {
+        if ($this->is_plugin_installed('mailoptin') && $this->is_plugin_active(self::$sponsors['mailoptin'])) {
             return;
         }
 
@@ -77,7 +82,9 @@ class PluginSponsor {
                 admin_url()
             )
         );
+
         $this->notice_css();
+
         $install_url = wp_nonce_url(
             admin_url('update.php?action=install-plugin&plugin=mailoptin'),
             'install-plugin_mailoptin'
@@ -131,7 +138,7 @@ class PluginSponsor {
     {
         $installed_plugins = get_plugins();
 
-        return isset($installed_plugins[self::RECOMMENDED_PLUGINS[$key]]);
+        return isset($installed_plugins[self::$sponsors[$key]]);
     }
 
     /**
@@ -143,9 +150,14 @@ class PluginSponsor {
      */
     public function is_plugin_active($key)
     {
-        return is_plugin_active(self::RECOMMENDED_PLUGINS[$key]);
+        return is_plugin_active(self::$sponsors[$key]);
     }
 
+    /**
+     * Styles for notice.
+     *
+     * @return void
+     */
     public function notice_css()
     {
         ?>

@@ -17,22 +17,21 @@ class PluginSponsor {
      *
      * @since 3.6.8
      */
-    protected static $sponsors = [
+    protected static $sponsors = array(
         'mailoptin' => 'mailoptin/mailoptin.php',
-    ];
+    );
 
     /**
      * PluginSponsor constructor.
      *
      * @since 3.6.5
      */
-    public function __construct(  )
-    {
+    public function __construct() {
         // admin notices.
-        add_action('admin_notices', array($this, 'admin_notice'));
-        add_action('network_admin_notices', array($this, 'admin_notice'));
+        add_action( 'admin_notices', array( $this, 'admin_notice' ) );
+        add_action( 'network_admin_notices', array( $this, 'admin_notice' ) );
 
-        add_action('admin_init', array($this, 'dismiss_admin_notice'));
+        add_action( 'admin_init', array( $this, 'dismiss_admin_notice' ) );
     }
 
     /**
@@ -43,16 +42,15 @@ class PluginSponsor {
      *
      * @return void
      */
-    public function dismiss_admin_notice()
-    {
-        if ( ! isset($_GET['mo-adaction']) || $_GET['mo-adaction'] != 'mo_dismiss_adnotice') {
+    public function dismiss_admin_notice() {
+        if ( ! isset( $_GET['mo-adaction'] ) || $_GET['mo-adaction'] != 'mo_dismiss_adnotice' ) {
             return;
         }
 
         $url = admin_url();
-        update_option('mo_dismiss_adnotice', 'true');
+        update_option( 'mo_dismiss_adnotice', 'true' );
 
-        wp_redirect($url);
+        wp_redirect( $url );
         exit;
     }
 
@@ -64,20 +62,19 @@ class PluginSponsor {
      *
      * @return void
      */
-    public function admin_notice()
-    {
-        if (get_option('mo_dismiss_adnotice', 'false') == 'true') {
+    public function admin_notice() {
+        if ( get_option( 'mo_dismiss_adnotice', 'false' ) == 'true' ) {
             return;
         }
 
-        if ($this->is_plugin_installed('mailoptin') && $this->is_plugin_active('mailoptin')) {
+        if ( $this->is_plugin_installed( 'mailoptin' ) && $this->is_plugin_active( 'mailoptin' ) ) {
             return;
         }
 
         $dismiss_url = esc_url_raw(
             add_query_arg(
                 array(
-                    'mo-adaction' => 'mo_dismiss_adnotice'
+                    'mo-adaction' => 'mo_dismiss_adnotice',
                 ),
                 admin_url()
             )
@@ -86,32 +83,35 @@ class PluginSponsor {
         $this->notice_css();
 
         $install_url = wp_nonce_url(
-            admin_url('update.php?action=install-plugin&plugin=mailoptin'),
+            admin_url( 'update.php?action=install-plugin&plugin=mailoptin' ),
             'install-plugin_mailoptin'
         );
 
-        $activate_url = wp_nonce_url(admin_url('plugins.php?action=activate&plugin=mailoptin%2Fmailoptin.php'), 'activate-plugin_mailoptin/mailoptin.php');
+        $activate_url = wp_nonce_url( admin_url( 'plugins.php?action=activate&plugin=mailoptin%2Fmailoptin.php' ),
+            'activate-plugin_mailoptin/mailoptin.php' );
         ?>
         <div class="mo-admin-notice notice notice-success">
             <div class="mo-notice-first-half">
                 <p>
                     <?php
                     printf(
-                        __('Free optin form plugin that will %1$sincrease your email list subscribers%2$s and keep them engaged with %1$sautomated and schedule newsletters%2$s.'),
-                        '<span class="mo-stylize"><strong>', '</strong></span>');
+                        __( 'Free optin form plugin that will %1$sincrease your email list subscribers%2$s and keep them engaged with %1$sautomated and schedule newsletters%2$s.' ),
+                        '<span class="mo-stylize"><strong>', '</strong></span>' );
                     ?>
                 </p>
                 <p style="text-decoration: underline;font-size: 12px;">Recommended by Dynamic Featured Image plugin</p>
             </div>
             <div class="mo-notice-other-half">
-                <?php if ( ! $this->is_plugin_installed('mailoptin')) : ?>
-                    <a class="button button-primary button-hero" id="mo-install-mailoptin-plugin" href="<?php echo $install_url; ?>">
-                        <?php _e('Install MailOptin Now for Free!'); ?>
+                <?php if ( ! $this->is_plugin_installed( 'mailoptin' ) ) : ?>
+                    <a class="button button-primary button-hero" id="mo-install-mailoptin-plugin"
+                       href="<?php echo $install_url; ?>">
+                        <?php _e( 'Install MailOptin Now for Free!' ); ?>
                     </a>
                 <?php endif; ?>
-                <?php if ($this->is_plugin_installed('mailoptin') && ! $this->is_plugin_active('mailoptin')) : ?>
-                    <a class="button button-primary button-hero" id="mo-activate-mailoptin-plugin" href="<?php echo $activate_url; ?>">
-                        <?php _e('Activate MailOptin Now!'); ?>
+                <?php if ( $this->is_plugin_installed( 'mailoptin' ) && ! $this->is_plugin_active( 'mailoptin' ) ) : ?>
+                    <a class="button button-primary button-hero" id="mo-activate-mailoptin-plugin"
+                       href="<?php echo $activate_url; ?>">
+                        <?php _e( 'Activate MailOptin Now!' ); ?>
                     </a>
                 <?php endif; ?>
                 <div class="mo-notice-learn-more">
@@ -120,7 +120,7 @@ class PluginSponsor {
             </div>
             <a href="<?php echo $dismiss_url; ?>">
                 <button type="button" class="notice-dismiss">
-                    <span class="screen-reader-text"><?php _e('Dismiss this notice'); ?>.</span>
+                    <span class="screen-reader-text"><?php _e( 'Dismiss this notice' ); ?>.</span>
                 </button>
             </a>
         </div>
@@ -134,11 +134,10 @@ class PluginSponsor {
      *
      * @return bool
      */
-    protected function is_plugin_installed($key)
-    {
+    protected function is_plugin_installed( $key ) {
         $installed_plugins = get_plugins();
 
-        return isset($installed_plugins[self::$sponsors[$key]]);
+        return isset( $installed_plugins[ self::$sponsors[ $key ] ] );
     }
 
     /**
@@ -148,9 +147,8 @@ class PluginSponsor {
      *
      * @return bool
      */
-    protected function is_plugin_active($key)
-    {
-        return is_plugin_active(self::$sponsors[$key]);
+    protected function is_plugin_active( $key )  {
+        return is_plugin_active( self::$sponsors[ $key ] );
     }
 
     /**
@@ -158,8 +156,7 @@ class PluginSponsor {
      *
      * @return void
      */
-    protected function notice_css()
-    {
+    protected function notice_css() {
         ?>
         <style type="text/css">
             .mo-admin-notice {

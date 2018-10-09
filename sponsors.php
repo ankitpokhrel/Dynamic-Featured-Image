@@ -70,7 +70,7 @@ class PluginSponsor {
             return;
         }
 
-        if ($this->is_plugin_installed(self::$sponsors['mailoptin']) && $this->is_plugin_active(self::$sponsors['mailoptin'])) {
+        if ($this->is_plugin_installed('mailoptin') && $this->is_plugin_active('mailoptin')) {
             return;
         }
 

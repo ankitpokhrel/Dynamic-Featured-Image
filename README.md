@@ -1,15 +1,12 @@
 [![Latest Stable Version](https://img.shields.io/wordpress/plugin/v/dynamic-featured-image.svg?style=flat-square)](https://packagist.org/packages/ankitpokhrel/Dynamic-Featured-Image)
 [![WordPress](https://img.shields.io/wordpress/v/dynamic-featured-image.svg?style=flat-square)](https://wordpress.org/plugins/dynamic-featured-image/)
 [![WordPress Rating](https://img.shields.io/wordpress/plugin/r/dynamic-featured-image.svg?style=flat-square)](https://wordpress.org/plugins/dynamic-featured-image/)
-[![twitter](https://img.shields.io/badge/twitter-%40ankitpokhrel-green.svg?style=flat-square)](https://twitter.com/ankitpokhrel)
 [![License](https://img.shields.io/packagist/l/ankitpokhrel/dynamic-featured-image.svg?style=flat-square)](https://packagist.org/packages/ankitpokhrel/dynamic-featured-image)
 
-## Dynamic Featured Image (A WordPress Plugin)  
+## Dynamic Featured Image (A WordPress Plugin)
 [![Download](https://img.shields.io/wordpress/plugin/dt/dynamic-featured-image.svg?style=flat-square)](https://wordpress.org/plugins/dynamic-featured-image)
 [![Build](https://img.shields.io/travis/ankitpokhrel/Dynamic-Featured-Image.svg?style=flat-square)](https://travis-ci.org/ankitpokhrel/Dynamic-Featured-Image)
-[![Code Climate](https://img.shields.io/codeclimate/github/ankitpokhrel/Dynamic-Featured-Image.svg?style=flat-square)](https://codeclimate.com/github/ankitpokhrel/Dynamic-Featured-Image)
 [![Code Coverage](https://img.shields.io/scrutinizer/coverage/g/ankitpokhrel/Dynamic-Featured-Image.svg?style=flat-square)](https://scrutinizer-ci.com/g/ankitpokhrel/Dynamic-Featured-Image/)
-[![Scrutinizer Code Quality](https://img.shields.io/scrutinizer/g/ankitpokhrel/Dynamic-Featured-Image.svg?style=flat-square)](https://scrutinizer-ci.com/g/ankitpokhrel/Dynamic-Featured-Image/)
 
 _Dynamically adds multiple featured image (post thumbnail) functionality to posts, pages and custom post types._
 
@@ -21,7 +18,7 @@ Why limit yourself to only one featured image if you can do some awesome stuffs 
   1. Unzip and upload the `dynamic-featured-images` directory to the plugin directory (`/wp-content/plugins/`) or install it from `Plugins->Add New->Upload`
   2. Activate the plugin through the `Plugins` menu in WordPress.
   3. If you don't see new featured image box, click `Screen Options` in the upper right corner of your wordpress admin and make sure that the `Featured Image 2` box is slected.
-  
+
 ### Bower
 ```
 bower install dynamic-featured-image
@@ -37,8 +34,8 @@ bower install dynamic-featured-image
   ![Dynamic Featured Image Media Selector](https://ankitpokhrel.com/DFI/screenshot-2.png)
 
 3. Click on `Add New` to add new featured image or use `Remove` link to remove the featured image box.
- 
-  ![Featured Images](https://ankitpokhrel.com/DFI/screenshot-3.png)  
+
+  ![Featured Images](https://ankitpokhrel.com/DFI/screenshot-3.png)
   ![Featured Images](https://ankitpokhrel.com/DFI/screenshot-4.png)
 
 4. After adding featured images click `publish` or `update` to save featured images.
@@ -72,7 +69,7 @@ bower install dynamic-featured-image
 14. [get_nth_featured_image( $position, $post_id )](https://github.com/ankitpokhrel/Dynamic-Featured-Image/wiki/API#wiki-14-get_nth_featured_image-position-post_id--null-)
 15. [get_all_featured_images( $post_id )](https://github.com/ankitpokhrel/Dynamic-Featured-Image/wiki/API#15-get_all_featured_images-post_id-)
 16. [get_link_to_image( $attachment_id )](https://github.com/ankitpokhrel/Dynamic-Featured-Image/wiki/API#16-get_link_to_image-attachment_id-)
-  
+
 ### Allowing DFI only in specific post types
 You can use `dfi_post_types` filter to allow DFI only in a specific post types.
 ```

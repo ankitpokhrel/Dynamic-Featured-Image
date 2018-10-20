@@ -24,7 +24,7 @@ class PluginSponsor {
     /**
      * PluginSponsor constructor.
      *
-     * @since 3.6.5
+     * @since 3.6.8
      */
     public function __construct() {
         // admin notices.

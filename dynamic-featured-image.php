@@ -14,7 +14,7 @@
  *
  * @package dynamic-featured-image
  *
- * Copyright (C) 2013 Ankit Pokhrel <info@ankitpokhrel.com, https://ankitpokhrel.com>
+ * Copyright (C) 2013-2019 Ankit Pokhrel <info@ankitpokhrel.com, https://ankitpokhrel.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -41,7 +41,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * Dynamic Featured Image plugin main class.
  *
  * @author Ankit Pokhrel <info@ankitpokhrel.com>
- * @version 3.0.1
+ * @version 3.6.8
  */
 class Dynamic_Featured_Image {
     /**

@@ -134,7 +134,7 @@ class Dynamic_Featured_Image_Test extends WP_UnitTestCase {
      */
     public function it_makes_featured_meta_box() {
         $post             = get_post( $this->post_id );
-        $featured['args'] = [ '/2015/03/dfi-150x150.jpg', 3 ];
+        $featured['args'] = [ '', 3 ];
 
         $mock = $this->mock_builder
             ->setMethods( [ 'nonce_field', 'get_image_id' ] )
@@ -173,7 +173,7 @@ class Dynamic_Featured_Image_Test extends WP_UnitTestCase {
      */
     public function it_makes_meta_box_when_featured_id_is_greater_than_nine() {
         $post             = get_post( $this->post_id );
-        $featured['args'] = [ '/2015/03/dfi-150x150.jpg', 13 ];
+        $featured['args'] = [ '', 13 ];
 
         $mock = $this->mock_builder
             ->setMethods( [ 'nonce_field', 'get_image_id' ] )

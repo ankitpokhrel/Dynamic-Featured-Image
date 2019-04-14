@@ -12,6 +12,7 @@ class Dynamic_Featured_Image_Test extends WP_UnitTestCase {
     protected $attachment_id = null;
     protected $dfi = null;
     protected $plugin_data = null;
+    protected $upload_url;
 
     public function setUp() {
         parent::setUp();
@@ -25,6 +26,8 @@ class Dynamic_Featured_Image_Test extends WP_UnitTestCase {
         $this->post_id = $this->factory->post->create( [
             'post_title' => 'Dynamic Featured Image WordPress Plugin',
         ] );
+
+        $this->upload_url = 'http://example.org/wp-content/uploads';
 
         $this->attachment_id = self::create_attachment_image();
     }
@@ -62,7 +65,7 @@ class Dynamic_Featured_Image_Test extends WP_UnitTestCase {
         $dfiFeatured = [
             '/2015/03/dfi-150x150.jpg,/2015/03/dfi.jpg',
             '/2015/03/dfis-150x150.jpg,/2015/03/dfis.jpg',
-            'http://example.org/wp-content/uploads/2015/03/dfi-pro-150x150.jpg,http://example.org/wp-content/uploads/2015/03/dfi-pro.jpg',
+            $this->upload_url . '/2015/03/dfi-pro-150x150.jpg,' . $this->upload_url . '/2015/03/dfi-pro.jpg',
         ];
 
         add_post_meta( $this->post_id, 'dfiFeatured', $dfiFeatured );
@@ -130,8 +133,8 @@ class Dynamic_Featured_Image_Test extends WP_UnitTestCase {
      * @covers ::get_featured_box
      */
     public function it_makes_featured_meta_box() {
-        $featured['args'] = [ '/2015/03/dfi-150x150.jpg', 3 ];
         $post             = get_post( $this->post_id );
+        $featured['args'] = [ '', 3 ];
 
         $mock = $this->mock_builder
             ->setMethods( [ 'nonce_field' ] )
@@ -142,14 +145,14 @@ class Dynamic_Featured_Image_Test extends WP_UnitTestCase {
              ->with( 'dfi_fimageplug-2' )
              ->will( $this->returnValue( "<input type='hidden' id='dfi_fimageplug-2' name='dfi_fimageplug-2' value='c7ad4cc095' /><input type='hidden' name='_wp_http_referer' value='' />" ) );
 
-        $expectedOutput = "<input type='hidden' id='dfi_fimageplug-2' name='dfi_fimageplug-2' value='c7ad4cc095' /><input type='hidden' name='_wp_http_referer' value='' /><a href='javascript:void(0)' class='dfiFeaturedImage hasFeaturedImage' title='Set Featured Image' data-post-id='" . $this->post_id . "'><span class='dashicons dashicons-camera'></span></a><br/>
+        $expectedOutput = "<input type='hidden' id='dfi_fimageplug-2' name='dfi_fimageplug-2' value='c7ad4cc095' /><input type='hidden' name='_wp_http_referer' value='' /><a href='javascript:void(0)' class='dfiFeaturedImage' title='Set Featured Image' data-post-id='" . $this->post_id . "' data-attachment-id=''><span class='dashicons dashicons-camera'></span></a><br/>
             <img src='' class='dfiImg '/>
             <div class='dfiLinks'>
                 <a href='javascript:void(0)' data-id='2' data-id-local='3' class='dfiAddNew dashicons dashicons-plus' title='Add New'></a>
                 <a href='javascript:void(0)' class='dfiRemove dashicons dashicons-minus' title='Remove'></a>
             </div>
             <div class='dfiClearFloat'></div>
-            <input type='hidden' name='dfiFeatured[]' value='/2015/03/dfi-150x150.jpg'  class='dfiImageHolder' />";
+            <input type='hidden' name='dfiFeatured[]' value='" . $featured['args'][0] . "'  class='dfiImageHolder' />";
 
         $this->expectOutputString( $expectedOutput );
         $mock->featured_meta_box( $post, $featured );
@@ -164,8 +167,8 @@ class Dynamic_Featured_Image_Test extends WP_UnitTestCase {
      * @covers ::get_featured_box
      */
     public function it_makes_meta_box_when_featured_id_is_greater_than_nine() {
-        $featured['args'] = [ '/2015/03/dfi-150x150.jpg', 13 ];
         $post             = get_post( $this->post_id );
+        $featured['args'] = [ '', 13 ];
 
         $mock = $this->mock_builder
             ->setMethods( [ 'nonce_field' ] )
@@ -176,14 +179,48 @@ class Dynamic_Featured_Image_Test extends WP_UnitTestCase {
              ->with( 'dfi_fimageplug-12' )
              ->will( $this->returnValue( "<input type='hidden' id='dfi_fimageplug-12' name='dfi_fimageplug-12' value='c7ad4cc095' /><input type='hidden' name='_wp_http_referer' value='' />" ) );
 
-        $expectedOutput = "<input type='hidden' id='dfi_fimageplug-12' name='dfi_fimageplug-12' value='c7ad4cc095' /><input type='hidden' name='_wp_http_referer' value='' /><a href='javascript:void(0)' class='dfiFeaturedImage hasFeaturedImage' title='Set Featured Image' data-post-id='" . $this->post_id . "'><span class='dashicons dashicons-camera'></span></a><br/>
+        $expectedOutput = "<input type='hidden' id='dfi_fimageplug-12' name='dfi_fimageplug-12' value='c7ad4cc095' /><input type='hidden' name='_wp_http_referer' value='' /><a href='javascript:void(0)' class='dfiFeaturedImage' title='Set Featured Image' data-post-id='" . $this->post_id . "' data-attachment-id=''><span class='dashicons dashicons-camera'></span></a><br/>
             <img src='' class='dfiImg '/>
             <div class='dfiLinks'>
                 <a href='javascript:void(0)' data-id='12' data-id-local='13' class='dfiAddNew dashicons dashicons-plus' title='Add New'></a>
                 <a href='javascript:void(0)' class='dfiRemove dashicons dashicons-minus' title='Remove'></a>
             </div>
             <div class='dfiClearFloat'></div>
-            <input type='hidden' name='dfiFeatured[]' value='/2015/03/dfi-150x150.jpg'  class='dfiImageHolder' />";
+            <input type='hidden' name='dfiFeatured[]' value='" . $featured['args'][0] . "'  class='dfiImageHolder' />";
+
+        $this->expectOutputString( $expectedOutput );
+        $mock->featured_meta_box( $post, $featured );
+    }
+
+    /**
+     * @test
+     *
+     * @covers ::featured_meta_box
+     * @covers ::get_image_thumb
+     * @covers ::get_number_translation
+     * @covers ::get_featured_box
+     */
+    public function it_makes_featured_meta_box_with_value() {
+        $post             = get_post( $this->post_id );
+        $featured['args'] = [ '/2015/03/dfi-150x150.jpg,/2015/03/dfi.jpg', 3 ];
+
+        $mock = $this->mock_builder
+            ->setMethods( [ 'nonce_field' ] )
+            ->getMock();
+
+        $mock->expects( $this->once() )
+             ->method( 'nonce_field' )
+             ->with( 'dfi_fimageplug-2' )
+             ->will( $this->returnValue( "<input type='hidden' id='dfi_fimageplug-2' name='dfi_fimageplug-2' value='c7ad4cc095' /><input type='hidden' name='_wp_http_referer' value='' />" ) );
+
+        $expectedOutput = "<input type='hidden' id='dfi_fimageplug-2' name='dfi_fimageplug-2' value='c7ad4cc095' /><input type='hidden' name='_wp_http_referer' value='' /><a href='javascript:void(0)' class='dfiFeaturedImage hasFeaturedImage' title='Set Featured Image' data-post-id='" . $this->post_id . "' data-attachment-id='" . $this->attachment_id . "'><span class='dashicons dashicons-camera'></span></a><br/>
+            <img src='" . $this->upload_url . "/2015/03/dfi.jpg' class='dfiImg '/>
+            <div class='dfiLinks'>
+                <a href='javascript:void(0)' data-id='2' data-id-local='3' class='dfiAddNew dashicons dashicons-plus' title='Add New'></a>
+                <a href='javascript:void(0)' class='dfiRemove dashicons dashicons-minus' title='Remove'></a>
+            </div>
+            <div class='dfiClearFloat'></div>
+            <input type='hidden' name='dfiFeatured[]' value='" . $featured['args'][0] . "'  class='dfiImageHolder' />";
 
         $this->expectOutputString( $expectedOutput );
         $mock->featured_meta_box( $post, $featured );
@@ -198,6 +235,17 @@ class Dynamic_Featured_Image_Test extends WP_UnitTestCase {
         $fullSizeImage = wp_get_attachment_image_src( $this->attachment_id, 'full' );
 
         $this->assertEquals( $this->dfi->get_image_url( $this->attachment_id, 'full' ), $fullSizeImage[0] );
+    }
+
+    /**
+     * @test
+     *
+     * @covers ::get_image_thumb_by_attachment_id
+     */
+    public function it_gets_image_thumb_by_attachment_id() {
+        $thumbImage = wp_get_attachment_image_src( $this->attachment_id, 'thumbnail' );
+
+        $this->assertEquals( $this->dfi->get_image_thumb_by_attachment_id( $this->attachment_id, 'thumbnail' ), $thumbImage[0] );
     }
 
     /**
@@ -382,8 +430,8 @@ class Dynamic_Featured_Image_Test extends WP_UnitTestCase {
      */
     public function it_gets_nth_featured_image() {
         $featuredImage2 = [
-            'thumb' => 'http://example.org/wp-content/uploads/2015/03/dfi-150x150.jpg',
-            'full' => 'http://example.org/wp-content/uploads/2015/03/dfi.jpg',
+            'thumb' => $this->upload_url . '/2015/03/dfi-150x150.jpg',
+            'full' => $this->upload_url . '/2015/03/dfi.jpg',
             'attachment_id' => $this->attachment_id,
         ];
 
@@ -391,8 +439,8 @@ class Dynamic_Featured_Image_Test extends WP_UnitTestCase {
 
         // no attachment id.
         $featuredImage3 = [
-            'thumb' => 'http://example.org/wp-content/uploads/2015/03/dfis-150x150.jpg',
-            'full' => 'http://example.org/wp-content/uploads/2015/03/dfis.jpg',
+            'thumb' => $this->upload_url . '/2015/03/dfis-150x150.jpg',
+            'full' => $this->upload_url . '/2015/03/dfis.jpg',
             'attachment_id' => null,
         ];
 
@@ -400,8 +448,8 @@ class Dynamic_Featured_Image_Test extends WP_UnitTestCase {
 
         // full image url and no attachment id.
         $featuredImage4 = [
-            'thumb' => 'http://example.org/wp-content/uploads/2015/03/dfi-pro-150x150.jpg',
-            'full' => 'http://example.org/wp-content/uploads/2015/03/dfi-pro.jpg',
+            'thumb' => $this->upload_url . '/2015/03/dfi-pro-150x150.jpg',
+            'full' => $this->upload_url . '/2015/03/dfi-pro.jpg',
             'attachment_id' => null,
         ];
 
@@ -421,8 +469,8 @@ class Dynamic_Featured_Image_Test extends WP_UnitTestCase {
      */
     public function it_gets_nth_featured_image_when_post_id_is_null() {
         $expected = [
-            'thumb' => 'http://example.org/wp-content/uploads/2015/03/dfi-150x150.jpg',
-            'full' => 'http://example.org/wp-content/uploads/2015/03/dfi.jpg',
+            'thumb' => $this->upload_url . '/2015/03/dfi-150x150.jpg',
+            'full' => $this->upload_url . '/2015/03/dfi.jpg',
             'attachment_id' => $this->attachment_id,
         ];
 
@@ -462,18 +510,18 @@ class Dynamic_Featured_Image_Test extends WP_UnitTestCase {
     public function it_gets_featured_images() {
         $expected = [
             [
-                'thumb' => 'http://example.org/wp-content/uploads/2015/03/dfi-150x150.jpg',
-                'full' => 'http://example.org/wp-content/uploads/2015/03/dfi.jpg',
+                'thumb' => $this->upload_url . '/2015/03/dfi-150x150.jpg',
+                'full' => $this->upload_url . '/2015/03/dfi.jpg',
                 'attachment_id' => $this->attachment_id,
             ],
             [
-                'thumb' => 'http://example.org/wp-content/uploads/2015/03/dfis-150x150.jpg',
-                'full' => 'http://example.org/wp-content/uploads/2015/03/dfis.jpg',
+                'thumb' => $this->upload_url . '/2015/03/dfis-150x150.jpg',
+                'full' => $this->upload_url . '/2015/03/dfis.jpg',
                 'attachment_id' => null,
             ],
             [
-                'thumb' => 'http://example.org/wp-content/uploads/2015/03/dfi-pro-150x150.jpg',
-                'full' => 'http://example.org/wp-content/uploads/2015/03/dfi-pro.jpg',
+                'thumb' => $this->upload_url . '/2015/03/dfi-pro-150x150.jpg',
+                'full' => $this->upload_url . '/2015/03/dfi-pro.jpg',
                 'attachment_id' => null,
             ],
         ];
@@ -495,18 +543,18 @@ class Dynamic_Featured_Image_Test extends WP_UnitTestCase {
     public function it_gets_featured_images_when_post_id_is_null() {
         $expected = [
             [
-                'thumb' => 'http://example.org/wp-content/uploads/2015/03/dfi-150x150.jpg',
-                'full' => 'http://example.org/wp-content/uploads/2015/03/dfi.jpg',
+                'thumb' => $this->upload_url . '/2015/03/dfi-150x150.jpg',
+                'full' => $this->upload_url . '/2015/03/dfi.jpg',
                 'attachment_id' => $this->attachment_id,
             ],
             [
-                'thumb' => 'http://example.org/wp-content/uploads/2015/03/dfis-150x150.jpg',
-                'full' => 'http://example.org/wp-content/uploads/2015/03/dfis.jpg',
+                'thumb' => $this->upload_url . '/2015/03/dfis-150x150.jpg',
+                'full' => $this->upload_url . '/2015/03/dfis.jpg',
                 'attachment_id' => null,
             ],
             [
-                'thumb' => 'http://example.org/wp-content/uploads/2015/03/dfi-pro-150x150.jpg',
-                'full' => 'http://example.org/wp-content/uploads/2015/03/dfi-pro.jpg',
+                'thumb' => $this->upload_url . '/2015/03/dfi-pro-150x150.jpg',
+                'full' => $this->upload_url . '/2015/03/dfi-pro.jpg',
                 'attachment_id' => null,
             ],
         ];
@@ -534,23 +582,23 @@ class Dynamic_Featured_Image_Test extends WP_UnitTestCase {
     public function it_gets_all_featured_images() {
         $expected = [
             [
-                'thumb' => 'http://example.org/wp-content/uploads/2015/03/dfi.jpg',
-                'full' => 'http://example.org/wp-content/uploads/2015/03/dfi.jpg',
+                'thumb' => $this->upload_url . '/2015/03/dfi.jpg',
+                'full' => $this->upload_url . '/2015/03/dfi.jpg',
                 'attachment_id' => $this->attachment_id,
             ],
             [
-                'thumb' => 'http://example.org/wp-content/uploads/2015/03/dfi-150x150.jpg',
-                'full' => 'http://example.org/wp-content/uploads/2015/03/dfi.jpg',
+                'thumb' => $this->upload_url . '/2015/03/dfi-150x150.jpg',
+                'full' => $this->upload_url . '/2015/03/dfi.jpg',
                 'attachment_id' => $this->attachment_id,
             ],
             [
-                'thumb' => 'http://example.org/wp-content/uploads/2015/03/dfis-150x150.jpg',
-                'full' => 'http://example.org/wp-content/uploads/2015/03/dfis.jpg',
+                'thumb' => $this->upload_url . '/2015/03/dfis-150x150.jpg',
+                'full' => $this->upload_url . '/2015/03/dfis.jpg',
                 'attachment_id' => null,
             ],
             [
-                'thumb' => 'http://example.org/wp-content/uploads/2015/03/dfi-pro-150x150.jpg',
-                'full' => 'http://example.org/wp-content/uploads/2015/03/dfi-pro.jpg',
+                'thumb' => $this->upload_url . '/2015/03/dfi-pro-150x150.jpg',
+                'full' => $this->upload_url . '/2015/03/dfi-pro.jpg',
                 'attachment_id' => null,
             ],
         ];
@@ -570,23 +618,23 @@ class Dynamic_Featured_Image_Test extends WP_UnitTestCase {
     public function it_gets_all_featured_images_when_post_id_is_null() {
         $expected = [
             [
-                'thumb' => 'http://example.org/wp-content/uploads/2015/03/dfi.jpg',
-                'full' => 'http://example.org/wp-content/uploads/2015/03/dfi.jpg',
+                'thumb' => $this->upload_url . '/2015/03/dfi.jpg',
+                'full' => $this->upload_url . '/2015/03/dfi.jpg',
                 'attachment_id' => $this->attachment_id,
             ],
             [
-                'thumb' => 'http://example.org/wp-content/uploads/2015/03/dfi-150x150.jpg',
-                'full' => 'http://example.org/wp-content/uploads/2015/03/dfi.jpg',
+                'thumb' => $this->upload_url . '/2015/03/dfi-150x150.jpg',
+                'full' => $this->upload_url . '/2015/03/dfi.jpg',
                 'attachment_id' => $this->attachment_id,
             ],
             [
-                'thumb' => 'http://example.org/wp-content/uploads/2015/03/dfis-150x150.jpg',
-                'full' => 'http://example.org/wp-content/uploads/2015/03/dfis.jpg',
+                'thumb' => $this->upload_url . '/2015/03/dfis-150x150.jpg',
+                'full' => $this->upload_url . '/2015/03/dfis.jpg',
                 'attachment_id' => null,
             ],
             [
-                'thumb' => 'http://example.org/wp-content/uploads/2015/03/dfi-pro-150x150.jpg',
-                'full' => 'http://example.org/wp-content/uploads/2015/03/dfi-pro.jpg',
+                'thumb' => $this->upload_url . '/2015/03/dfi-pro-150x150.jpg',
+                'full' => $this->upload_url . '/2015/03/dfi-pro.jpg',
                 'attachment_id' => null,
             ],
         ];
@@ -675,8 +723,8 @@ class Dynamic_Featured_Image_Test extends WP_UnitTestCase {
 
         $expected = [
             [
-                'thumb' => 'http://example.org/wp-content/uploads/2015/03/featured-150x150.jpg',
-                'full' => 'http://example.org/wp-content/uploads/2015/03/featured.jpg',
+                'thumb' => $this->upload_url . '/2015/03/featured-150x150.jpg',
+                'full' => $this->upload_url . '/2015/03/featured.jpg',
                 'attachment_id' => null,
             ],
         ];

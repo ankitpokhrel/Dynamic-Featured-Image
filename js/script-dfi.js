@@ -128,7 +128,19 @@ jQuery( document ).ready( function ( $ ) {
 
                 featuredBox.find( 'img' ).attr( 'src', medium ).fadeIn( 200 );
                 featuredBox.find( 'input.dfiImageHolder' ).val( dfiFeaturedImages );
-            } ).open();
+            } );
+
+          dfi_uploader.on('open', function () {
+            var attached = current.data('attachment-id');
+            var selection = dfi_uploader.state().get('selection');
+
+            if ( attached ) {
+              selection.add(wp.media.attachment(attached));
+            }
+          });
+
+          // Open media dialog.
+          dfi_uploader.open();
         } // End if().
 
         return false;

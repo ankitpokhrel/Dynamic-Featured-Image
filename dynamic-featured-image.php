@@ -726,13 +726,7 @@ class Dynamic_Featured_Image {
 
         if ( is_null( $attachment_id ) ) {
             // check if the image is edited image.
-            // and try to get the attachment id.
-            $image_url = str_replace( $this->upload_url . '/', '', $image_url );
-            $row       = $this->execute_query( $this->db->prepare( 'SELECT post_id FROM ' . $this->db->postmeta . ' WHERE meta_key = %s AND meta_value = %s', '_wp_attached_file', $image_url ) );
-
-            if ( ! is_null( $row ) ) {
-                $attachment_id = $row;
-            }
+            return attachment_url_to_postid( $image_url );
         }
 
         return $attachment_id;

@@ -668,25 +668,24 @@ class Dynamic_Featured_Image {
     }
 
     /**
-     * Get image thumbnail url of specific size by image url.
+     * Get image thumbnail url of specific size by attachment id.
      *
-     * @since 2.0.0
+     * @since 3.7.0
      * @access public
      *
-     * @see  get_image_id()
-     * @see  wp_get_attachment_image_src()
+     * @see wp_get_attachment_image_src()
      *
-     * @param  int $attachment_id attachment id of an image.
-     * @param  string $size size of the image to fetch (thumbnail, medium, full).
+     * @param int $attachment_id attachment id of an image.
+     * @param string $size size of the image to fetch (thumbnail, medium, full).
      *
      * @return string|null
      */
     public function get_image_thumb_by_attachment_id( $attachment_id, $size = 'thumbnail' ) {
-        if (empty($attachment_id)) {
+        if ( empty( $attachment_id ) ) {
             return null;
         }
 
-        $image_thumb   = wp_get_attachment_image_src( $attachment_id, $size );
+        $image_thumb = wp_get_attachment_image_src( $attachment_id, $size );
 
         return empty( $image_thumb ) ? null : $image_thumb[0];
     }

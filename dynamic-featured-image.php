@@ -385,13 +385,18 @@ class Dynamic_Featured_Image {
             $featured_img_full    = $this->separate( $featured_img, 'full' );
         }
 
-        $attachment_id = $this->get_image_id( $this->upload_url . $featured_img_full );
+        $thumbnail     = null;
+        $attachment_id = null;
+        if (!empty($featured_img_full)) {
+            $attachment_id = $this->get_image_id( $this->upload_url . $featured_img_full );
 
-        $thumbnail = $this->get_image_thumb_by_attachment_id( $attachment_id, 'medium' );
-        if ( empty( $thumbnail ) ) {
-            // since medium sized thumbnail image is missing,
-            // let's set full image url as thumbnail.
-            $thumbnail = $featured_img_full;
+            $thumbnail = $this->get_image_thumb_by_attachment_id( $attachment_id, 'medium' );
+
+            if ( empty( $thumbnail ) ) {
+                // since medium sized thumbnail image is missing,
+                // let's set full image url as thumbnail.
+                $thumbnail = $featured_img_full;
+            }
         }
 
         // Add a nonce field.
@@ -415,11 +420,11 @@ class Dynamic_Featured_Image {
      * @return string Html content
      */
     private function get_featured_box( $featured_img_trimmed, $featured_img, $featured_id, $thumbnail, $post_id, $attachment_id ) {
-        $has_featured_image = ! empty( $featured_img_trimmed ) ? 'hasFeaturedImage' : '';
+        $has_featured_image = ! empty( $featured_img_trimmed ) ? ' hasFeaturedImage' : '';
         $thumbnail          = ! is_null( $thumbnail ) ? $thumbnail : '';
         $dfi_empty          = is_null( $featured_img_trimmed ) ? 'dfiImgEmpty' : '';
 
-        return "<a href='javascript:void(0)' class='dfiFeaturedImage {$has_featured_image}' title='" . __( 'Set Featured Image', self::TEXT_DOMAIN ) . "' data-post-id='" . $post_id . "' data-attachment-id='" . $attachment_id . "'><span class='dashicons dashicons-camera'></span></a><br/>
+        return "<a href='javascript:void(0)' class='dfiFeaturedImage{$has_featured_image}' title='" . __( 'Set Featured Image', self::TEXT_DOMAIN ) . "' data-post-id='" . $post_id . "' data-attachment-id='" . $attachment_id . "'><span class='dashicons dashicons-camera'></span></a><br/>
             <img src='" . $thumbnail . "' class='dfiImg {$dfi_empty}'/>
             <div class='dfiLinks'>
                 <a href='javascript:void(0)' data-id='{$featured_id}' data-id-local='" . $this->get_number_translation( $featured_id + 1 ) . "' class='dfiAddNew dashicons dashicons-plus' title='" . __( 'Add New', self::TEXT_DOMAIN ) . "'></a>
@@ -674,9 +679,13 @@ class Dynamic_Featured_Image {
      * @param  int $attachment_id attachment id of an image.
      * @param  string $size size of the image to fetch (thumbnail, medium, full).
      *
-     * @return string
+     * @return string|null
      */
     public function get_image_thumb_by_attachment_id( $attachment_id, $size = 'thumbnail' ) {
+        if (empty($attachment_id)) {
+            return null;
+        }
+
         $image_thumb   = wp_get_attachment_image_src( $attachment_id, $size );
 
         return empty( $image_thumb ) ? null : $image_thumb[0];

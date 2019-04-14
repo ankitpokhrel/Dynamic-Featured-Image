@@ -137,20 +137,15 @@ class Dynamic_Featured_Image_Test extends WP_UnitTestCase {
         $featured['args'] = [ '', 3 ];
 
         $mock = $this->mock_builder
-            ->setMethods( [ 'nonce_field', 'get_image_id' ] )
+            ->setMethods( [ 'nonce_field' ] )
             ->getMock();
-
-        $mock->expects( $this->once() )
-             ->method( 'get_image_id' )
-             ->with( $this->upload_url )
-             ->will( $this->returnValue( $this->attachment_id ) );
 
         $mock->expects( $this->once() )
              ->method( 'nonce_field' )
              ->with( 'dfi_fimageplug-2' )
              ->will( $this->returnValue( "<input type='hidden' id='dfi_fimageplug-2' name='dfi_fimageplug-2' value='c7ad4cc095' /><input type='hidden' name='_wp_http_referer' value='' />" ) );
 
-        $expectedOutput = "<input type='hidden' id='dfi_fimageplug-2' name='dfi_fimageplug-2' value='c7ad4cc095' /><input type='hidden' name='_wp_http_referer' value='' /><a href='javascript:void(0)' class='dfiFeaturedImage hasFeaturedImage' title='Set Featured Image' data-post-id='" . $this->post_id . "' data-attachment-id='" . $this->attachment_id . "'><span class='dashicons dashicons-camera'></span></a><br/>
+        $expectedOutput = "<input type='hidden' id='dfi_fimageplug-2' name='dfi_fimageplug-2' value='c7ad4cc095' /><input type='hidden' name='_wp_http_referer' value='' /><a href='javascript:void(0)' class='dfiFeaturedImage' title='Set Featured Image' data-post-id='" . $this->post_id . "' data-attachment-id=''><span class='dashicons dashicons-camera'></span></a><br/>
             <img src='' class='dfiImg '/>
             <div class='dfiLinks'>
                 <a href='javascript:void(0)' data-id='2' data-id-local='3' class='dfiAddNew dashicons dashicons-plus' title='Add New'></a>
@@ -176,23 +171,52 @@ class Dynamic_Featured_Image_Test extends WP_UnitTestCase {
         $featured['args'] = [ '', 13 ];
 
         $mock = $this->mock_builder
-            ->setMethods( [ 'nonce_field', 'get_image_id' ] )
+            ->setMethods( [ 'nonce_field' ] )
             ->getMock();
-
-        $mock->expects( $this->once() )
-             ->method( 'get_image_id' )
-             ->with( $this->upload_url )
-             ->will( $this->returnValue( $this->attachment_id ) );
 
         $mock->expects( $this->once() )
              ->method( 'nonce_field' )
              ->with( 'dfi_fimageplug-12' )
              ->will( $this->returnValue( "<input type='hidden' id='dfi_fimageplug-12' name='dfi_fimageplug-12' value='c7ad4cc095' /><input type='hidden' name='_wp_http_referer' value='' />" ) );
 
-        $expectedOutput = "<input type='hidden' id='dfi_fimageplug-12' name='dfi_fimageplug-12' value='c7ad4cc095' /><input type='hidden' name='_wp_http_referer' value='' /><a href='javascript:void(0)' class='dfiFeaturedImage hasFeaturedImage' title='Set Featured Image' data-post-id='" . $this->post_id . "' data-attachment-id='" . $this->attachment_id . "'><span class='dashicons dashicons-camera'></span></a><br/>
+        $expectedOutput = "<input type='hidden' id='dfi_fimageplug-12' name='dfi_fimageplug-12' value='c7ad4cc095' /><input type='hidden' name='_wp_http_referer' value='' /><a href='javascript:void(0)' class='dfiFeaturedImage' title='Set Featured Image' data-post-id='" . $this->post_id . "' data-attachment-id=''><span class='dashicons dashicons-camera'></span></a><br/>
             <img src='' class='dfiImg '/>
             <div class='dfiLinks'>
                 <a href='javascript:void(0)' data-id='12' data-id-local='13' class='dfiAddNew dashicons dashicons-plus' title='Add New'></a>
+                <a href='javascript:void(0)' class='dfiRemove dashicons dashicons-minus' title='Remove'></a>
+            </div>
+            <div class='dfiClearFloat'></div>
+            <input type='hidden' name='dfiFeatured[]' value='" . $featured['args'][0] . "'  class='dfiImageHolder' />";
+
+        $this->expectOutputString( $expectedOutput );
+        $mock->featured_meta_box( $post, $featured );
+    }
+
+    /**
+     * @test
+     *
+     * @covers ::featured_meta_box
+     * @covers ::get_image_thumb
+     * @covers ::get_number_translation
+     * @covers ::get_featured_box
+     */
+    public function it_makes_featured_meta_box_with_value() {
+        $post             = get_post( $this->post_id );
+        $featured['args'] = [ '/2015/03/dfi-150x150.jpg,/2015/03/dfi.jpg', 3 ];
+
+        $mock = $this->mock_builder
+            ->setMethods( [ 'nonce_field' ] )
+            ->getMock();
+
+        $mock->expects( $this->once() )
+             ->method( 'nonce_field' )
+             ->with( 'dfi_fimageplug-2' )
+             ->will( $this->returnValue( "<input type='hidden' id='dfi_fimageplug-2' name='dfi_fimageplug-2' value='c7ad4cc095' /><input type='hidden' name='_wp_http_referer' value='' />" ) );
+
+        $expectedOutput = "<input type='hidden' id='dfi_fimageplug-2' name='dfi_fimageplug-2' value='c7ad4cc095' /><input type='hidden' name='_wp_http_referer' value='' /><a href='javascript:void(0)' class='dfiFeaturedImage hasFeaturedImage' title='Set Featured Image' data-post-id='" . $this->post_id . "' data-attachment-id='" . $this->attachment_id . "'><span class='dashicons dashicons-camera'></span></a><br/>
+            <img src='" . $this->upload_url . "/2015/03/dfi.jpg' class='dfiImg '/>
+            <div class='dfiLinks'>
+                <a href='javascript:void(0)' data-id='2' data-id-local='3' class='dfiAddNew dashicons dashicons-plus' title='Add New'></a>
                 <a href='javascript:void(0)' class='dfiRemove dashicons dashicons-minus' title='Remove'></a>
             </div>
             <div class='dfiClearFloat'></div>

@@ -387,7 +387,7 @@ class Dynamic_Featured_Image {
 
         $thumbnail     = null;
         $attachment_id = null;
-        if (!empty($featured_img_full)) {
+        if ( ! empty( $featured_img_full ) ) {
             $attachment_id = $this->get_image_id( $this->upload_url . $featured_img_full );
 
             $thumbnail = $this->get_image_thumb_by_attachment_id( $attachment_id, 'medium' );

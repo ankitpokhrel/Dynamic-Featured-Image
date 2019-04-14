@@ -17,7 +17,7 @@ Why limit yourself to only one featured image if you can do some awesome stuffs 
 
   1. Unzip and upload the `dynamic-featured-images` directory to the plugin directory (`/wp-content/plugins/`) or install it from `Plugins->Add New->Upload`
   2. Activate the plugin through the `Plugins` menu in WordPress.
-  3. If you don't see new featured image box, click `Screen Options` in the upper right corner of your wordpress admin and make sure that the `Featured Image 2` box is slected.
+  3. If you don't see new featured image box, click `Screen Options` in the upper right corner of your wordpress admin and make sure that the `Featured Image 2` box is selected.
 
 ### Bower
 ```
@@ -25,7 +25,7 @@ bower install dynamic-featured-image
 ```
 
 ### How it works?
-1. After successfull plugin activation go to `add` or `edit` page of posts or pages and you will notice a box for second featured image.
+1. After successful plugin activation go to `add` or `edit` page of posts or pages and you will notice a box for second featured image.
 
   ![New featured image box](https://ankitpokhrel.com/DFI/screenshot-1.png)
 
@@ -124,9 +124,5 @@ If you are interested in translating the plugin in your language, first make sur
 ### Dynamic Featured Image PRO
 A premium version of this plugin is also available. Users looking for more timely/in-depth support and extended features are encouraged to check out [Dynamic Featured Image PRO](https://ankitpokhrel.com/explore/dynamic-featured-image-pro/).
 
-### Author available for hire
-I'm available for freelance work. Remote worldwide or locally around Nepal. Drop me a line @ankitpokhrel if you like.
-
 ### Questions about this project?
-
 Please feel free to report any bug found. Pull requests, issues, and plugin recommendations are more than welcome!

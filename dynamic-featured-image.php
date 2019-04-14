@@ -725,11 +725,21 @@ class Dynamic_Featured_Image {
         $attachment_id = $this->get_attachment_id( $image_url );
 
         if ( is_null( $attachment_id ) ) {
-            // check if the image is edited image.
-            // and try to get the attachment id.
-            $image_url = str_replace( $this->upload_url . '/', '', $image_url );
-            $row       = $this->execute_query( $this->db->prepare( 'SELECT post_id FROM ' . $this->db->postmeta . ' WHERE meta_key = %s AND meta_value = %s', '_wp_attached_file', $image_url ) );
+            /*
+             * Check if the image is an edited image.
+             * and try to get the attachment id.
+             */
 
+            global $wp_version;
+
+            if ( intval( $wp_version ) >= 4 ) {
+                return attachment_url_to_postid( $image_url );
+            }
+
+            // Fallback.
+            $image_url = str_replace( $this->upload_url . '/', '', $image_url );
+
+            $row = $this->execute_query( $this->db->prepare( 'SELECT post_id FROM ' . $this->db->postmeta . ' WHERE meta_key = %s AND meta_value = %s', '_wp_attached_file', $image_url ) );
             if ( ! is_null( $row ) ) {
                 $attachment_id = $row;
             }

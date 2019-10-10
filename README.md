@@ -68,7 +68,8 @@ bower install dynamic-featured-image
 13. [get_image_description_by_id( $attachment_id )](https://github.com/ankitpokhrel/Dynamic-Featured-Image/wiki/API#wiki-13-get_image_description_by_id-attachment_id-)
 14. [get_nth_featured_image( $position, $post_id )](https://github.com/ankitpokhrel/Dynamic-Featured-Image/wiki/API#wiki-14-get_nth_featured_image-position-post_id--null-)
 15. [get_all_featured_images( $post_id )](https://github.com/ankitpokhrel/Dynamic-Featured-Image/wiki/API#15-get_all_featured_images-post_id-)
-16. [get_link_to_image( $attachment_id )](https://github.com/ankitpokhrel/Dynamic-Featured-Image/wiki/API#16-get_link_to_image-attachment_id-)
+16. [get_featured_images( $post_id )](https://github.com/ankitpokhrel/Dynamic-Featured-Image/wiki/API#16-get_featured_images-post_id-)
+17. [get_link_to_image( $attachment_id )](https://github.com/ankitpokhrel/Dynamic-Featured-Image/wiki/API#17-get_link_to_image-attachment_id-)
 
 ### Allowing DFI only in specific post types
 You can use `dfi_post_types` filter to allow DFI only in a specific post types.

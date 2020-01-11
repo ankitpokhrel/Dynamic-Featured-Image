@@ -27,16 +27,16 @@ bower install dynamic-featured-image
 ### How it works?
 1. After successful plugin activation go to `add` or `edit` page of posts or pages and you will notice a box for second featured image.
 
-  ![New featured image box](https://ankitpokhrel.com/DFI/screenshot-1.png)
+  ![New featured image box](.github/screenshots/1.png)
 
 2. Click `Set featured image` icon, select required image from the "Dynamic Featured Image Media Selector" popup and click `Set Featured Image`.
 
-  ![Dynamic Featured Image Media Selector](https://ankitpokhrel.com/DFI/screenshot-2.png)
+  ![Dynamic Featured Image Media Selector](.github/screenshots/2.png)
 
 3. Click on `Add New` to add new featured image or use `Remove` link to remove the featured image box.
 
-  ![Featured Images](https://ankitpokhrel.com/DFI/screenshot-3.png)
-  ![Featured Images](https://ankitpokhrel.com/DFI/screenshot-4.png)
+  ![Featured Images](.github/screenshots/3.png)
+  ![Featured Images](.github/screenshots/4.png)
 
 4. After adding featured images click `publish` or `update` to save featured images.
 
@@ -121,9 +121,6 @@ If you are interested in translating the plugin in your language, first make sur
     ```shell
     $ phpcs <dfi-plugin-dir or filename>
     ```
-
-### Dynamic Featured Image PRO
-A premium version of this plugin is also available. Users looking for more timely/in-depth support and extended features are encouraged to check out [Dynamic Featured Image PRO](https://ankitpokhrel.com/explore/dynamic-featured-image-pro/).
 
 ### Questions about this project?
 Please feel free to report any bug found. Pull requests, issues, and plugin recommendations are more than welcome!

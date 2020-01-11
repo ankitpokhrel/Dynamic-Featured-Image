@@ -35,7 +35,7 @@ bower install dynamic-featured-image
 
 3. Click on `Add New` to add new featured image or use `Remove` link to remove the featured image box.
 
-  ![Featured Images](.github/screenshots/3.png)
+  ![Featured Images](.github/screenshots/3.png)  
   ![Featured Images](.github/screenshots/4.png)
 
 4. After adding featured images click `publish` or `update` to save featured images.

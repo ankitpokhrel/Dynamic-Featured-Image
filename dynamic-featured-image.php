@@ -66,13 +66,6 @@ class Dynamic_Featured_Image {
     const WIKI_LINK = 'https://github.com/ankitpokhrel/Dynamic-Featured-Image/wiki/';
 
     /**
-     * Upgrade Link.
-     *
-     * @since 3.6.0
-     */
-    const UPGRADE_LINK = 'https://ankitpokhrel.com/explore/dynamic-featured-image-pro/';
-
-    /**
      * Image upload directory.
      *
      * @var $upload_dir string
@@ -127,9 +120,6 @@ class Dynamic_Featured_Image {
 
         // handle ajax request.
         add_action( 'wp_ajax_dfiMetaBox_callback', array( $this, 'ajax_callback' ) );
-
-        // add action links.
-        add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), array( $this, 'dfi_action_links' ) );
 
         // media uploader custom fields.
         add_filter( 'attachment_fields_to_edit', array( $this, 'media_attachment_custom_fields' ), 10, 2 );
@@ -200,27 +190,6 @@ class Dynamic_Featured_Image {
 
         // enqueue scripts.
         wp_enqueue_script( 'scripts-dfi' );
-    }
-
-    /**
-     * Add upgrade link.
-     *
-     * @access public
-     * @since  3.5.1
-     * @action plugin_action_links
-     *
-     * @codeCoverageIgnore
-     *
-     * @param  array $links Action links.
-     *
-     * @return array
-     */
-    public function dfi_action_links( $links ) {
-        $upgrade_link = array(
-            '<a href="' . self::UPGRADE_LINK . '" target="_blank">Upgrade to Premium</a>'
-        );
-
-        return array_merge( $links, $upgrade_link );
     }
 
     /**

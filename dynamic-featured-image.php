@@ -421,7 +421,13 @@ class Dynamic_Featured_Image {
         if ( ! is_numeric( $featured_id ) ) {
             return;
         }
-
+        
+        $max_allowed = apply_filters("dfi_maximum_allowed_images", 999);
+		
+        if ( $featured_id > $max_allowed ) { 
+            return "";
+        }
+		
         // @codingStandardsIgnoreStart
         echo $this->nonce_field( 'dfi_fimageplug-' . $featured_id );
         ?>
@@ -430,9 +436,12 @@ class Dynamic_Featured_Image {
                     class="dashicons dashicons-camera"></span></a><br/>
         <img src="" class="dfiImg dfiImgEmpty"/>
         <div class="dfiLinks">
-            <a href="javascript:void(0)" data-id="<?php echo $featured_id ?>"
+            <?php 
+            if ( $featured_id < $max_allowed ) { ?>
+                <a href="javascript:void(0)" data-id="<?php echo $featured_id ?>"
                data-id-local="<?php echo $this->get_number_translation( $featured_id + 1 ) ?>"
                class="dfiAddNew dashicons dashicons-plus" title="<?php echo __( 'Add New', self::TEXT_DOMAIN ) ?>"></a>
+            <?php } ?>
             <a href="javascript:void(0)" class="dfiRemove dashicons dashicons-minus"
                title="<?php echo __( 'Remove', self::TEXT_DOMAIN ) ?>"></a>
         </div>

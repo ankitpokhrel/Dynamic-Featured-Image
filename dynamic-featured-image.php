@@ -224,7 +224,8 @@ class Dynamic_Featured_Image {
         if ( ! empty( $featured_data ) && $total_featured >= 1 ) {
             $i = 2;
             foreach ( $featured_data as $featured ) {
-                $this->dfi_add_meta_box( $post_types, $featured, $i++ );
+                if ( $i <= apply_filters("dfi_maximum_allowed_images", 999) )
+                    $this->dfi_add_meta_box( $post_types, $featured, $i++ );
             }
         } else {
             $this->dfi_add_meta_box( $post_types );

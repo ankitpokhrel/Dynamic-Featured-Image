@@ -554,8 +554,8 @@ class Dynamic_Featured_Image {
     protected function sanitize_array( $input_array ) {
         $sanitized = array();
 
-        foreach ( $input_array as $value ) {
-            $sanitized[] = sanitize_text_field( wp_unslash( $value ) );
+        foreach ( $input_array as $key=>$value ) {
+            $sanitized[$key] = sanitize_text_field( wp_unslash( $value ) );
         }
 
         return $sanitized;

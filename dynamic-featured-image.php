@@ -66,6 +66,13 @@ class Dynamic_Featured_Image {
     const WIKI_LINK = 'https://github.com/ankitpokhrel/Dynamic-Featured-Image/wiki/';
 
     /**
+					
+	  
+				   
+	   
+																						
+
+	   
      * Image upload directory.
      *
      * @var $upload_dir string
@@ -890,7 +897,6 @@ class Dynamic_Featured_Image {
                 $ret_val[]      = (int) $this->get_image_id( $this->upload_url . $dfi_image_full );
             }
         }
-		$ret_val = $this->sanitize_array( $ret_val );
         return $ret_val;
     }
 
@@ -932,7 +938,7 @@ class Dynamic_Featured_Image {
 
         $featured_images = $this->get_featured_images( $post_id );
 
-        return isset( $featured_images[ $position - 2 ] ) ?  sanitize_text_field( $featured_images[ $position - 2 ] ) : null;
+        return isset( $featured_images[ $position - 2 ] ) ? $featured_images[ $position - 2 ] : null;
     }
 
     /**

@@ -1015,10 +1015,10 @@ class Dynamic_Featured_Image {
     protected function get_real_upload_path( $img ) {
         // check if upload path is already attached.
         if ( false !== strpos( $img, $this->upload_url ) || preg_match( '/https?:\/\//', $img ) ) {
-            return sanitize_url($img);
+            return esc_url_raw($img);
         }
 
-        return sanitize_url($this->upload_url . $img);
+        return esc_url_raw($this->upload_url . $img);
     }
 
     /**

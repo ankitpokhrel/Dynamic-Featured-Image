@@ -4,6 +4,9 @@
 [![License](https://img.shields.io/packagist/l/ankitpokhrel/dynamic-featured-image.svg?style=flat-square)](https://packagist.org/packages/ankitpokhrel/dynamic-featured-image)
 
 ## Dynamic Featured Image (A WordPress Plugin)
+
+> This project is no longer actively maintained.
+
 [![Download](https://img.shields.io/wordpress/plugin/dt/dynamic-featured-image.svg?style=flat-square)](https://wordpress.org/plugins/dynamic-featured-image)
 [![Build](https://img.shields.io/travis/ankitpokhrel/Dynamic-Featured-Image.svg?style=flat-square)](https://travis-ci.org/ankitpokhrel/Dynamic-Featured-Image)
 [![Code Coverage](https://img.shields.io/scrutinizer/coverage/g/ankitpokhrel/Dynamic-Featured-Image.svg?style=flat-square)](https://scrutinizer-ci.com/g/ankitpokhrel/Dynamic-Featured-Image/)
